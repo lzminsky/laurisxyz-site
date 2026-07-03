@@ -12,7 +12,7 @@
             --bg: #f9f7f4;
             --fg: #111;
             --fg-dim: #444;
-            --fg-dimmer: #888;
+            --fg-dimmer: #6b6b6b;
             --accent: #000;
         }
 
@@ -90,7 +90,13 @@
             margin-bottom: 48px;
             opacity: 0;
             animation: fadeIn 0.8s ease-out 0.05s forwards;
+            white-space: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
         }
+
+        .nav::-webkit-scrollbar { display: none; }
 
         .nav a {
             font-family: 'JetBrains Mono', monospace;
@@ -122,6 +128,11 @@
 
         .bio p:last-child {
             margin-bottom: 0;
+        }
+
+        .bio p:first-child {
+            color: var(--fg);
+            font-size: 1rem;
         }
 
         .bio .current {
@@ -357,7 +368,7 @@
         }
 
         .book-note {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--fg-dim);
             margin-top: 4px;
             padding-left: 32px;
@@ -438,7 +449,7 @@
             border: 1px solid #e4e0da;
             border-radius: 999px;
             padding: 2px 9px;
-            font-size: 0.62rem;
+            font-size: 0.68rem;
             color: var(--fg-dimmer);
             white-space: nowrap;
         }
@@ -534,7 +545,7 @@
 
         @media (max-width: 600px) {
             html {
-                font-size: 16px;
+                font-size: 17px;
             }
 
             .container {
@@ -550,8 +561,8 @@
             }
 
             .nav a {
-                margin-right: 16px;
-                font-size: 0.7rem;
+                margin-right: 14px;
+                font-size: 0.68rem;
             }
 
             .title {
@@ -586,7 +597,7 @@
             .book-note {
                 padding-left: 0;
                 margin-top: 8px;
-                font-size: 0.8rem;
+                font-size: 0.875rem;
             }
 
             .book-item {
