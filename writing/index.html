@@ -76,6 +76,28 @@
         .nav a:hover { color: var(--ink); }
         .nav a.nav-x { padding-bottom: 3px; border-bottom: 1px solid currentColor; color: var(--teal); }
         .nav a.nav-x:hover { color: var(--ink); }
+        .nav-menu { position: relative; display: none; }
+        .nav-menu summary {
+            display: inline-flex; min-width: 44px; min-height: 44px; padding: 5px 5px 0;
+            align-items: flex-start; justify-content: center; color: var(--ink-muted);
+            font: 500 .78rem/1.4 var(--type-body); letter-spacing: -.01em;
+            list-style: none; cursor: pointer;
+        }
+        .nav-menu summary::-webkit-details-marker { display: none; }
+        .nav-menu summary::after { margin-left: 6px; content: '+'; }
+        .nav-menu[open] summary { color: var(--teal); }
+        .nav-menu[open] summary::after { content: '−'; }
+        .nav-menu-panel {
+            position: absolute; z-index: 50; top: 46px; right: 0; width: 204px; padding: 7px;
+            border: 1px solid var(--rule); background: var(--paper);
+            box-shadow: 0 14px 36px rgba(1, 22, 20, .09);
+        }
+        .nav-menu-panel a {
+            display: flex; width: 100%; min-height: 44px; padding: 11px 12px 9px;
+            align-items: center; justify-content: flex-start; font-size: .78rem;
+        }
+        .nav-menu-panel a + a { border-top: 1px solid var(--rule); }
+        .nav-menu-panel .nav-menu-x { display: none; color: var(--teal); }
         a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
         .text-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--ink);
             font: 500 .76rem/1.4 var(--type-body); letter-spacing: -.01em;
@@ -94,17 +116,26 @@
             font-family: var(--type-display); font-weight: var(--type-display-weight); letter-spacing: var(--type-display-tracking);
         }
         .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
+        @media (max-width: 960px) {
+            .masthead { gap: 24px; }
+            .nav { position: relative; flex-wrap: nowrap; gap: 0 14px; }
+            .nav > a { min-width: 44px; padding-right: 5px; padding-left: 5px; justify-content: center; white-space: nowrap; }
+            .nav > .nav-wide { display: none; }
+            .nav-menu { display: block; }
+        }
         @media (max-width: 640px) {
             html { font-size: 17px; }
             .container { width: calc(100% - 32px); padding: 22px 0 48px; }
             .masthead { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 15px; }
-            .masthead-origin { flex: 0 0 28px; }
-            .mark-link { min-width: 28px; min-height: 38px; }
+            .masthead-origin { flex: 0 0 44px; }
+            .mark-link { min-width: 44px; min-height: 44px; }
             .mark-symbol { font-size: 1.7rem; }
             .crumb { display: none; }
-            .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 17px; margin-top: 0; padding-top: 0; }
-            .nav a { display: none; min-height: 38px; padding-top: 4px; font-size: .72rem; white-space: nowrap; }
-            .nav a[href="/writing/"], .nav a.nav-x { display: inline-flex; }
+            .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 10px; margin-top: 0; padding-top: 0; }
+            .nav > a { min-width: 44px; min-height: 44px; padding: 5px 3px 0; font-size: .72rem; white-space: nowrap; }
+            .nav > .nav-x { display: none; }
+            .nav-menu summary { min-width: 44px; min-height: 44px; padding-top: 5px; font-size: .72rem; }
+            .nav-menu-panel .nav-menu-x { display: flex; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
@@ -175,8 +206,18 @@
             <nav class="nav" aria-label="Primary navigation">
                 <a href="/#work">Work</a>
                 <a href="/writing/">Writing</a>
-                <a href="/#library">Library</a>
+                <a class="nav-wide" href="/#library">Library</a>
                 <a class="nav-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+                <details class="nav-menu">
+                    <summary>Menu</summary>
+                    <div class="nav-menu-panel">
+                        <a href="/">Home</a>
+                        <a href="/#now">Now</a>
+                        <a href="/#formation">Formation</a>
+                        <a href="/#library">Library</a>
+                        <a class="nav-menu-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+                    </div>
+                </details>
             </nav>
         </header>
         <main id="main-content">
@@ -292,6 +333,29 @@
     </div>
     <script>
         (() => {
+            const navMenus = Array.from(document.querySelectorAll('.nav-menu'));
+            const closeNavMenus = (except = null) => {
+                navMenus.forEach(menu => {
+                    if (menu !== except) menu.removeAttribute('open');
+                });
+            };
+            navMenus.forEach(menu => {
+                menu.addEventListener('toggle', () => {
+                    if (menu.open) closeNavMenus(menu);
+                });
+                menu.addEventListener('click', event => {
+                    if (event.target.closest('a')) menu.removeAttribute('open');
+                });
+                menu.addEventListener('keydown', event => {
+                    if (event.key !== 'Escape') return;
+                    menu.removeAttribute('open');
+                    menu.querySelector('summary')?.focus();
+                });
+            });
+            document.addEventListener('click', event => {
+                if (!event.target.closest('.nav-menu')) closeNavMenus();
+            });
+
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             const items = Array.from(document.querySelectorAll('[data-animate]'));
             if (!items.length || !('IntersectionObserver' in window)) return;
