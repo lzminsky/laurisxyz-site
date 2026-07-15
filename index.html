@@ -129,9 +129,50 @@
             border-bottom: 1px solid currentColor;
             color: var(--teal);
         }
+        .nav-menu { position: relative; display: none; }
+        .nav-menu summary {
+            display: inline-flex;
+            min-width: 44px;
+            min-height: 44px;
+            padding: 5px 5px 0;
+            align-items: flex-start;
+            justify-content: center;
+            color: var(--ink-muted);
+            font: 500 .78rem/1.4 var(--type-body);
+            letter-spacing: -.01em;
+            list-style: none;
+            cursor: pointer;
+        }
+        .nav-menu summary::-webkit-details-marker { display: none; }
+        .nav-menu summary::after { margin-left: 6px; content: '+'; }
+        .nav-menu[open] summary { color: var(--teal); }
+        .nav-menu[open] summary::after { content: '−'; }
+        .nav-menu-panel {
+            position: absolute;
+            z-index: 50;
+            top: 46px;
+            right: 0;
+            width: 204px;
+            padding: 7px;
+            border: 1px solid var(--rule);
+            background: var(--paper);
+            box-shadow: 0 14px 36px rgba(1, 22, 20, .09);
+        }
+        .nav-menu-panel a {
+            display: flex;
+            width: 100%;
+            min-height: 44px;
+            padding: 11px 12px 9px;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: .78rem;
+        }
+        .nav-menu-panel a + a { border-top: 1px solid var(--rule); }
+        .nav-menu-panel .nav-menu-x { display: none; color: var(--teal); }
         .nav a:focus-visible, .mark-link:focus-visible, .text-link:focus-visible, .work-link:focus-visible,
         .btn-x:focus-visible, .archive-door:focus-visible, .shelf-toggle:focus-visible,
-        .writing-row:focus-visible, .writing-feature-media a:focus-visible, .book-row:focus-visible {
+        .writing-row:focus-visible, .writing-feature-media a:focus-visible, .book-row:focus-visible,
+        .nav-menu summary:focus-visible {
             outline: 2px solid var(--teal);
             outline-offset: 4px;
         }
@@ -312,6 +353,13 @@
 
         /* ── Research work — one changing state-space ───────────────────── */
         #work { display: block; padding-top: 0; border-top: 0; }
+        .work-header {
+            display: grid;
+            grid-template-columns: var(--rail) minmax(0, 1fr);
+            gap: var(--gutter);
+            padding: 86px 0 42px;
+            border-top: 1px solid var(--rule);
+        }
         .atlas {
             display: grid;
             grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
@@ -364,7 +412,6 @@
         .atlas-note-title { display: block; font-size: .86rem; font-weight: 600; }
         .atlas-note-title span { margin-left: 8px; color: var(--ink-muted); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
         .atlas-note p { margin-top: 6px; color: var(--ink-soft); font-size: .81rem; line-height: 1.55; }
-        .entry-poster { display: none; }
         .atlas-stage-col { position: relative; min-width: 0; }
         .atlas-stage {
             position: sticky;
@@ -510,6 +557,13 @@
         }
 
         @media (max-width: 1100px) { .atlas { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); column-gap: 40px; } }
+        @media (max-width: 960px) {
+            .masthead { gap: 24px; }
+            .nav { position: relative; flex-wrap: nowrap; gap: 0 14px; }
+            .nav > a { min-width: 44px; padding-right: 5px; padding-left: 5px; justify-content: center; white-space: nowrap; }
+            .nav > .nav-wide { display: none; }
+            .nav-menu { display: block; }
+        }
         @media (max-width: 900px) {
             .container { width: min(100% - 48px, 760px); }
             .hero { padding: 72px 0 86px; }
@@ -518,18 +572,23 @@
             .now-label time { display: inline; margin-top: 0; }
             .now-grid { gap: 40px; }
             .folio-section, .books-section { grid-template-columns: 1fr; gap: 30px; padding: 68px 0; }
+            .work-header { grid-template-columns: 1fr; gap: 30px; padding: 68px 0 30px; }
             #formation { padding: 56px 0; }
             .section-label { display: flex; gap: 12px; align-items: baseline; }
             .formation-grid { grid-template-columns: 1fr; gap: 14px; }
             .formation-research { padding-left: 0; border-left: 0; }
             .atlas { grid-template-columns: 1fr; margin-top: 40px; }
             .atlas-stage-col { display: none; }
-            .atlas-entry { min-height: 0; padding: 42px 0 48px; }
-            .entry-poster { display: block; width: 100%; aspect-ratio: 16 / 10; margin-top: 22px; }
+            .atlas-entry { min-height: 0; padding: 36px 0 42px; }
+            .atlas-proof { width: min(100%, 680px); margin-top: 20px; }
             .writing-feature { grid-template-columns: 1fr; }
             .writing-feature-body { min-height: 250px; }
             .writing-row { grid-template-columns: 96px minmax(0, 1fr); }
             .writing-row-media { display: none; }
+        }
+        @media (max-width: 720px) {
+            .masthead-origin { flex: 0 0 44px; }
+            .epigraph { display: none; }
         }
         @media (max-width: 640px) {
             html { font-size: 17px; }
@@ -537,13 +596,15 @@
 
             /* On a phone the header is navigation, not a second composition. */
             .masthead { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 15px; }
-            .masthead-origin { flex: 0 0 28px; }
-            .mark-link { min-width: 28px; min-height: 38px; }
+            .masthead-origin { flex: 0 0 44px; }
+            .mark-link { min-width: 44px; min-height: 44px; }
             .mark-symbol { font-size: 1.7rem; }
             .epigraph { display: none; }
-            .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 17px; margin-top: 0; padding-top: 0; }
-            .nav a { min-height: 38px; padding-top: 4px; font-size: .72rem; white-space: nowrap; }
-            .nav a[href="#now"], .nav a[href="#formation"], .nav a[href="#library"] { display: none; }
+            .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 10px; margin-top: 0; padding-top: 0; }
+            .nav > a { min-width: 44px; min-height: 44px; padding: 5px 3px 0; font-size: .72rem; white-space: nowrap; }
+            .nav > .nav-x { display: none; }
+            .nav-menu summary { min-width: 44px; min-height: 44px; padding-top: 5px; font-size: .72rem; }
+            .nav-menu-panel .nav-menu-x { display: flex; }
 
             .hero { padding: 43px 0 50px; }
             .hero h1 { max-width: 10.5em; font-size: clamp(2.6rem, 12vw, 3.05rem); line-height: .95; }
@@ -560,6 +621,7 @@
             .now-list { margin-top: 9px; }
 
             .folio-section, .books-section { gap: 21px; padding: 46px 0; }
+            .work-header { gap: 21px; padding: 46px 0 24px; }
             #formation { padding: 44px 0 48px; }
             .section-heading { font-size: 2rem; }
             .section-intro { margin-top: 14px; font-size: .94rem; line-height: 1.55; }
@@ -583,7 +645,6 @@
             .atlas-title { margin-top: 11px; font-size: 1.75rem; }
             .atlas-sub { font-size: .96rem; }
             .atlas-desc { margin-top: 11px; font-size: .86rem; line-height: 1.54; }
-            .entry-poster { display: none; }
             .atlas-proof { margin-top: 19px; }
             .atlas-proof figcaption { margin-top: 6px; font-size: .61rem; }
             .atlas-note { margin-top: 14px; padding-top: 12px; }
@@ -629,12 +690,21 @@
                 </figure>
             </div>
             <nav class="nav" aria-label="Primary navigation">
-                <a href="#now">Now</a>
-                <a href="#formation">Formation</a>
+                <a class="nav-wide" href="#now">Now</a>
+                <a class="nav-wide" href="#formation">Formation</a>
                 <a href="#work">Work</a>
                 <a href="#writing">Writing</a>
-                <a href="#library">Library</a>
+                <a class="nav-wide" href="#library">Library</a>
                 <a class="nav-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+                <details class="nav-menu">
+                    <summary>Menu</summary>
+                    <div class="nav-menu-panel">
+                        <a href="#now">Now</a>
+                        <a href="#formation">Formation</a>
+                        <a href="#library">Library</a>
+                        <a class="nav-menu-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+                    </div>
+                </details>
             </nav>
         </header>
 
@@ -727,7 +797,15 @@
                 </div>
             </section>
 
-            <section class="folio-section" id="work" data-reveal aria-label="Research work">
+            <section class="folio-section" id="work" data-reveal aria-labelledby="work-heading">
+                <header class="work-header">
+                    <div class="section-label">
+                        <span class="section-kicker">Work</span>
+                    </div>
+                    <div class="section-content">
+                        <h2 class="section-heading" id="work-heading">Research work.</h2>
+                    </div>
+                </header>
                 <div class="atlas">
                     <div class="atlas-entries">
                         <article class="atlas-entry" data-pose="statebook" id="statebook">
@@ -735,7 +813,6 @@
                             <h3 class="atlas-title">Statebook</h3>
                             <p class="atlas-sub">Markets for every state of the world.</p>
                             <p class="atlas-desc">An interactive policy publication developed in collaboration with the <a href="https://hyperliquidpolicy.org" target="_blank" rel="noopener">Hyperliquid Policy Center</a>. It shows how real businesses could use perpetuals and event contracts against risks that ordinary listed markets do not match. The cases and figures are synthetic.</p>
-                            <canvas class="entry-poster" data-pose="statebook" aria-hidden="true"></canvas>
                             <figure class="atlas-proof" data-animate="image">
                                 <a href="https://hpc-markets.vercel.app" target="_blank" rel="noopener">
                                     <img src="assets/statebook.png" alt="Statebook publication showing markets for every state of the world" width="1200" height="630" loading="lazy">
@@ -756,7 +833,6 @@
                             <h3 class="atlas-title">SLAM</h3>
                             <p class="atlas-sub">Seeing Like a Market.</p>
                             <p class="atlas-desc">An empirical and theoretical research program on the institutional adoption of event-risk contracts and synthetic perpetual futures. It began with the original <em>Seeing Like a Market</em> paper, presented at the inaugural Kalshi Research conference in March 2026.</p>
-                            <canvas class="entry-poster" data-pose="slam" aria-hidden="true"></canvas>
                             <figure class="atlas-proof" data-animate="image">
                                 <a href="writing/seeing-like-a-market/">
                                     <img src="assets/slam.png" alt="Seeing Like a Market research program" width="1440" height="900" loading="lazy">
@@ -775,7 +851,6 @@
                             <h3 class="atlas-title">Hedgebook</h3>
                             <p class="atlas-sub">Corporate exposure, matched to live contracts.</p>
                             <p class="atlas-desc">A daily-updated public reference connecting Kalshi event contracts to the S&amp;P 500 companies they reference. The current edition contains 500 company dossiers, 47 market pages, and roughly 2,500 issuer–market links, with traditional-market analogues alongside them.</p>
-                            <canvas class="entry-poster" data-pose="hedgebook" aria-hidden="true"></canvas>
                             <figure class="atlas-proof" data-animate="image">
                                 <a href="https://www.hedgespx.com" target="_blank" rel="noopener">
                                     <img src="assets/hedgebook.png" alt="Hedgebook connecting event contracts to S&amp;P 500 companies" width="1200" height="630" loading="lazy">
@@ -792,7 +867,6 @@
                             <h3 class="atlas-title">BizHedge</h3>
                             <p class="atlas-sub">Matching business risks to live event contracts.</p>
                             <p class="atlas-desc">Describe what could hurt the business in ordinary language. BizHedge searches current Kalshi markets, identifies the strongest legitimate relationship, and makes the cost, payout, and remaining risk legible. If no market genuinely fits, it says so.</p>
-                            <canvas class="entry-poster" data-pose="bizhedge" aria-hidden="true"></canvas>
                             <figure class="atlas-proof" data-animate="image">
                                 <a href="https://bizhedge.app" target="_blank" rel="noopener">
                                     <img src="assets/bizhedge.png" alt="BizHedge mapping a business exposure to a live event contract" width="1200" height="630" loading="lazy">
@@ -1021,6 +1095,29 @@
 
     <script>
         (() => {
+            const navMenus = Array.from(document.querySelectorAll('.nav-menu'));
+            const closeNavMenus = (except = null) => {
+                navMenus.forEach(menu => {
+                    if (menu !== except) menu.removeAttribute('open');
+                });
+            };
+            navMenus.forEach(menu => {
+                menu.addEventListener('toggle', () => {
+                    if (menu.open) closeNavMenus(menu);
+                });
+                menu.addEventListener('click', event => {
+                    if (event.target.closest('a')) menu.removeAttribute('open');
+                });
+                menu.addEventListener('keydown', event => {
+                    if (event.key !== 'Escape') return;
+                    menu.removeAttribute('open');
+                    menu.querySelector('summary')?.focus();
+                });
+            });
+            document.addEventListener('click', event => {
+                if (!event.target.closest('.nav-menu')) closeNavMenus();
+            });
+
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const animated = Array.from(document.querySelectorAll('[data-animate]'));
             if (!reducedMotion && animated.length && 'IntersectionObserver' in window) {
@@ -1455,33 +1552,11 @@
                 window.addEventListener('resize', () => {
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(() => {
-                        if (mobileQuery.matches) { renderPosters(); return; }
+                        if (mobileQuery.matches) return;
                         if (three) three.resize(); else canvasScene.size();
                         applyStation(station);
                     }, 160);
                 });
-
-                // Mobile: authored static posters, one per entry. Deferred —
-                // don't paint four canvases nobody has scrolled to yet.
-                const posters = Array.from(document.querySelectorAll('.entry-poster'));
-                let postersDone = false;
-                const renderPosters = () => {
-                    if (postersDone || !mobileQuery.matches) return;
-                    posters.forEach(cv => {
-                        const s = makeScene(cv);
-                        if (s.size()) s.draw({ ...POSES[cv.dataset.pose] });
-                    });
-                    postersDone = true;
-                };
-                if ('IntersectionObserver' in window) {
-                    const pio = new IntersectionObserver((obs) => {
-                        if (obs.some(o => o.isIntersecting)) { renderPosters(); pio.disconnect(); }
-                    }, { rootMargin: '400px 0px' });
-                    posters.forEach(cv => pio.observe(cv));
-                } else {
-                    renderPosters();
-                }
-                mobileQuery.addEventListener?.('change', () => { postersDone = false; renderPosters(); });
             }
         })();
     </script>
