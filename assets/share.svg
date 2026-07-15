@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <path d="M62 62h1076" stroke="#d7ddda"/>
+
+  <path d="M63 95h30v29" fill="none" stroke="#011614" stroke-width="4"/>
+  <text x="118" y="119" fill="#65706d" font-family="Menlo, Consolas, monospace" font-size="19" letter-spacing="3">LAURIS.XYZ</text>
+
+  <text x="62" y="246" fill="#011614" font-family="Georgia, 'Times New Roman', serif" font-size="62" letter-spacing="-1.8">I work on how states of the</text>
+  <text x="62" y="322" fill="#011614" font-family="Georgia, 'Times New Roman', serif" font-size="62" letter-spacing="-1.8">world become financial markets.</text>
+
+  <path d="M690 460C780 412 849 410 915 445C976 477 1037 475 1138 406" fill="none" stroke="#0c5c43" stroke-width="2" opacity=".72"/>
+  <path d="M690 494C772 476 834 477 903 503C970 528 1047 517 1138 458" fill="none" stroke="#65706d" stroke-width="1.25" opacity=".42"/>
+  <path d="M690 528h448" stroke="#d7ddda"/>
+
+  <text x="62" y="563" fill="#65706d" font-family="Menlo, Consolas, monospace" font-size="17" letter-spacing="2.2">RESEARCH · MARKET DESIGN · VENTURES</text>
+</svg>

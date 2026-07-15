@@ -504,7 +504,10 @@ INDEX_STYLE = """
 """
 
 
-def shell(title, description, style_extra, body, canonical, article_css=False):
+def shell(title, description, style_extra, body, canonical, article_css=False,
+          share_image="https://www.lauris.xyz/assets/share.png", share_width=1200,
+          share_height=630, share_alt="Lauris — research, market design, and ventures",
+          og_type="website"):
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -516,7 +519,22 @@ def shell(title, description, style_extra, body, canonical, article_css=False):
     <meta property="og:title" content="{html.escape(title)}">
     <meta property="og:description" content="{html.escape(description)}">
     <meta property="og:url" content="{canonical}">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Cpath d='M8 9h16v14' fill='none' stroke='%23011614' stroke-width='2.6'/%3E%3C/svg%3E">
+    <meta property="og:type" content="{og_type}">
+    <meta property="og:site_name" content="Lauris">
+    <meta property="og:image" content="{share_image}">
+    <meta property="og:image:width" content="{share_width}">
+    <meta property="og:image:height" content="{share_height}">
+    <meta property="og:image:alt" content="{html.escape(share_alt)}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@lzminsky">
+    <meta name="twitter:title" content="{html.escape(title)}">
+    <meta name="twitter:description" content="{html.escape(description)}">
+    <meta name="twitter:image" content="{share_image}">
+    <meta name="twitter:image:alt" content="{html.escape(share_alt)}">
+    <link rel="canonical" href="{canonical}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="mask-icon" href="/favicon.svg" color="#011614">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&display=swap" rel="stylesheet">
@@ -642,9 +660,14 @@ def build_article(cfg, data, fingerprints=None):
                 <a class="text-link text-link--in" href="/writing/">All writing</a>
             </div>"""
 
+    share = cfg["hero"] or cfg.get("thumb")
+    share_image = f"https://www.lauris.xyz/assets/writing/{share['file']}" if share else "https://www.lauris.xyz/assets/share.png"
+    share_width = share["w"] if share else 1200
+    share_height = share["h"] if share else 630
     page = shell(f"{cfg['title']} — Lauris", cfg["deck"].replace("&amp;", "&"),
                  ARTICLE_STYLE, body, f"https://lauris.xyz/writing/{cfg['slug']}/",
-                 article_css=True)
+                 article_css=True, share_image=share_image, share_width=share_width,
+                 share_height=share_height, share_alt=cfg["title"], og_type="article")
     dest = OUT / cfg["slug"] / "index.html"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(page)

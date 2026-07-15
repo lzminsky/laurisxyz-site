@@ -9,7 +9,22 @@
     <meta property="og:title" content="Lauris — Markets, ventures, and research">
     <meta property="og:description" content="I work on how states of the world become financial markets.">
     <meta property="og:url" content="https://lauris.xyz">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Cpath d='M8 9h16v14' fill='none' stroke='%23011614' stroke-width='2.6'/%3E%3C/svg%3E">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Lauris">
+    <meta property="og:image" content="https://www.lauris.xyz/assets/share.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Lauris — research, market design, and ventures">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@lzminsky">
+    <meta name="twitter:title" content="Lauris — Markets, ventures, and research">
+    <meta name="twitter:description" content="I work on how states of the world become financial markets.">
+    <meta name="twitter:image" content="https://www.lauris.xyz/assets/share.png">
+    <meta name="twitter:image:alt" content="Lauris — research, market design, and ventures">
+    <link rel="canonical" href="https://lauris.xyz">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="mask-icon" href="/favicon.svg" color="#011614">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&amp;display=swap" rel="stylesheet">
@@ -445,19 +460,6 @@
         .shelf-toggle::after { content: '→'; transition: transform 200ms var(--ease-out); }
         .books-list.is-open + .shelf-toggle::after { content: '↑'; }
 
-        /* ── Endcap ──────────────────────────────────────────────────────── */
-        .endcap {
-            display: grid;
-            grid-template-columns: var(--rail) minmax(0, 1fr);
-            gap: var(--gutter);
-            padding: 78px 0 84px;
-            border-top: 1px solid var(--ink);
-        }
-        .endcap-kicker { color: var(--ink); font: 600 .667rem/1.45 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
-        .endcap-line { max-width: 620px; font-size: clamp(1.45rem, 2.6vw, 2rem); font-weight: 400; letter-spacing: -.02em; line-height: 1.25; text-wrap: pretty; }
-        .endcap-line em { color: var(--ink-soft); }
-        .endcap-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 28px; }
-
         .footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding-top: 44px; border-top: 1px solid var(--rule); }
         .footer-mark { color: var(--ink-muted); font: 1.2rem/1 var(--type-mono); }
         .footer-copy { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .045em; text-align: right; text-transform: uppercase; }
@@ -468,7 +470,7 @@
            and already the display face of Statebook); Geist for reading;
            Geist Mono for labels. Numbers from hpccc/src/typography.css. */
         .hero h1, .section-heading, .formation-heading, .books-title,
-        .endcap-line, .archive-door-title,
+        .archive-door-title,
         .record-name, .book-name, .now-lede, .hero-deck {
             font-family: var(--type-display);
             font-weight: var(--type-display-weight);
@@ -485,7 +487,7 @@
         .mono, .section-kicker, .work-meta, .nav a, .text-link,
         .writing-date, .book-number, .now-label, .now-caption, .record-date,
         .record-caption, .work-status,
-        .shelf-toggle, .endcap-kicker, .footer-copy, .btn-x,
+        .shelf-toggle, .footer-copy, .btn-x,
         .atlas-proof figcaption, .atlas-index, .stage-plate-index {
             font-weight: 600;
         }
@@ -520,7 +522,7 @@
             .now-label { display: flex; align-items: baseline; gap: 12px; }
             .now-label time { display: inline; margin-top: 0; }
             .now-grid { gap: 40px; }
-            .folio-section, .books-section, .endcap { grid-template-columns: 1fr; gap: 30px; padding: 68px 0; }
+            .folio-section, .books-section { grid-template-columns: 1fr; gap: 30px; padding: 68px 0; }
             #formation { padding: 56px 0; }
             .section-label { display: flex; gap: 12px; align-items: baseline; }
             .formation-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -559,7 +561,6 @@
             .writing-date { padding-top: 0; }
             .books-list { columns: 1; }
             .book-note { padding-left: 0; }
-            .endcap { padding: 62px 0; }
             .footer { align-items: flex-start; flex-direction: column; }
             .footer-copy { text-align: left; }
         }
@@ -711,11 +712,11 @@
                             <p class="atlas-index">Research project</p>
                             <h3 class="atlas-title">SLAM</h3>
                             <p class="atlas-sub">Seeing Like a Market.</p>
-                            <p class="atlas-desc">An empirical and theoretical research project on the institutional adoption of event-risk contracts, synthetic perpetual futures, and combinations of the two. It began with the original <em>Seeing Like a Market</em> paper, presented at the inaugural Kalshi Research conference in March 2026. New papers are now being drafted by researchers who have worked at Goldman Sachs, GSR, Jane Street, and BlackRock, with academic engagement from the London School of Economics.</p>
+                            <p class="atlas-desc">An empirical and theoretical research program on the institutional adoption of event-risk contracts and synthetic perpetual futures. It began with the original <em>Seeing Like a Market</em> paper, presented at the inaugural Kalshi Research conference in March 2026.</p>
                             <canvas class="entry-poster" data-pose="slam" aria-hidden="true"></canvas>
                             <figure class="atlas-proof" data-animate="image">
                                 <a href="writing/seeing-like-a-market/">
-                                    <img src="assets/writing/article4_slam_hero.jpg" alt="The Decision Surface comparing event claims with the derivatives that shadow them" width="1878" height="751" loading="lazy">
+                                    <img src="assets/slam.png" alt="Seeing Like a Market research program" width="1440" height="900" loading="lazy">
                                 </a>
                                 <figcaption>90 pages · 87 contracts · five asset classes</figcaption>
                             </figure>
@@ -971,16 +972,6 @@
                 </div>
             </section>
 
-            <section class="endcap" aria-label="Follow on X">
-                <p class="endcap-kicker">X</p>
-                <div>
-                    <p class="endcap-line">I post new work on X.</p>
-                    <div class="endcap-actions">
-                        <a class="btn-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow @lzminsky</a>
-                        <a class="text-link text-link--in" href="writing/">All writing</a>
-                    </div>
-                </div>
-            </section>
         </main>
 
         <footer class="footer" data-reveal>
