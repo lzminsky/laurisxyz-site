@@ -1,0 +1,183 @@
+[
+  {
+    "id": "PINNED",
+    "title": "You could literally just read economics at the LSE...",
+    "date": "May 24, 2026",
+    "url": "https://x.com/lzminsky/status/2058537535605817506",
+    "paragraphs": [
+      "You could literally just read economics at the LSE, sit Part III at Cambridge and stay on for the PhD in stochastic filtering, get a seat at a Berkeley Square macro pod that runs a bigger gilt book than half the primary dealers, buy the four-bed lateral at Clarges overlooking Green Park, dm the girl whose brother was your mate from the LSE Investment Society and whose father was Chief Treasurer at Yukos, first dates at 5 Hertford Street, shooting weekends at the Highland estate the family bought in '06, get the LP intro over Sunday roast,",
+      "but you will not."
+    ],
+    "has_image": false
+  },
+  {
+    "id": "A",
+    "title": "Happy to ship the first version of Hedgebook",
+    "date": "May 30, 2026",
+    "url": "https://x.com/lzminsky/status/2060758432773280053",
+    "paragraphs": [
+      "Happy to ship the first version of Hedgebook, powered by @Kalshi: an app showing how every SPX companies can hedge their core business risks using Kalshi event contract markets.",
+      "Event contracts and perpetual contracts consolidated into a single, onshore, regulated exchange is how we get to perfect Arrow-Debreu markets.",
+      "Thanks to @j0hnwang and @0x_ultra for inviting me to build this, and to Nicole from @KalshiResearch for inviting me to present the early frameworks at the Kalshi Research Conference in March."
+    ]
+  },
+  {
+    "id": "B",
+    "title": "Institutional event contract structuring workflow (diagram)",
+    "date": "May 16, 2026",
+    "url": "https://x.com/lzminsky/status/2055669526939816369",
+    "paragraphs": [
+      "Consolidated one of my workflows today and it ended up creating a clean map of how institutional-side prediction market structuring + execution currently looks actor and flow wise.",
+      "Sharing it as someone might find it useful.",
+      "Sell-side to settlement. If you've sat in the seat, the top half will read familiar. The bottom table covers upstairs / downstairs across execution wrappers.",
+      "Might be faulty in places, worth a grok through first. A download too due to size.",
+      "Shoutouts to @river_markets, @itomarkets, and @adjacent___ for shaping some of the layer thinking."
+    ]
+  },
+  {
+    "id": "C",
+    "title": "GTM strategy for @tempo",
+    "date": "Sep 7, 2025",
+    "url": "https://x.com/lzminsky/status/1964457808046563438",
+    "paragraphs": [
+      "I am proposing a GTM strategy for @tempo - the L1 backed by Paradigm.",
+      "First, create a referral system prior to mainnet, so that you can get to a couple of billion dollars in TVL.",
+      "Secondly, to stimulate user activity and app building, one can create a set of incentives. For the sake of simplicity, we can call them Tempo Gold and Tempo Points.",
+      "For any user who wants to Tempo, they can interact with applications and protocols, and through that accumulate Gold and Points in anticipation of the Token Generation Event for the chain."
+    ]
+  },
+  {
+    "id": "D",
+    "title": "The manifesto tweet",
+    "date": "Sep 4, 2025",
+    "url": "https://x.com/lzminsky/status/1963616457561887020",
+    "paragraphs": [
+      "the only people who are worthy of respect are those who are willing to live or die by the sword",
+      "put your name on it. cross the rubicon. do it even if it fails flat on your face.",
+      "don't be a coward. don't max optionality.",
+      "conviction-max and ride the volatility."
+    ]
+  },
+  {
+    "id": "E",
+    "title": "The exchange stack is converging (the market-structure map — this is the \"institutional map\")",
+    "date": "Jul 15, 2026, 2:34 AM",
+    "url": "https://x.com/lzminsky/status/2077174969738363261",
+    "paragraphs": [
+      "some late night musings. the exchange taxonomy is starting to die.",
+      "\"prediction market,\" \"perpetual exchange,\" \"compute exchange,\" and \"futures venue\" increasingly describe just the front door. walmart didn't sell groceries at the start, either.",
+      "@Kalshi now has GPU-compute price markets and a CFTC-approved bitcoin perp. @Architect_Fi is building a U.S. compute venue; @CMEGroup has announced compute futures. APEC is pursuing equity perps. @coinbase, @CBOE, and @HyperliquidX are attacking nearby parts of the same problem.",
+      "everything is converging into frontier-market formation. if we take a market regime and non purely speculative standpoint, what we have is a process:",
+      "take a risk businesses already carry, define a reference, write a contract people understand, and make it liquid enough to hedge or finance. market design at it's finest, except now everyone has APIs, a branding team and a cohort of Twitter interns.",
+      "the instruments have different jobs in that stack.",
+      "Event contracts are the discovery layer. They let people trade narrow questions while the benchmark and canonical contract are still being worked out. A perp offers continuing exposure. etc etc. We all know this.",
+      "once those forms run through a shared account, collateral pool, and execution system, the categories start to collapse. \"prediction market\" and \"perpetual exchange\" describe payoff forms inside a larger market stack.",
+      "arrow-debreu (near) perfect market conditions at a certain level of performance in the far future",
+      "the competitive split is clean. horizontal platforms own the rails: collateral, clearing, and distribution. vertical markets own the hard part. some of the vertical platforms can probably monetize benchmark or oracle access to the larger ones as a form of additional monetization.",
+      "anyhow, let the frontier market games begin.",
+      "PS: obviously ignoring crypto-only / altcoin-focused exchanges because's its a boring solved game with a pretty stale set of underlyings."
+    ]
+  },
+  {
+    "id": "F",
+    "title": "\"I was very wrong\" — the compute-curve post, quoting the Jul 3 compute-markets thread",
+    "date": "Jul 14, 2026, 11:39 PM",
+    "url": "https://x.com/lzminsky/status/2077131007430725932",
+    "paragraphs": [
+      "I was very wrong",
+      "Kalshi got to a compute curve in almost the reverse order I expected. The dated futures contracts everyone announced are still waiting to trade, but the yes-or-no GPU markets are already producing a term structure.",
+      "Take B200. Kalshi lists a bunch of strikes asking where hourly rental prices will finish. Put those prices together and you can back out a rough distribution; repeat it across dates and you have a curve.",
+      "This is basically the Arrow-Debreu point: the difference between 2 nearby thresholds prices the outcomes between them. I gave binaries too narrow a role in the piece below.",
+      "The funny part is that the curve itself is not tradable. Kalshi says it can be used as a reference for swaps and OTC compute deals, which is much closer to how I think this market will work. The binary book gives the desk a public number to quote around.",
+      "*(Quotes the Jul 3 post below — full text captured separately since it's substantial and worth including on its own.)*"
+    ]
+  },
+  {
+    "id": "G",
+    "title": "The Jul 3 compute-markets thread (quoted by post F, substantial on its own)",
+    "date": "Jul 3, 2026",
+    "url": "https://x.com/lzminsky/status/2073033302064132119",
+    "paragraphs": [
+      "By no means am I an expert in compute markets, but was inspired to develop a take by both Brett and @0xfishylosopher",
+      "Compute keeps getting scored against the commodity formation checklist and keeps failing the same two boxes, standardized delivery and time plus location pricing. Fair enough as history.",
+      "Grain, oil and electricity all needed those things because their markets terminated in a dated futures contract, and a dated contract has to bridge into the physical world somehow.",
+      "But new markets stopped terminating there. Perps collapsed the term structure into a funding rate and swapped the delivery bridge for an oracle print.",
+      "Hyperliquid became the deepest novel derivatives venue of the cycle on underlyings it never delivers.",
+      "AX clears over a billion a month in perps on traditional assets and already lists GPU-hour contracts. The catch is that the perp stuffs the whole thing into the benchmark. A funding rate needs an anchor, and for compute the anchor is the entire fight.",
+      "Compute varies by SKU, location, tenor and counterparty. No index can carry all four, so every index picks what to keep and drops the rest.",
+      "The three racing to list made three different cuts: on-demand rental rates, printed transactions only, energy normalized. One of these is the LIBOR to SOFR argument, real prints over posted quotes, being made at the birth of a benchmark instead of after a scandal.",
+      "Whatever an index drops has to go somewhere, and it goes onto dealer balance sheets. Which is why this market is forming dealer first, exchange second. The cleared contract ends up as the hedge leg for the OTC book, and price discovery moves into the spread between indices. Oil did this with WTI-Brent, gas did it with JKM-TTF. When no benchmark is complete, the basis between imperfect ones carries the information. That still leaves the part neither a funding rate nor a basis trade can touch: jumps.",
+      "An export control ruling, a Rubin slip, an interconnection queue decision, a hyperscaler capex cut. The whole surface moves at once and resolves as an event, not drift.",
+      "The instrument for that slice is a binary, and the first compute price markets settling on printed transaction data went live in May on @Kalshi.",
+      "For a dealer warehousing SKU basis that's the right shape, you lay off the timing and keep the size. Perp for the level, index menu for the shape, dealers for the residual, binaries for the jumps. All four layers are live today.",
+      "Historical path-dependencies may not be a precise source of truth here."
+    ]
+  },
+  {
+    "id": "H",
+    "title": "Founder-happiness reflection (personal/professional, \"Now\"-page candidate)",
+    "date": "Jul 14, 2026 (~15h before pull)",
+    "url": "(reply-chain post on profile timeline, permalink not separately confirmed — reachable via profile scroll at the \"15h\" timestamp)",
+    "paragraphs": [
+      "who would of thought that the key to being extremely happy while being insanely productive is just following through on your own intellectual curiosities?",
+      "in contrast, when I had to pivot a business two and a half years ago, and we made quite a bit of money, I was STILL deeply unhappy, because it was so far away from what I actually wanted to do, but I felt that I had an obligation to follow through on that",
+      "employees, investors, probably some ingrained status of being a founder, plus I had to force a narrative consistently.",
+      "now, I'm stimulated every day and the idea of a billion dollar outcome seems extremely natural."
+    ]
+  },
+  {
+    "id": "I",
+    "title": "Robert Greene vs. Gracián vs. Machiavelli (intellectual, \"Library\"-section candidate)",
+    "date": "Jul 12, 2026, 3:46 PM",
+    "url": "https://x.com/lzminsky/status/2076287192431743132",
+    "paragraphs": [
+      "i find the reverence for Robert Greene faintly comic especially in contrast to Gracián.",
+      "his books get treated as samizdat from the inner rooms of power, when a lot of their appeal is that they convert ordinary social uncertainty into court intrigue. your coworker undermining you is SECRETLY executing Law 15.",
+      "very flattering for the reader, but a massive anti-signal if you take it seriously.",
+      "He is an extremely gifted compiler with a real eye for fascinating historical studies, but the cult around him mistakes a taxonomy of manoeuvres, that, to be frank, are just relatively normal human action, for some form of dark art.",
+      "Machiavelli is more serious than his reputation, and far more moral. most people haven't properly read him anyhow and how he talks about the tragedy of political action. i.e. private virtue and public responsibility do not always line up and refusing to dirty your hands does not spare you the consequences of what happens next. It's a severe moral universe and worldview.",
+      "Gracián is a different problem again.",
+      "His aphorisms are compressed to the point that a line that first looks like advice on manipulation turns out, on a second reading, to be about restraint.",
+      "He took for granted that social life runs on masks. He also saw that the person most often fooled by the mask is the one wearing it.",
+      "As such, he's really hard to quote. each maxim leans on the others, so that prudence keeps pulling against ambition, and worldly success is made subordinate to the harder job of surviving it without turning ridiculous or losing all of your agency in the Court.",
+      "courts still exist. how do you think people get L1 allocations in hot deals?",
+      "ultimately, a far more superior read, if you're willing to sit with it."
+    ]
+  },
+  {
+    "id": "J",
+    "title": "Gracián quote + \"Luck Surface Area\" chart",
+    "date": "Jul 6, 2026, 7:18 PM",
+    "url": "https://x.com/lzminsky/status/2074166089160810967",
+    "paragraphs": [
+      "\"Do and be seen doing. Things do not pass for what they are but for what they seem. To be of use and to know how to show it, is to be twice as useful. What is not seen is as if it was not.\"",
+      "*(A Gracián aphorism, quoted without additional commentary — ties directly to the Robert Greene/Gracián post above, item I, so the two read well as a pair if both go on the site.)*"
+    ]
+  },
+  {
+    "id": "K",
+    "title": "Bartlett & O'Hara \"Adverse Selection in Prediction Markets\" — Stanford paper commentary",
+    "date": "Jul 10, 2026, 9:20 PM",
+    "url": "https://x.com/lzminsky/status/2075646380500987956",
+    "paragraphs": [
+      "Robert Bartlett and Maureen O'Hara have a new @StanfordRock/@StanfordLaw paper, \"Adverse Selection in Prediction Markets\", focusing on @kalshi markets. O'Hara helped found market microstructure as a field. This is the standard equity toolkit applied to event contracts.",
+      "Linking the paper below.",
+      "The finding is easy to state, but if taken at face value, then the regulatory consequences may be dire, and end up destroying the actual use cases for prediction markets / event risk contracts that a lot of us are here for.",
+      "To start things off, a market maker in an event contract cannot hedge. She carries every position to settlement. Plus, there are a lot of other rough underlying issues that make it hard to warehouse risk compared to, let's say, traditional derivatives markets for rates, credit and so forth.",
+      "The key issue here is that these books have no liquidity traders in the Glosten-Milgrom sense: nobody trades these contracts to hedge or rebalance. Makers stay profitable because retail overpays for YES.",
+      "In markets about one company or one person, what the paper calls single-name markets, takers buy YES 61% of the time. YES settles 32% of the time. That gap funds the makers, it funds the informed traders too, and, hilariously enough, as most of the volume does currently exist on sports, it subsidizes market making for non-sports markets.",
+      "The conclusion most people will draw, that these markets are gambling and will stay gambling, does not follow. The open question is who else the uninformed money could be.",
+      "Credit has a different kind of uninformed money. A cat bond investor has no view on hurricanes. He is paid a premium to hold the risk. He stays for years because the risk has nothing to do with the rest of his portfolio. He is uninformed and he is not losing. Prediction markets have no participant like this yet.",
+      "Sports markets never will, because no institution carries exposure to a game result, outside of bookies. Markets on rates, credit events and weather can, because institutions already hold those risks.",
+      "The paper's own time series says the current setup is temporary. Kalshi scaled from 0.3 million to over 80 million single-name contracts a month. The retail overpayment grew. The losses to informed traders grew with it. The maker's net profit stayed pinned between 1 and 3 cents a contract.",
+      "The authors end up describing this as a form of stability or equilibrium. It reads more like a race that is currently tied. The balance holds only while retail money grows as fast as the sharps do. The authors say themselves that they cannot predict its persistence.",
+      "Credit also shows where the informed flow ends up. Single-name CDS was the insider's market. It shrank to a few percent of traded volume and moved off exchange into negotiated and funded formats.",
+      "Index CDS spread the same risk across 125 names and now carries 99% of the volume.",
+      "Bartlett and O'Hara find the same split on Kalshi: informed flow sits in the single-name markets. If the pattern repeats, contracts on single companies will end up in notes and blocks, handled by dealers.",
+      "The broad markets keep the order book.",
+      "A market with no informed trading contains no information. For most of what trades on these venues, the contract is the only price the risk has anywhere. Informed traders moving that price are the market doing its job. The maker's losses to them are the cost of producing the information.",
+      "What worries me here is the practical stakes. Those really sit with the regulators. The retail overpayment currently funds market making across these venues, including the markets turning into real coverage tools. Restrict it before institutional money is connected and both disappear.",
+      "*(Quotes the Jul 9 \"Credit already trades event risk\" article — same one already in this ledger as Article #2.)*"
+    ]
+  }
+]

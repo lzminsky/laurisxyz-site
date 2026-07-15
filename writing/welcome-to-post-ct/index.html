@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Post-CT — Lauris</title>
+    <meta name="description" content="Crypto Twitter as a market mechanism: from discovery engine and capital allocator to reputation interface.">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="Welcome to Post-CT — Lauris">
+    <meta property="og:description" content="Crypto Twitter as a market mechanism: from discovery engine and capital allocator to reputation interface.">
+    <meta property="og:url" content="https://lauris.xyz/writing/welcome-to-post-ct/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Cpath d='M8 9h16v14' fill='none' stroke='%23011614' stroke-width='2.6'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --type-display: 'Newsreader', Georgia, serif;
+            --type-body: 'Geist', system-ui, sans-serif;
+            --type-mono: 'Geist Mono', ui-monospace, monospace;
+            --type-display-weight: 300;
+            --type-display-tracking: -.02em;
+            --type-label-tracking: .05em;
+            --paper: #ffffff; --paper-raised: #ffffff; --ink: #011614; --ink-soft: #34423e;
+            --ink-muted: #65706d; --rule: #d7ddda; --teal: #0c5c43; --wine: #0c5c43;
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: var(--ink); color: var(--paper); }
+        html { font-size: 18px; }
+        body {
+            min-height: 100vh;
+            background: var(--paper);
+            color: var(--ink); font-family: var(--type-body); line-height: 1.62;
+            letter-spacing: -.01em; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+        }
+        a { color: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
+        .skip-link {
+            position: fixed; z-index: 100; top: 12px; left: 12px; padding: 11px 14px;
+            background: var(--ink); color: var(--paper); font: 600 .667rem/1 var(--type-mono);
+            letter-spacing: .04em; text-decoration: none; text-transform: uppercase;
+            transform: translateY(calc(-100% - 18px)); transition: transform 180ms var(--ease-out);
+        }
+        .skip-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; transform: none; }
+        .container { width: min(1180px, calc(100% - 80px)); margin: 0 auto; padding: 42px 0 88px; }
+        .mono { font-family: var(--type-mono); }
+        .masthead { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+            padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
+        .masthead-origin { display: flex; align-items: flex-start; gap: 17px; min-width: 0; }
+        .mark-link { display: grid; min-width: 36px; min-height: 44px; color: var(--ink); text-decoration: none; place-content: start; }
+        .mark-symbol { font: 2rem/0.8 var(--type-mono); }
+        .crumb { padding-top: 6px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
+        .crumb a { color: var(--ink-muted); text-decoration: none; transition: color 180ms var(--ease-out); }
+        .crumb a:hover, .crumb a:focus-visible { color: var(--ink); }
+        .crumb span { margin: 0 7px; color: var(--rule); }
+        .nav { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 8px 24px; padding-top: 3px; }
+        .nav a { display: inline-flex; align-items: flex-start; min-height: 44px; padding-top: 5px; color: var(--ink-muted);
+            font: 500 .78rem/1.4 var(--type-body); letter-spacing: -.01em;
+            text-decoration: none; transition: color 180ms var(--ease-out); }
+        .nav a:hover { color: var(--ink); }
+        .nav a.nav-x { padding-bottom: 3px; border-bottom: 1px solid currentColor; color: var(--teal); }
+        .nav a.nav-x:hover { color: var(--ink); }
+        a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+        .text-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--ink);
+            font: 500 .76rem/1.4 var(--type-body); letter-spacing: -.01em;
+            text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
+        .text-link::after { content: '↗'; transition: transform 180ms var(--ease-out); }
+        .text-link--in::after { content: '→'; }
+        .text-link:hover::after { transform: translate(2px, -2px); }
+        .text-link--in:hover::after { transform: translateX(3px); }
+        .btn-x { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 2px 0 5px;
+            border: 0; border-bottom: 1px solid currentColor; color: var(--ink);
+            font: 500 .76rem/1.2 var(--type-body); letter-spacing: -.01em;
+            text-decoration: none; transition: color 180ms var(--ease-out); }
+        .btn-x::after { content: '↗'; }
+        .btn-x:hover { color: var(--teal); }
+        .foot-strip { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 96px;
+            padding-top: 40px; border-top: 1px solid var(--rule); }
+        .footer-mark { color: var(--ink-muted); font: 1.2rem/1 var(--type-mono); }
+        .footer-copy { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .045em;
+            text-align: right; text-transform: uppercase; }
+        .art-title, .arch-title, .arch-item-title, .shelf-title {
+            font-family: var(--type-display); font-weight: var(--type-display-weight); letter-spacing: var(--type-display-tracking);
+        }
+        .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
+        @media (max-width: 640px) {
+            html { font-size: 18px; }
+            .container { width: calc(100% - 40px); padding: 32px 0 62px; }
+            .masthead { display: block; }
+            .nav { justify-content: flex-start; margin-top: 22px; }
+            .foot-strip { flex-direction: column; align-items: flex-start; }
+            .footer-copy { text-align: left; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+        }
+</style>
+    <link rel="stylesheet" href="/assets/article.css">
+    <script src="/assets/reader.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="container">
+        <header class="masthead">
+            <div class="masthead-origin">
+                <a href="/" class="mark-link" aria-label="Lauris — home"><span class="mark-symbol">┐</span></a>
+                <p class="crumb"><a href="/">Lauris</a><span>/</span><a href="/writing/">Writing</a></p>
+            </div>
+            <nav class="nav" aria-label="Primary navigation">
+                <a href="/#work">Work</a>
+                <a href="/writing/">Writing</a>
+                <a href="/#library">Library</a>
+                <a class="nav-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+            </nav>
+        </header>
+        <main id="main-content">
+
+            <article data-slug="welcome-to-post-ct">
+                <header class="art-head">
+                    <p class="art-kicker">Essay · market culture</p>
+                    <h1 class="art-title">Welcome to Post-CT</h1>
+                    <p class="art-deck">Crypto Twitter as a market mechanism: from discovery engine and capital allocator to reputation interface.</p>
+                    <div class="art-meta">
+                        <time datetime="2025-11-27">X Article · 27 Nov 2025</time>
+                        <span class="art-extent">2,245 words — 10 min</span>
+                        <a class="text-link" href="https://x.com/lzminsky/status/1994035337329274912" target="_blank" rel="noopener">Originally published on X</a>
+                    </div>
+                </header>
+                <figure class="art-hero">
+                    <img src="/assets/writing/article6_postct_hero.jpg" alt="The monoculture and what follows it." width="1065" height="426">
+                    <figcaption>The monoculture and what follows it.</figcaption>
+                </figure>
+                <div class="art-body">
+                    <div class="folio-rule" aria-hidden="true"></div>
+<p>Welcome to post-CT.</p>
+<p>By CT, I mean Crypto Twitter as a market-discovery and capital-allocation engine, not as the broader Twitter crypto community.</p>
+<p>"Post-CT" does not mean that discourse disappears. It's that CT, as a discourse-as-coordination mechanism, is losing its ability to repeatedly produce market events that have magnitude.</p>
+<p>A monoculture cannot sustain itself if it stops producing enough visible winners to recruit the next wave of entrants.</p>
+<p>By "magnitude" I mean not "a coin did a 3x." but that most of the liquid market is staring at the same object. Within this frame, CT is a mechanism that repeatedly converted a public narrative layer into coordinated flows around a single dominant meta. Post-CT is what it looks like when that conversion is no longer reliably functioning.</p>
+<p>I'm not trying to predict what comes next. I don't really have a clue, frankly. The point of this article is to describe why the previous regime worked, why it's degrading, and what that implies about how crypto now organizes itself.</p>
+<h2 id="f6-6"><a class="folio-tick folio-tick--h2" href="#f6-6" data-tick="1. What CT Was When It Worked" aria-hidden="true" tabindex="-1"></a>1. What CT Was When It Worked</h2>
+<p>CT mattered because it compressed three market functions into one interface.</p>
+<p>First, it performed narrative discovery. CT was a high-bandwidth salience mechanism. "Salience" here is not just an overly-smart word for "interesting." It's a market term: the process by which the graph converges on what is worth looking at now.</p>
+<p>In practice, CT created focal points. It reduced a huge hypothesis space into a small set of objects that felt actionable "right now." That compression solved a coordination problem.</p>
+<p>Another way to say the same thing, more mechanically: CT converted dispersed, private attention into visible, public common knowledge. If you see ten credible operators all talking about the same object, you don't just learn the object exists; you learn that other people know that others know it exists. In liquid markets, that matters.</p>
+<p>"A wealth of information creates a poverty of attention." — Herbert A. Simon</p>
+<p>Second, CT acted as trust routing. Crypto is not a market where most assets have strong intrinsic valuation anchors that bind in the short-run. So capital cannot route purely through fundamentals. It routes through people, reputations, and repeated signals. "Trust routing" is the informal infrastructure that decides whose claims get believed early enough to matter.</p>
+<p>This wasn't mystical. It was a crude reputation function computed by thousands of participants, continuously, in public. People inferred who is early, who has good priors, who has access, and whose behavior correlates with positive EV. That reputational layer made it possible to allocate capital without formal diligence because it operated as shorthand for counterparty selection.</p>
+<p>And importantly, it wasn't just "follower count." It was follower count plus who followed you, plus the quality of replies, plus whether credible people engaged with you, plus whether your predictions survived contact with reality. CT made those signals cheap to observe.</p>
+<p>There was both public trust, and, over time, certain communities have become more privately-trusted oriented.</p>
+<p>Third, CT translated narrative into allocation through reflexivity. Reflexivity is the core loop: narratives move prices, prices validate narratives, validation attracts more attention, attention brings more buyers, and the loop reinforces itself until it breaks.</p>
+<p>This is where the microstructure comes in. A narrative does not move "the market" abstractly. It moves order flow. If a large cohort becomes convinced that an object is the thing, the marginal participant expresses that conviction through buying.</p>
+<p>When this loop is strong, the market temporarily rewards alignment with consensus more than it rewards deep analysis. Looking back, CT functioned almost as an extremely low-IQ Bloomberg terminal: a single feed where salience, trust, and allocation fused into one thing.</p>
+<h2 id="f6-19"><a class="folio-tick folio-tick--h2" href="#f6-19" data-tick="2. Why the Monoculture Era Was Possible" aria-hidden="true" tabindex="-1"></a>2. Why the Monoculture Era Was Possible</h2>
+<p>The monoculture years had a repeatable structure. Each cycle had an object that was simple enough to be legible to large cohorts and broad enough to absorb much of the ecosystem's attention and liquidity. I like to call these objects toys.</p>
+<p>A "toy" here is not an insult. It's a structural description. Think of it as a game that is easy to explain, easy to participate in, and inherently social (almost like an expansion pack to an MMORPG). A toy has low onboarding friction and high narrative compressibility. You can tell your friend what it is in one sentence.</p>
+<p>A "meta" is what happens when a toy becomes the shared game board. Meta means the dominant strategy set and the dominant objects that most participants orient around. The reason the monoculture was powerful is that the meta was not just "popular." It was shared across users, builders, traders, and VCs. Everyone was playing the same game, just at different layers of the stack.</p>
+<p><a href="https://x.com/icobeast" target="_blank" rel="noopener">@icobeast</a> wrote a great article about the cyclicality and changing nature of the "in-thing," which I highly recommend reading. <a href="https://x.com/icobeast/status/1993721136325005596" target="_blank" rel="noopener">https://x.com/icobeast/status/1993721136325005596</a></p>
+<p>The regime that we were a part of required an inefficiency window for people to make money, stupid amounts of money, fast.</p>
+<p>Early in each cycle, the market is not perfectly efficient because the infrastructure for playing the meta at scale hasn't been fully built. Extraction exists, but it hasn't fully saturated the niche. This matters because broad wealth compounding requires a period where a large number of participants can enter before the environment becomes fully hostile.</p>
+<p>"Information asymmetry between buyers and sellers drives markets away from efficiency." — Akerlof, "The Market for Lemons"</p>
+<p>The point is that, for this system to work, you needed to have highly efficient markets for some, while it being a proverbial lemon market for others.</p>
+<p>The monoculture regime also required shared context at scale. CT provided this. Shared context is rare online because attention usually fragments. When a monoculture forms, attention converges. Convergence reduces coordination costs and amplifies reflexivity.</p>
+<p>"The knowledge of the circumstances of which we must make use never exists in concentrated or integrated form but solely as the dispersed bits of incomplete and frequently contradictory knowledge which all the separate individuals possess." — F. A. Hayek, "The Use of Knowledge in Society"</p>
+<p>This is also why "one meta" was so plausible. When fundamentals are weakly binding, salience becomes a stronger constraint than valuation. The market doesn't ask "what is it worth?" first. It asks "what are we all staring at, and how crowded is the trade?"</p>
+<p>As a rough analogy, mass culture used to concentrate attention into a few shared objects (the same TV shows, the same chart music, the same celebrities). Today, attention fragments into niches and subcultures; people don't share the same reference set at scale. The analogy is that CT-as-a-mechanism is undergoing a similar transition: less shared context at the top, more local context in smaller arenas.</p>
+<h2 id="f6-32"><a class="folio-tick folio-tick--h2" href="#f6-32" data-tick="3. Why Post-CT Is Emerging" aria-hidden="true" tabindex="-1"></a>3. Why Post-CT Is Emerging</h2>
+<p>Post-CT is what you get when those enabling conditions fail.</p>
+<p>The first failure is that the toys become solved more efficiently.</p>
+<p>In the previous cycle, the market learned the playbooks and then industrialized them. As playbooks industrialize, the inefficiency window closes faster and becomes narrower. The distribution of outcomes becomes more extreme: fewer winners, more structural losers.</p>
+<p>Memecoins are a clear illustration of this dynamic. As an asset class, they were effective because they were low complexity and maximally reflexive. But the same properties make them easy to manufacture. Once production pipelines mature, the meta resembles an assembly line.</p>
+<p>And then the microstructure shifts. The median participant isn't trading against other humans; they are trading against systems. They arrive after the information has spread, after the pool is seeded, after the routing is optimized, after the insiders have positioned, and often after the exit paths are already precomputed. In that environment, expected value for the median participant compresses. You are the exit liquidity, almost always.</p>
+<p>A useful mental model: early-cycle order flow is mostly naive and human. Late-cycle order flow is increasingly adversarial and mechanical. The same toy becomes a different game.</p>
+<p>A monoculture cannot sustain itself if it stops producing enough visible winners to recruit the next wave of entrants.</p>
+<p>The second failure is that extraction starts to dominate contribution. By "extraction," I mean the set of actors and mechanisms that capture value from flow rather than creating new flow.</p>
+<p>In early phases, new participants can add net liquidity and still benefit because the environment is expanding faster than the extractor layer can fully harvest it. In later phases, incremental participants become net donors to the extractor layer. When that becomes widely felt, participation declines. When participation declines, the reflexive loop weakens.</p>
+<p>This is also why the emotional signature shows up so consistently. If a market stops offering broad, legible paths to winning, the mood degrades. Cynicism is often rational in a market where the median experience becomes "I am someone else's liquidity."</p>
+<p>Look at this post by <a href="https://x.com/Chilearmy123" target="_blank" rel="noopener">@Chilearmy123</a> to get a feel for the overall, current market sentiment among retail participants.</p>
+<p>The third failure is attention fragmentation. When no single object can absorb the ecosystem, the discovery layer loses clear salience. Participants split into narrower arenas. That fragmentation is not just cultural; it has market consequences. Liquidity dilutes across niches, price signals become less socially legible, and the "one trade everyone is in" dynamic disappears.</p>
+<p>I'll add one more factor here, briefly, without trying to make any predictions: macro conditions influence how powerful reflexive loops can become. The monoculture era coincided with a global environment where risk appetite and liquidity conditions made speculative reflexivity feel normal. When capital is more expensive and the marginal buyer is more cautious, it's harder for narrative-driven flows to sustain themselves for long.</p>
+<h2 id="f6-46"><a class="folio-tick folio-tick--h2" href="#f6-46" data-tick="4. What &quot;Post-CT&quot; Means, Precisely" aria-hidden="true" tabindex="-1"></a>4. What "Post-CT" Means, Precisely</h2>
+<p>Post-CT is a regime where CT no longer functions as the primary coordination mechanism for system-wide capital allocation for onchain market focusing, mostly, on a single metagame.</p>
+<p>In the monoculture era, CT linked narrative consensus to liquidity concentration repeatedly and at scale. In post-CT, that linkage is weaker and more intermittent. CT remains relevant as a discovery surface and a reputation index, but it is no longer the engine that reliably synchronizes the whole ecosystem around one trade, one toy, one shared context.</p>
+<p>Another way to define it: CT still produces narratives, but fewer narratives become common knowledge at scale, and fewer of those common-knowledge narratives convert into synchronized order flow. When that conversion fails, you get a market that feels "quieter" even if there is still plenty happening.</p>
+<p>This is why the subjective experience changes. The market feels slower and more specialized because broad coordination disappears. The emotional signature is largely a response to EV conditions.</p>
+<h2 id="f6-51"><a class="folio-tick folio-tick--h2" href="#f6-51" data-tick="5. How CT Evolves: Engine to Interface" aria-hidden="true" tabindex="-1"></a>5. How CT Evolves: Engine to Interface</h2>
+<p>CT doesn't vanish. Its function shifts.</p>
+<p>In the earlier regime, CT was upstream of flows. It helped determine what happened. In the current regime, CT is closer to an interface layer: it broadcasts reputational signals, surfaces narratives, and helps route trust, but the actual allocation decisions increasingly occur inside higher-trust subgraphs.</p>
+<p>These subgraphs are not mysterious. They are dense networks where information has higher fidelity and where participants have repeated interactions eg small operator circles, sector-specific communities, private group chats, and institutional rooms. CT becomes a facade for a real social backend layer.</p>
+<p>This also resolves a common confusion: "CT is dying" often really means "CT is no longer where the money is made for the median participant." The money is made where information is higher quality, where access is gated, and where trust is not computed noisily in public.</p>
+<p>You can still post and build your brand to seven-figures (which some of my friends and nodes have done &amp; are still doing), but the value accrual comes from building that social graph, being a trusted party and getting access to more of the backend layer.</p>
+<h2 id="f6-57"><a class="folio-tick folio-tick--h2" href="#f6-57" data-tick="6. I Don&#x27;t Know What Comes Next" aria-hidden="true" tabindex="-1"></a>6. I Don't Know What Comes Next</h2>
+<p>I'm not going to pretend I can name the next monoculture. In fact, I am skeptical that a monoculture will form in the same way again, at least under current conditions. The point is that the mechanism that created monocultures has degraded.</p>
+<p>Take my intuition with some grain of salt, as it might be ephemerally and situationally based on what I'm seeing however a lot of these dynamics were already forming earlier this year.</p>
+<p>There are active sectors right now, and it's not hard to list categories that have attention. I am not going to mention any of those sectors at all, as that would really add nothing to the piece, but outside of presales and some initial distribution, what we're seeing, in general, is a dynamic wherein the most highly priced categories are more CT-adjacent rather than CT-endogenous.</p>
+<h2 id="f6-61"><a class="folio-tick folio-tick--h2" href="#f6-61" data-tick="7. Thesis" aria-hidden="true" tabindex="-1"></a>7. Thesis</h2>
+<p>We have entered the post-CT era.</p>
+<p>Not because CT is dead, and not because discourse stops mattering, but because the structural conditions that enabled repeated, system-wide monocultures have weakened. The games are more efficient, extraction is more mature, attention is more fragmented, and reflexive loops are increasingly local rather than systemic.</p>
+<p>Crypto continues, and CT continues. The claim is narrower: the era when CT could reliably coordinate the entire market into one shared meta that produced broad, low-barrier convexity is over for now, and, in my opinion, the chances of that succeeding akin to what we saw over the past 4 years is materially lower.</p>
+<p>It doesn't mean you're not going to make money. It doesn't mean that crypto is dead. This is not a bearish or a cynical take. In fact, I have never been more optimistic about the future of this industry. The point is that distribution and salience will be structurally very different from what we have seen over the past years.</p>
+                </div>
+            </article>
+            <nav class="shelf" aria-label="All writing"><p class="shelf-label">The writing</p><a class="shelf-item" href="/writing/a-hedge-is-not-a-product/" data-article="a-hedge-is-not-a-product"><span class="shelf-num">I</span><span class="shelf-title">A hedge is not a product</span><span class="shelf-extent">2,518w</span></a><a class="shelf-item" href="/writing/credit-already-trades-event-risk/" data-article="credit-already-trades-event-risk"><span class="shelf-num">II</span><span class="shelf-title">Credit already trades event risk</span><span class="shelf-extent">1,213w</span></a><a class="shelf-item" href="/writing/benchmarks-and-institutional-scale/" data-article="benchmarks-and-institutional-scale"><span class="shelf-num">III</span><span class="shelf-title">Benchmarks are key to scaling prediction markets institutionally</span><span class="shelf-extent">3,828w</span></a><a class="shelf-item" href="/writing/seeing-like-a-market/" data-article="seeing-like-a-market"><span class="shelf-num">IV</span><span class="shelf-title">Seeing Like a Market</span><span class="shelf-extent">2,189w</span></a><a class="shelf-item" href="/writing/philosophical-precision-is-the-new-assembly/" data-article="philosophical-precision-is-the-new-assembly"><span class="shelf-num">V</span><span class="shelf-title">In the Age of Claude, Philosophical Precision Is the New Assembly</span><span class="shelf-extent">1,678w</span></a><a class="shelf-item is-here" href="/writing/welcome-to-post-ct/" aria-current="page" data-article="welcome-to-post-ct"><span class="shelf-num">VI</span><span class="shelf-title">Welcome to Post-CT</span><span class="shelf-extent">2,245w</span></a></nav>
+            <div class="art-cta">
+                <a class="btn-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow new work on X</a>
+                <a class="text-link text-link--in" href="/writing/">Back to the archive</a>
+            </div>
+        </main>
+        <footer class="foot-strip">
+            <span class="footer-mark">┐</span>
+            <span class="footer-copy">Lauris · Markets, ventures, research, and writing<br><a href="mailto:hello@lauris.xyz">hello@lauris.xyz</a> · <a href="https://x.com/lzminsky" target="_blank" rel="noopener">@lzminsky</a></span>
+        </footer>
+    </div>
+    <script>
+        (() => {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const items = Array.from(document.querySelectorAll('[data-animate]'));
+            if (!items.length || !('IntersectionObserver' in window)) return;
+            document.documentElement.classList.add('motion-ready');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            }, { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+            items.forEach((item) => observer.observe(item));
+        })();
+    </script>
+</body>
+</html>

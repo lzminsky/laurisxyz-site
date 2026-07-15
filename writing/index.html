@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing — Lauris</title>
+    <meta name="description" content="Essays and working notes on event risk, corporate hedging, and exchange design.">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="Writing — Lauris">
+    <meta property="og:description" content="Essays and working notes on event risk, corporate hedging, and exchange design.">
+    <meta property="og:url" content="https://lauris.xyz/writing/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Cpath d='M8 9h16v14' fill='none' stroke='%23011614' stroke-width='2.6'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --type-display: 'Newsreader', Georgia, serif;
+            --type-body: 'Geist', system-ui, sans-serif;
+            --type-mono: 'Geist Mono', ui-monospace, monospace;
+            --type-display-weight: 300;
+            --type-display-tracking: -.02em;
+            --type-label-tracking: .05em;
+            --paper: #ffffff; --paper-raised: #ffffff; --ink: #011614; --ink-soft: #34423e;
+            --ink-muted: #65706d; --rule: #d7ddda; --teal: #0c5c43; --wine: #0c5c43;
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: var(--ink); color: var(--paper); }
+        html { font-size: 18px; }
+        body {
+            min-height: 100vh;
+            background: var(--paper);
+            color: var(--ink); font-family: var(--type-body); line-height: 1.62;
+            letter-spacing: -.01em; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+        }
+        a { color: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
+        .skip-link {
+            position: fixed; z-index: 100; top: 12px; left: 12px; padding: 11px 14px;
+            background: var(--ink); color: var(--paper); font: 600 .667rem/1 var(--type-mono);
+            letter-spacing: .04em; text-decoration: none; text-transform: uppercase;
+            transform: translateY(calc(-100% - 18px)); transition: transform 180ms var(--ease-out);
+        }
+        .skip-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; transform: none; }
+        .container { width: min(1180px, calc(100% - 80px)); margin: 0 auto; padding: 42px 0 88px; }
+        .mono { font-family: var(--type-mono); }
+        .masthead { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+            padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
+        .masthead-origin { display: flex; align-items: flex-start; gap: 17px; min-width: 0; }
+        .mark-link { display: grid; min-width: 36px; min-height: 44px; color: var(--ink); text-decoration: none; place-content: start; }
+        .mark-symbol { font: 2rem/0.8 var(--type-mono); }
+        .crumb { padding-top: 6px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
+        .crumb a { color: var(--ink-muted); text-decoration: none; transition: color 180ms var(--ease-out); }
+        .crumb a:hover, .crumb a:focus-visible { color: var(--ink); }
+        .crumb span { margin: 0 7px; color: var(--rule); }
+        .nav { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 8px 24px; padding-top: 3px; }
+        .nav a { display: inline-flex; align-items: flex-start; min-height: 44px; padding-top: 5px; color: var(--ink-muted);
+            font: 500 .78rem/1.4 var(--type-body); letter-spacing: -.01em;
+            text-decoration: none; transition: color 180ms var(--ease-out); }
+        .nav a:hover { color: var(--ink); }
+        .nav a.nav-x { padding-bottom: 3px; border-bottom: 1px solid currentColor; color: var(--teal); }
+        .nav a.nav-x:hover { color: var(--ink); }
+        a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+        .text-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--ink);
+            font: 500 .76rem/1.4 var(--type-body); letter-spacing: -.01em;
+            text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
+        .text-link::after { content: '↗'; transition: transform 180ms var(--ease-out); }
+        .text-link--in::after { content: '→'; }
+        .text-link:hover::after { transform: translate(2px, -2px); }
+        .text-link--in:hover::after { transform: translateX(3px); }
+        .btn-x { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 2px 0 5px;
+            border: 0; border-bottom: 1px solid currentColor; color: var(--ink);
+            font: 500 .76rem/1.2 var(--type-body); letter-spacing: -.01em;
+            text-decoration: none; transition: color 180ms var(--ease-out); }
+        .btn-x::after { content: '↗'; }
+        .btn-x:hover { color: var(--teal); }
+        .foot-strip { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 96px;
+            padding-top: 40px; border-top: 1px solid var(--rule); }
+        .footer-mark { color: var(--ink-muted); font: 1.2rem/1 var(--type-mono); }
+        .footer-copy { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .045em;
+            text-align: right; text-transform: uppercase; }
+        .art-title, .arch-title, .arch-item-title, .shelf-title {
+            font-family: var(--type-display); font-weight: var(--type-display-weight); letter-spacing: var(--type-display-tracking);
+        }
+        .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
+        @media (max-width: 640px) {
+            html { font-size: 18px; }
+            .container { width: calc(100% - 40px); padding: 32px 0 62px; }
+            .masthead { display: block; }
+            .nav { justify-content: flex-start; margin-top: 22px; }
+            .foot-strip { flex-direction: column; align-items: flex-start; }
+            .footer-copy { text-align: left; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+        }
+</style>
+    <style>
+        .arch-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 70px; align-items: end; padding: 94px 0 68px; }
+        .arch-kicker { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
+        .arch-title { max-width: 720px; margin-top: 14px; font-size: clamp(3.1rem, 7vw, 5.8rem); font-weight: 300; letter-spacing: -.035em; line-height: .92; }
+        .arch-intro { max-width: 460px; margin: 0; color: var(--ink-soft); font-family: var(--type-body); font-size: 1rem; font-style: normal; font-weight: 400; line-height: 1.62; text-wrap: pretty; }
+        .arch-ledger { display: flex; justify-content: space-between; gap: 24px; padding: 13px 0 15px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
+        .arch-section { margin-top: 82px; }
+        .arch-label { color: var(--ink); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
+        .arch-lead { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 48px; margin-top: 18px; padding: 32px 0 44px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); text-decoration: none; }
+        .arch-lead-media { overflow: hidden; border: 1px solid var(--rule); }
+        .arch-lead-media img { width: 100%; transition: transform 900ms var(--ease-out); }
+        .arch-lead-copy { display: flex; min-width: 0; flex-direction: column; justify-content: space-between; }
+        .arch-lead time, .arch-item time { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .045em; text-transform: uppercase; }
+        .arch-lead-title { display: block; margin-top: 12px; font-family: var(--type-display); font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.02; }
+        .arch-lead-deck { display: block; margin-top: 14px; color: var(--ink-soft); font-size: .94rem; line-height: 1.6; text-wrap: pretty; }
+        .arch-list { border-top: 1px solid var(--ink); }
+        .arch-item { display: grid; grid-template-columns: 42px 108px minmax(0, 1fr) 210px; gap: 10px 26px; align-items: start; padding: 25px 0 27px; border-bottom: 1px solid var(--rule); text-decoration: none; }
+        .arch-item-num { padding-top: 4px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+        .arch-item time { padding-top: 4px; }
+        .arch-item-title { display: block; font-family: var(--type-display); font-size: 1.34rem; font-weight: 400; letter-spacing: -.015em; line-height: 1.12; transition: color 180ms var(--ease-out); }
+        .arch-item-deck { display: block; max-width: 560px; margin-top: 7px; color: var(--ink-soft); font-size: .87rem; line-height: 1.55; text-wrap: pretty; }
+        .arch-item-open { display: inline-block; min-height: 44px; margin-top: 9px; color: var(--ink); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .045em; text-transform: uppercase; }
+        .arch-thumb { overflow: hidden; margin: 2px 0 0; border: 1px solid var(--rule); }
+        .arch-thumb img { width: 100%; aspect-ratio: 1.8 / 1; background: var(--paper-raised); object-fit: cover; transition: transform 800ms var(--ease-out); }
+        .arch-lead:hover .arch-lead-media img, .arch-item:hover .arch-thumb img { transform: scale(1.025); }
+        .arch-item:hover .arch-item-title { color: var(--teal); }
+        .note-list { margin-top: 16px; border-top: 1px solid var(--ink); }
+        .note-item { display: grid; grid-template-columns: 42px 108px minmax(0, 1fr) auto; gap: 8px 26px; align-items: baseline; padding: 18px 0 20px; border-bottom: 1px solid var(--rule); text-decoration: none; }
+        .note-num { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+        .note-item time { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .045em; text-transform: uppercase; }
+        .note-title { font-size: 1rem; font-weight: 500; line-height: 1.25; transition: color 180ms var(--ease-out); }
+        .note-item:hover .note-title { color: var(--teal); }
+        .note-deck { display: block; max-width: 680px; margin-top: 4px; color: var(--ink-soft); font-size: .84rem; font-weight: 400; line-height: 1.5; }
+        .note-arrow { color: var(--ink-muted); font: .8rem/1 var(--type-mono); }
+        .arch-endcap { margin-top: 92px; padding-top: 32px; border-top: 1px solid var(--ink); }
+        .arch-endcap p { max-width: 560px; font-family: var(--type-display); font-size: 1.55rem; font-weight: 300; line-height: 1.3; }
+        .arch-endcap .art-cta { margin-top: 24px; }
+        .motion-ready [data-animate] { opacity: 0; transform: translateY(16px); }
+        .motion-ready [data-animate].is-visible { opacity: 1; transform: none; transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+        @media (max-width: 800px) {
+            .arch-head { grid-template-columns: 1fr; gap: 28px; padding: 72px 0 52px; }
+            .arch-lead { grid-template-columns: 1fr; }
+            .arch-item { grid-template-columns: 34px 96px minmax(0, 1fr); }
+            .arch-thumb { display: none; }
+            .note-item { grid-template-columns: 34px 96px minmax(0, 1fr); }
+            .note-arrow { display: none; }
+        }
+        @media (max-width: 560px) {
+            .arch-title { font-size: clamp(3rem, 16vw, 4.8rem); }
+            .arch-ledger { display: block; }
+            .arch-ledger span { display: block; }
+            .arch-item, .note-item { grid-template-columns: 30px minmax(0, 1fr); gap: 4px 14px; }
+            .arch-item time, .note-item time { grid-column: 2; }
+            .arch-item-copy, .note-title { grid-column: 2; }
+        }
+</style>
+    <script src="/assets/reader.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="container">
+        <header class="masthead">
+            <div class="masthead-origin">
+                <a href="/" class="mark-link" aria-label="Lauris — home"><span class="mark-symbol">┐</span></a>
+                <p class="crumb"><a href="/">Lauris</a><span>/</span><a href="/writing/">Writing</a></p>
+            </div>
+            <nav class="nav" aria-label="Primary navigation">
+                <a href="/#work">Work</a>
+                <a href="/writing/">Writing</a>
+                <a href="/#library">Library</a>
+                <a class="nav-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+            </nav>
+        </header>
+        <main id="main-content">
+
+            <header class="arch-head">
+                <div>
+                    <p class="arch-kicker">The writing archive</p>
+                    <h1 class="arch-title">Essays and working notes.</h1>
+                </div>
+                <p class="arch-intro">Event risk, corporate hedging, exchange design, and the institutional machinery that makes a contract usable. Everything below appeared first on <a href="https://x.com/lzminsky" target="_blank" rel="noopener">X</a>; the articles live here in full.</p>
+            </header>
+            <div class="arch-ledger"><span>Six articles · seven working notes</span><span>November 2025 — July 2026</span></div>
+            <section class="arch-section" aria-label="Articles">
+                <p class="arch-label">Articles</p>
+                <a class="arch-lead" href="/writing/a-hedge-is-not-a-product/" data-animate>
+                    <span class="arch-lead-media"><img src="/assets/writing/article1_hedge_hero.jpg" alt="" width="2048" height="819"></span>
+                    <span class="arch-lead-copy">
+                        <span>
+                            <time datetime="2026-07-14">14 Jul 2026</time>
+                            <span class="arch-lead-title">A hedge is not a product</span>
+                            <span class="arch-lead-deck">A contract can be bought. A hedge has to be constructed around an exposure.</span>
+                        </span>
+                        <span class="arch-item-open">Read →</span>
+                    </span>
+                </a>
+                <div class="arch-list">
+                    <a class="arch-item" href="/writing/credit-already-trades-event-risk/" data-animate>
+                        <span class="arch-item-num">II</span>
+                        <time datetime="2026-07-09">09 Jul 2026</time>
+                        <span class="arch-item-copy">
+                            <span class="arch-item-title">Credit already trades event risk</span>
+                            <span class="arch-item-deck">Or how to scale non-sports event contract markets: what synthetic risk transfer teaches about institutional ownership.</span>
+                            <span class="arch-item-open">Read →</span>
+                        </span>
+                        <span class="arch-thumb"><img src="/assets/writing/exh_credit_hero.jpg" alt="" width="2048" height="771" loading="lazy"></span>
+                    </a>
+                    <a class="arch-item" href="/writing/benchmarks-and-institutional-scale/" data-animate>
+                        <span class="arch-item-num">III</span>
+                        <time datetime="2026-05-05">05 May 2026</time>
+                        <span class="arch-item-copy">
+                            <span class="arch-item-title">Benchmarks are key to scaling prediction markets institutionally</span>
+                            <span class="arch-item-deck">Which benchmarks can actually do it, in what order — and why the benchmark slot is the one to own.</span>
+                            <span class="arch-item-open">Read →</span>
+                        </span>
+                        <span class="arch-thumb"><img src="/assets/writing/article3_benchmarks_5_timeline.png" alt="" width="2000" height="1360" loading="lazy"></span>
+                    </a>
+                    <a class="arch-item" href="/writing/seeing-like-a-market/" data-animate>
+                        <span class="arch-item-num">IV</span>
+                        <time datetime="2026-04-07">07 Apr 2026</time>
+                        <span class="arch-item-copy">
+                            <span class="arch-item-title">Seeing Like a Market</span>
+                            <span class="arch-item-deck">The rationale for institutional risk transfer using prediction markets: a 90-page working paper and 87 contracts across five asset classes.</span>
+                            <span class="arch-item-open">Read →</span>
+                        </span>
+                        <span class="arch-thumb"><img src="/assets/writing/article4_slam_hero.jpg" alt="" width="1878" height="751" loading="lazy"></span>
+                    </a>
+                    <a class="arch-item" href="/writing/philosophical-precision-is-the-new-assembly/" data-animate>
+                        <span class="arch-item-num">V</span>
+                        <time datetime="2026-02-05">05 Feb 2026</time>
+                        <span class="arch-item-copy">
+                            <span class="arch-item-title">In the Age of Claude, Philosophical Precision Is the New Assembly</span>
+                            <span class="arch-item-deck">Precise conceptual vocabulary as a control language for agentic reasoning.</span>
+                            <span class="arch-item-open">Read →</span>
+                        </span>
+                        <span class="arch-thumb"><img src="/assets/writing/article5_claude_hero.png" alt="" width="600" height="240" loading="lazy"></span>
+                    </a>
+                    <a class="arch-item" href="/writing/welcome-to-post-ct/" data-animate>
+                        <span class="arch-item-num">VI</span>
+                        <time datetime="2025-11-27">27 Nov 2025</time>
+                        <span class="arch-item-copy">
+                            <span class="arch-item-title">Welcome to Post-CT</span>
+                            <span class="arch-item-deck">Crypto Twitter as a market mechanism: from discovery engine and capital allocator to reputation interface.</span>
+                            <span class="arch-item-open">Read →</span>
+                        </span>
+                        <span class="arch-thumb"><img src="/assets/writing/article6_postct_hero.jpg" alt="" width="1065" height="426" loading="lazy"></span>
+                    </a>
+                </div>
+            </section>
+            <section class="arch-section" aria-label="Working notes">
+                <p class="arch-label">Working notes · on X</p>
+                <div class="note-list">
+                    <a class="note-item" href="https://x.com/lzminsky/status/2077174969738363261" target="_blank" rel="noopener" data-animate>
+                        <span class="note-num">01</span>
+                        <time>15 Jul 2026</time>
+                        <span class="note-title">The exchange stack is converging<span class="note-deck">Selected venues are extending a common set of payoff forms across new underliers. The label describes the front door, not the payoff stack.</span></span>
+                        <span class="note-arrow">↗</span>
+                    </a>
+                    <a class="note-item" href="https://x.com/lzminsky/status/2077131007430725932" target="_blank" rel="noopener" data-animate>
+                        <span class="note-num">02</span>
+                        <time>14 Jul 2026</time>
+                        <span class="note-title">I was very wrong — the compute curve, corrected<span class="note-deck">A public correction on compute markets, quoting the July 3 framework it revises.</span></span>
+                        <span class="note-arrow">↗</span>
+                    </a>
+                    <a class="note-item" href="https://x.com/lzminsky/status/2075646380500987956" target="_blank" rel="noopener" data-animate>
+                        <span class="note-num">03</span>
+                        <time>10 Jul 2026</time>
+                        <span class="note-title">On Bartlett &amp; O'Hara, “Adverse Selection in Prediction Markets”<span class="note-deck">Reading 41.6 million Kalshi trades: what the absence of Glosten–Milgrom liquidity traders means for the book.</span></span>
+                        <span class="note-arrow">↗</span>
+                    </a>
+                    <a class="note-item" href="https://x.com/lzminsky/status/2074166089160810967" target="_blank" rel="noopener" data-animate>
+                        <span class="note-num">04</span>
+                        <time>06 Jul 2026</time>
+                        <span class="note-title">Gracián and the luck surface area<span class="note-deck">L = D × T. The interior maximum beats either corner.</span></span>
+                        <span class="note-arrow">↗</span>
+                    </a>
+                    <a class="note-item" href="https://x.com/lzminsky/status/2073033302064132119" target="_blank" rel="noopener" data-animate>
+                        <span class="note-num">05</span>
+                        <time>03 Jul 2026</time>
+                        <span class="note-title">Compute, sliced four ways<span class="note-deck">The level, the shape, the residual, and the jumps — and the instrument each slice gets.</span></span>
+                        <span class="note-arrow">↗</span>
+                    </a>
+                    <a class="note-item" href="https://x.com/lzminsky/status/2060758432773280053" target="_blank" rel="noopener" data-animate>
+                        <span class="note-num">06</span>
+                        <time>30 May 2026</time>
+                        <span class="note-title">Hedgebook, version one<span class="note-deck">The launch note and product demo: every company's real-world risk, mapped to live contracts.</span></span>
+                        <span class="note-arrow">↗</span>
+                    </a>
+                    <a class="note-item" href="https://x.com/lzminsky/status/2055669526939816369" target="_blank" rel="noopener" data-animate>
+                        <span class="note-num">07</span>
+                        <time>16 May 2026</time>
+                        <span class="note-title">Institutional event-contract structuring workflow<span class="note-deck">The full desk workflow, drawn: from exposure decomposition to documentation and recognition.</span></span>
+                        <span class="note-arrow">↗</span>
+                    </a>
+                </div>
+            </section>
+            <div class="arch-endcap">
+                <p>The archive is the record. <em>The live work appears first on X.</em></p>
+                <div class="art-cta">
+                    <a class="btn-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow @lzminsky</a>
+                    <a class="text-link text-link--in" href="/">Back to the front page</a>
+                </div>
+            </div>
+        </main>
+        <footer class="foot-strip">
+            <span class="footer-mark">┐</span>
+            <span class="footer-copy">Lauris · Markets, ventures, research, and writing<br><a href="mailto:hello@lauris.xyz">hello@lauris.xyz</a> · <a href="https://x.com/lzminsky" target="_blank" rel="noopener">@lzminsky</a></span>
+        </footer>
+    </div>
+    <script>
+        (() => {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const items = Array.from(document.querySelectorAll('[data-animate]'));
+            if (!items.length || !('IntersectionObserver' in window)) return;
+            document.documentElement.classList.add('motion-ready');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            }, { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+            items.forEach((item) => observer.observe(item));
+        })();
+    </script>
+</body>
+</html>
