@@ -460,11 +460,6 @@
         .shelf-toggle::after { content: '→'; transition: transform 200ms var(--ease-out); }
         .books-list.is-open + .shelf-toggle::after { content: '↑'; }
 
-        .footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding-top: 44px; border-top: 1px solid var(--rule); }
-        .footer-mark { color: var(--ink-muted); font: 1.2rem/1 var(--type-mono); }
-        .footer-copy { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .045em; text-align: right; text-transform: uppercase; }
-
-
         /* ── Type roles ───────────────────────────────────────────────────
            Newsreader Light for display (Teodor's silhouette, open licence,
            and already the display face of Statebook); Geist for reading;
@@ -487,7 +482,7 @@
         .mono, .section-kicker, .work-meta, .nav a, .text-link,
         .writing-date, .book-number, .now-label, .now-caption, .record-date,
         .record-caption, .work-status,
-        .shelf-toggle, .footer-copy, .btn-x,
+        .shelf-toggle, .btn-x,
         .atlas-proof figcaption, .atlas-index, .stage-plate-index {
             font-weight: 600;
         }
@@ -561,8 +556,6 @@
             .writing-date { padding-top: 0; }
             .books-list { columns: 1; }
             .book-note { padding-left: 0; }
-            .footer { align-items: flex-start; flex-direction: column; }
-            .footer-copy { text-align: left; }
         }
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
@@ -974,10 +967,6 @@
 
         </main>
 
-        <footer class="footer" data-reveal>
-            <span class="footer-mark">┐</span>
-            <span class="footer-copy">Lauris · Markets, ventures, research, and writing<br><a href="mailto:hello@lauris.xyz">hello@lauris.xyz</a> · <a href="https://x.com/lzminsky" target="_blank" rel="noopener">@lzminsky</a></span>
-        </footer>
     </div>
 
     <script>

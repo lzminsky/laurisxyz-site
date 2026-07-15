@@ -62,6 +62,6 @@
         .art-kicker, .art-meta time, .art-meta .text-link, .art-after-kicker,
         .shelf-label, .arch-label,
         .arch-item-open, .art-fig figcaption, .art-hero figcaption, .art-body h3,
-        .crumb, .nav a, .btn-x, .footer-copy, .note-item time {
+        .crumb, .nav a, .btn-x, .note-item time {
             font-weight: 600;
         }
