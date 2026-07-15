@@ -5,8 +5,7 @@
         .art-deck { max-width: 680px; margin-top: 20px; color: var(--ink-soft); font-size: 1.16rem; font-style: italic; line-height: 1.5; text-wrap: pretty; }
         .art-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: baseline; margin-top: 26px;
             padding-top: 14px; border-top: 1px solid var(--ink); max-width: 680px; }
-        .art-meta time, .art-extent { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .06em; text-transform: uppercase; }
-        .art-extent { font-variant-numeric: tabular-nums; }
+        .art-meta time { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .06em; text-transform: uppercase; }
         .art-meta .text-link { color: var(--ink-muted); font-size: .72rem; }
         .art-meta .text-link:hover { color: var(--ink); }
         .art-hero { margin: 44px 0 0; }
@@ -14,75 +13,6 @@
         .art-hero--portrait img, .art-hero--natural img { width: auto; max-width: min(620px, 100%); }
         .art-hero figcaption, .art-fig figcaption { margin-top: 9px; color: var(--ink-muted);
             font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .045em; text-transform: uppercase; max-width: 640px; }
-        /* ── The rule ─────────────────────────────────────────────────────
-           A measure that sometimes carries labels — not a table of contents.
-           Spans exactly the prose: not the masthead, not the hero, not the
-           Adjacent aside, not the footer. So it reads full when the writing
-           ends, not when you reach the bottom of the page.
-           .art-body is 700px flush-left in a 1120px container (all slack is
-           right); .art-fig overhangs to 860px. The rule clears both at 880. */
-        .art-body { position: relative; }
-        .folio-rule {
-            position: absolute;
-            top: 0; bottom: 0; left: 880px;
-            width: 1px;
-            background: var(--rule);
-        }
-        .folio-rule::after {
-            position: absolute;
-            top: 0; left: 0;
-            width: 1px;
-            height: 100%;
-            background: var(--teal);
-            content: '';
-            transform: scaleY(var(--art-progress, 0));
-            transform-origin: top;
-        }
-        /* The tick nests inside the thing it marks and centres on it, so
-           alignment survives any change to the type scale or margins.
-           .art-fig is wider (860px) but shares .art-body's left edge, so the
-           same left offset lands on the same rule. */
-        .art-body h2, .art-body h3, .art-fig { position: relative; }
-        .folio-tick {
-            position: absolute;
-            top: 50%;
-            left: 873px;
-            width: 7px;
-            height: 1px;
-            background: var(--ink);
-            text-decoration: none;
-        }
-        .folio-tick--h3 { left: 876px; width: 4px; background: var(--ink-muted); }
-        .folio-tick--fig {
-            left: 877px;
-            width: 3px; height: 3px;
-            background: none;
-            border: 1px solid var(--ink-muted);
-        }
-        .folio-tick[data-tick]::after {
-            position: absolute;
-            top: 50%;
-            left: 18px;
-            width: 190px;
-            color: var(--ink-muted);
-            content: attr(data-tick);
-            font: 600 .667rem/1.5 var(--type-mono);
-            letter-spacing: .045em;
-            opacity: 0;
-            text-transform: uppercase;
-            text-wrap: balance;
-            transform: translateY(-50%);
-            transition: opacity 160ms var(--ease-out);
-            pointer-events: none;
-        }
-        .folio-tick:hover, .folio-tick:focus-visible { background: var(--teal); }
-        .folio-tick:hover::after, .folio-tick:focus-visible::after { opacity: 1; }
-        /* Below 1200px the container has no right slack. No mobile TOC drawer —
-           the article is already good; that's how print works. */
-        @media (max-width: 1199px) {
-            .folio-rule, .folio-tick { display: none; }
-        }
-
         .art-body { max-width: 700px; margin-top: 54px; }
         .art-body p { margin: 0 0 19px; font-size: 1.02rem; color: var(--ink); }
         .art-body p a, .art-body li a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
@@ -95,25 +25,16 @@
         .art-fig { margin: 40px 0 40px; max-width: 860px; }
         .art-fig img { width: 100%; border: 1px solid var(--rule); background: var(--paper-raised); }
         .art-fig--portrait img { width: auto; max-width: min(460px, 100%); }
-        /* ── The shelf ────────────────────────────────────────────────────
-           Six pages become a body of work. No thumbnails: it's an index,
-           not a gallery — the exhibition on the homepage does pictures. */
         .shelf { max-width: 860px; margin-top: 76px; padding-top: 18px; border-top: 1px solid var(--ink); }
         .shelf-label { margin-bottom: 6px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .07em; text-transform: uppercase; }
         .shelf-item {
-            display: grid;
-            grid-template-columns: 34px minmax(0, 1fr) 62px;
-            gap: 18px;
-            align-items: baseline;
+            display: block;
             padding: 11px 0 12px;
             border-bottom: 1px solid var(--rule);
             text-decoration: none;
         }
-        .shelf-num { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .05em; }
         .shelf-title { font-size: .98rem; line-height: 1.3; transition: color 160ms var(--ease-out); }
-        .shelf-extent { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; text-align: right; }
         .shelf-item:hover .shelf-title { color: var(--teal); }
-        .shelf-item.is-here .shelf-num { color: var(--wine); }
         .shelf-item.is-here .shelf-title { font-weight: 600; }
         .shelf-item.is-here { border-bottom-color: var(--ink); }
 
@@ -138,10 +59,9 @@
         .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
         .art-body h2 { font-family: var(--type-display); font-weight: 400; letter-spacing: -.015em; }
         .shelf-title, .arch-item-title { font-weight: 400; letter-spacing: -.01em; }
-        .art-kicker, .art-meta time, .art-extent, .art-meta .text-link, .art-after-kicker,
-        .shelf-label, .shelf-num, .shelf-extent, .arch-kicker, .arch-label,
+        .art-kicker, .art-meta time, .art-meta .text-link, .art-after-kicker,
+        .shelf-label, .arch-label,
         .arch-item-open, .art-fig figcaption, .art-hero figcaption, .art-body h3,
         .crumb, .nav a, .btn-x, .footer-copy, .note-item time {
             font-weight: 600;
         }
-        .folio-tick[data-tick]::after { font-weight: 600; }

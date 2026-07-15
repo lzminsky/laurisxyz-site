@@ -89,7 +89,7 @@ ARTICLES = [
              "caption": "Payoff equivalence: as ε→0 the vertical spread converges to the event contract. The payoffs are equivalent; the costs are not."},
         ],
         "related": [
-            ("SLAM — the research programme behind the cost test", "https://www.slampaper.xyz", True),
+            ("SLAM research project", "https://www.slampaper.xyz", True),
         ],
     },
     {
@@ -105,7 +105,7 @@ ARTICLES = [
                  "caption": "The Decision Surface: 30 win · 12 at threshold · 45 loss, of 87 contracts at $3m scale."},
         "figures": [],
         "related": [
-            ("Enter the programme at slampaper.xyz", "https://www.slampaper.xyz", True),
+            ("SLAM research project", "https://www.slampaper.xyz", True),
         ],
     },
     {
@@ -121,7 +121,7 @@ ARTICLES = [
                  "caption": "A 1970s assembly reference sheet: the last time precision at the lowest level was the whole game."},
         "figures": [],
         "related": [
-            ("The library underneath the work", "/#library", False),
+            ("Library", "/#library", False),
         ],
     },
     {
@@ -139,8 +139,6 @@ ARTICLES = [
         "related": [],
     },
 ]
-
-ROMAN = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI"}
 
 NOTES = [
     ("The exchange stack is converging", "15 Jul 2026",
@@ -231,21 +229,6 @@ def check_prose(fingerprints: dict) -> None:
     print(f"prose guard: OK ({len(fingerprints)} articles unchanged)")
 
 
-def tick(kind: str, anchor: str, label: str = "") -> str:
-    """A mark on the rule, emitted as the FIRST CHILD of the thing it marks.
-
-    Inside, not beside: an absolutely-positioned sibling resolves to its static
-    position, which sits above the heading's collapsed top margin (measured: 25px
-    high on every h2). Nesting it and centring on the parent box makes alignment
-    structural rather than a magic offset that breaks if the type scale moves.
-
-    It is out of flow, so it costs the prose no layout. It is empty, so it costs
-    the word count nothing.
-    """
-    attrs = f' data-tick="{html.escape(label, quote=True)}"' if label else ""
-    return f'<a class="folio-tick folio-tick--{kind}" href="#{anchor}"{attrs} aria-hidden="true" tabindex="-1"></a>'
-
-
 def render_body(art_cfg, paragraphs):
     figures = list(art_cfg.get("figures", []))
     used = set()
@@ -281,9 +264,9 @@ def render_body(art_cfg, paragraphs):
         stripped = p.strip()
         if re.fullmatch(r"\*\*.+\*\*", stripped):
             heading = stripped[2:-2]
-            out.append(f'<h2 id="{anchor}">{tick("h2", anchor, heading)}{inline(heading)}</h2>')
+            out.append(f'<h2 id="{anchor}">{inline(heading)}</h2>')
         elif stripped in ("Top tier", "Bottom tier", "Quick initial links"):
-            out.append(f'<h3 id="{anchor}">{tick("h3", anchor, stripped)}{inline(stripped)}</h3>')
+            out.append(f'<h3 id="{anchor}">{inline(stripped)}</h3>')
         elif "\n- " in p:
             head, *items = re.split(r"\n-\s*", p)
             if head.strip():
@@ -309,7 +292,7 @@ def render_body(art_cfg, paragraphs):
                 fig_anchor = f"f{num}-fig{fig_n}"
                 cls = "art-fig art-fig--portrait" if fig.get("portrait") else "art-fig"
                 out.append(
-                    f'<figure class="{cls}" id="{fig_anchor}">{tick("fig", fig_anchor)}'
+                    f'<figure class="{cls}" id="{fig_anchor}">'
                     f'<img src="/assets/writing/{fig["file"]}" '
                     f'alt="{html.escape(fig["caption"])}" width="{fig["w"]}" height="{fig["h"]}" loading="lazy">'
                     f'<figcaption>{fig["caption"]}</figcaption></figure>'
@@ -412,8 +395,7 @@ ARTICLE_STYLE = """
         .art-deck { max-width: 680px; margin-top: 20px; color: var(--ink-soft); font-size: 1.16rem; font-style: italic; line-height: 1.5; text-wrap: pretty; }
         .art-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: baseline; margin-top: 26px;
             padding-top: 14px; border-top: 1px solid var(--ink); max-width: 680px; }
-        .art-meta time, .art-extent { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .06em; text-transform: uppercase; }
-        .art-extent { font-variant-numeric: tabular-nums; }
+        .art-meta time { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .06em; text-transform: uppercase; }
         .art-meta .text-link { color: var(--ink-muted); font-size: .72rem; }
         .art-meta .text-link:hover { color: var(--ink); }
         .art-hero { margin: 44px 0 0; }
@@ -421,75 +403,6 @@ ARTICLE_STYLE = """
         .art-hero--portrait img, .art-hero--natural img { width: auto; max-width: min(620px, 100%); }
         .art-hero figcaption, .art-fig figcaption { margin-top: 9px; color: var(--ink-muted);
             font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .045em; text-transform: uppercase; max-width: 640px; }
-        /* ── The rule ─────────────────────────────────────────────────────
-           A measure that sometimes carries labels — not a table of contents.
-           Spans exactly the prose: not the masthead, not the hero, not the
-           Adjacent aside, not the footer. So it reads full when the writing
-           ends, not when you reach the bottom of the page.
-           .art-body is 700px flush-left in a 1120px container (all slack is
-           right); .art-fig overhangs to 860px. The rule clears both at 880. */
-        .art-body { position: relative; }
-        .folio-rule {
-            position: absolute;
-            top: 0; bottom: 0; left: 880px;
-            width: 1px;
-            background: var(--rule);
-        }
-        .folio-rule::after {
-            position: absolute;
-            top: 0; left: 0;
-            width: 1px;
-            height: 100%;
-            background: var(--teal);
-            content: '';
-            transform: scaleY(var(--art-progress, 0));
-            transform-origin: top;
-        }
-        /* The tick nests inside the thing it marks and centres on it, so
-           alignment survives any change to the type scale or margins.
-           .art-fig is wider (860px) but shares .art-body's left edge, so the
-           same left offset lands on the same rule. */
-        .art-body h2, .art-body h3, .art-fig { position: relative; }
-        .folio-tick {
-            position: absolute;
-            top: 50%;
-            left: 873px;
-            width: 7px;
-            height: 1px;
-            background: var(--ink);
-            text-decoration: none;
-        }
-        .folio-tick--h3 { left: 876px; width: 4px; background: var(--ink-muted); }
-        .folio-tick--fig {
-            left: 877px;
-            width: 3px; height: 3px;
-            background: none;
-            border: 1px solid var(--ink-muted);
-        }
-        .folio-tick[data-tick]::after {
-            position: absolute;
-            top: 50%;
-            left: 18px;
-            width: 190px;
-            color: var(--ink-muted);
-            content: attr(data-tick);
-            font: 600 .667rem/1.5 var(--type-mono);
-            letter-spacing: .045em;
-            opacity: 0;
-            text-transform: uppercase;
-            text-wrap: balance;
-            transform: translateY(-50%);
-            transition: opacity 160ms var(--ease-out);
-            pointer-events: none;
-        }
-        .folio-tick:hover, .folio-tick:focus-visible { background: var(--teal); }
-        .folio-tick:hover::after, .folio-tick:focus-visible::after { opacity: 1; }
-        /* Below 1200px the container has no right slack. No mobile TOC drawer —
-           the article is already good; that's how print works. */
-        @media (max-width: 1199px) {
-            .folio-rule, .folio-tick { display: none; }
-        }
-
         .art-body { max-width: 700px; margin-top: 54px; }
         .art-body p { margin: 0 0 19px; font-size: 1.02rem; color: var(--ink); }
         .art-body p a, .art-body li a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
@@ -502,25 +415,16 @@ ARTICLE_STYLE = """
         .art-fig { margin: 40px 0 40px; max-width: 860px; }
         .art-fig img { width: 100%; border: 1px solid var(--rule); background: var(--paper-raised); }
         .art-fig--portrait img { width: auto; max-width: min(460px, 100%); }
-        /* ── The shelf ────────────────────────────────────────────────────
-           Six pages become a body of work. No thumbnails: it's an index,
-           not a gallery — the exhibition on the homepage does pictures. */
         .shelf { max-width: 860px; margin-top: 76px; padding-top: 18px; border-top: 1px solid var(--ink); }
         .shelf-label { margin-bottom: 6px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .07em; text-transform: uppercase; }
         .shelf-item {
-            display: grid;
-            grid-template-columns: 34px minmax(0, 1fr) 62px;
-            gap: 18px;
-            align-items: baseline;
+            display: block;
             padding: 11px 0 12px;
             border-bottom: 1px solid var(--rule);
             text-decoration: none;
         }
-        .shelf-num { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .05em; }
         .shelf-title { font-size: .98rem; line-height: 1.3; transition: color 160ms var(--ease-out); }
-        .shelf-extent { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; text-align: right; }
         .shelf-item:hover .shelf-title { color: var(--teal); }
-        .shelf-item.is-here .shelf-num { color: var(--wine); }
         .shelf-item.is-here .shelf-title { font-weight: 600; }
         .shelf-item.is-here { border-bottom-color: var(--ink); }
 
@@ -545,23 +449,19 @@ ARTICLE_STYLE = """
         .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
         .art-body h2 { font-family: var(--type-display); font-weight: 400; letter-spacing: -.015em; }
         .shelf-title, .arch-item-title { font-weight: 400; letter-spacing: -.01em; }
-        .art-kicker, .art-meta time, .art-extent, .art-meta .text-link, .art-after-kicker,
-        .shelf-label, .shelf-num, .shelf-extent, .arch-kicker, .arch-label,
+        .art-kicker, .art-meta time, .art-meta .text-link, .art-after-kicker,
+        .shelf-label, .arch-label,
         .arch-item-open, .art-fig figcaption, .art-hero figcaption, .art-body h3,
         .crumb, .nav a, .btn-x, .footer-copy, .note-item time {
             font-weight: 600;
         }
-        .folio-tick[data-tick]::after { font-weight: 600; }
-
 """
 
 INDEX_STYLE = """
-        .arch-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 70px; align-items: end; padding: 94px 0 68px; }
-        .arch-kicker { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
-        .arch-title { max-width: 720px; margin-top: 14px; font-size: clamp(3.1rem, 7vw, 5.8rem); font-weight: 300; letter-spacing: -.035em; line-height: .92; }
+        .arch-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 70px; align-items: end; padding: 94px 0 54px; }
+        .arch-title { max-width: 720px; font-size: clamp(3.1rem, 7vw, 5.8rem); font-weight: 300; letter-spacing: -.035em; line-height: .92; }
         .arch-intro { max-width: 460px; margin: 0; color: var(--ink-soft); font-family: var(--type-body); font-size: 1rem; font-style: normal; font-weight: 400; line-height: 1.62; text-wrap: pretty; }
-        .arch-ledger { display: flex; justify-content: space-between; gap: 24px; padding: 13px 0 15px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
-        .arch-section { margin-top: 82px; }
+        .arch-section { margin-top: 44px; }
         .arch-label { color: var(--ink); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
         .arch-lead { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 48px; margin-top: 18px; padding: 32px 0 44px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); text-decoration: none; }
         .arch-lead-media { overflow: hidden; border: 1px solid var(--rule); }
@@ -571,8 +471,7 @@ INDEX_STYLE = """
         .arch-lead-title { display: block; margin-top: 12px; font-family: var(--type-display); font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.02; }
         .arch-lead-deck { display: block; margin-top: 14px; color: var(--ink-soft); font-size: .94rem; line-height: 1.6; text-wrap: pretty; }
         .arch-list { border-top: 1px solid var(--ink); }
-        .arch-item { display: grid; grid-template-columns: 42px 108px minmax(0, 1fr) 210px; gap: 10px 26px; align-items: start; padding: 25px 0 27px; border-bottom: 1px solid var(--rule); text-decoration: none; }
-        .arch-item-num { padding-top: 4px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+        .arch-item { display: grid; grid-template-columns: 108px minmax(0, 1fr) 210px; gap: 10px 26px; align-items: start; padding: 25px 0 27px; border-bottom: 1px solid var(--rule); text-decoration: none; }
         .arch-item time { padding-top: 4px; }
         .arch-item-title { display: block; font-family: var(--type-display); font-size: 1.34rem; font-weight: 400; letter-spacing: -.015em; line-height: 1.12; transition: color 180ms var(--ease-out); }
         .arch-item-deck { display: block; max-width: 560px; margin-top: 7px; color: var(--ink-soft); font-size: .87rem; line-height: 1.55; text-wrap: pretty; }
@@ -582,33 +481,25 @@ INDEX_STYLE = """
         .arch-lead:hover .arch-lead-media img, .arch-item:hover .arch-thumb img { transform: scale(1.025); }
         .arch-item:hover .arch-item-title { color: var(--teal); }
         .note-list { margin-top: 16px; border-top: 1px solid var(--ink); }
-        .note-item { display: grid; grid-template-columns: 42px 108px minmax(0, 1fr) auto; gap: 8px 26px; align-items: baseline; padding: 18px 0 20px; border-bottom: 1px solid var(--rule); text-decoration: none; }
-        .note-num { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+        .note-item { display: grid; grid-template-columns: 108px minmax(0, 1fr) auto; gap: 8px 26px; align-items: baseline; padding: 18px 0 20px; border-bottom: 1px solid var(--rule); text-decoration: none; }
         .note-item time { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .045em; text-transform: uppercase; }
         .note-title { font-size: 1rem; font-weight: 500; line-height: 1.25; transition: color 180ms var(--ease-out); }
         .note-item:hover .note-title { color: var(--teal); }
         .note-deck { display: block; max-width: 680px; margin-top: 4px; color: var(--ink-soft); font-size: .84rem; font-weight: 400; line-height: 1.5; }
         .note-arrow { color: var(--ink-muted); font: .8rem/1 var(--type-mono); }
-        .arch-endcap { margin-top: 92px; padding-top: 32px; border-top: 1px solid var(--ink); }
-        .arch-endcap p { max-width: 560px; font-family: var(--type-display); font-size: 1.55rem; font-weight: 300; line-height: 1.3; }
-        .arch-endcap .art-cta { margin-top: 24px; }
         .motion-ready [data-animate] { opacity: 0; transform: translateY(16px); }
         .motion-ready [data-animate].is-visible { opacity: 1; transform: none; transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
         @media (max-width: 800px) {
-            .arch-head { grid-template-columns: 1fr; gap: 28px; padding: 72px 0 52px; }
+            .arch-head { grid-template-columns: 1fr; gap: 28px; padding: 72px 0 44px; }
             .arch-lead { grid-template-columns: 1fr; }
-            .arch-item { grid-template-columns: 34px 96px minmax(0, 1fr); }
+            .arch-item { grid-template-columns: 96px minmax(0, 1fr); }
             .arch-thumb { display: none; }
-            .note-item { grid-template-columns: 34px 96px minmax(0, 1fr); }
+            .note-item { grid-template-columns: 96px minmax(0, 1fr); }
             .note-arrow { display: none; }
         }
         @media (max-width: 560px) {
             .arch-title { font-size: clamp(3rem, 16vw, 4.8rem); }
-            .arch-ledger { display: block; }
-            .arch-ledger span { display: block; }
-            .arch-item, .note-item { grid-template-columns: 30px minmax(0, 1fr); gap: 4px 14px; }
-            .arch-item time, .note-item time { grid-column: 2; }
-            .arch-item-copy, .note-title { grid-column: 2; }
+            .arch-item, .note-item { grid-template-columns: 1fr; gap: 6px; }
         }
 """
 
@@ -631,7 +522,6 @@ def shell(title, description, style_extra, body, canonical, article_css=False):
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&display=swap" rel="stylesheet">
     <style>{STYLE}</style>
     {'<link rel="stylesheet" href="/assets/article.css">' if article_css else f'<style>{style_extra}</style>'}
-    <script src="/assets/reader.js" defer></script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -677,9 +567,8 @@ def shell(title, description, style_extra, body, canonical, article_css=False):
 """
 
 
-def shelf(current_slug: str, counts: dict) -> str:
-    """The six, always visible. This is what makes it a body of work rather
-    than six pages that each dead-end."""
+def shelf(current_slug: str) -> str:
+    """Simple links to the other long-form pieces."""
     rows = []
     for c in ARTICLES:
         here = c["slug"] == current_slug
@@ -687,18 +576,16 @@ def shelf(current_slug: str, counts: dict) -> str:
         current = ' aria-current="page"' if here else ""
         slug = c["slug"]
         rows.append(
-            f'<a class="{cls}" href="/writing/{slug}/"{current} data-article="{slug}">'
-            f'<span class="shelf-num">{ROMAN[c["num"]]}</span>'
-            f'<span class="shelf-title">{html.escape(c["title"])}</span>'
-            f'<span class="shelf-extent">{counts.get(slug, 0):,}w</span></a>'
+            f'<a class="{cls}" href="/writing/{slug}/"{current}>'
+            f'<span class="shelf-title">{html.escape(c["title"])}</span></a>'
         )
     return (
         '<nav class="shelf" aria-label="All writing">'
-        '<p class="shelf-label">The writing</p>' + "".join(rows) + "</nav>"
+        '<p class="shelf-label">More writing</p>' + "".join(rows) + "</nav>"
     )
 
 
-def build_article(cfg, data, fingerprints=None, counts=None):
+def build_article(cfg, data, fingerprints=None):
     body_html = render_body(cfg, data["paragraphs"])
 
     words = len(prose_of(body_html).split())
@@ -730,14 +617,9 @@ def build_article(cfg, data, fingerprints=None, counts=None):
         )
         related = f"""
             <aside class="art-after">
-                <p class="art-after-kicker">Adjacent</p>
+                <p class="art-after-kicker">Related</p>
                 <ul>{items}</ul>
             </aside>"""
-
-    # Word count leads: a minute count is a guess about the reader, a word
-    # count is a fact about the text. This audience trusts facts.
-    minutes = max(1, round(words / 230))
-    extent = f"{words:,} words — {minutes} min"
 
     body = f"""
             <article data-slug="{cfg['slug']}">
@@ -746,20 +628,18 @@ def build_article(cfg, data, fingerprints=None, counts=None):
                     <h1 class="art-title">{html.escape(cfg['title'])}</h1>
                     <p class="art-deck">{cfg['deck']}</p>
                     <div class="art-meta">
-                        <time datetime="{cfg['iso']}">X Article · {cfg['date']}</time>
-                        <span class="art-extent">{extent}</span>
-                        <a class="text-link" href="{cfg['url']}" target="_blank" rel="noopener">Originally published on X</a>
+                        <time datetime="{cfg['iso']}">{cfg['date']}</time>
+                        <a class="text-link" href="{cfg['url']}" target="_blank" rel="noopener">View original on X</a>
                     </div>
                 </header>{hero_html}
                 <div class="art-body">
-                    <div class="folio-rule" aria-hidden="true"></div>
 {body_html}
                 </div>
             </article>{related}
-            {shelf(cfg['slug'], counts or {})}
+            {shelf(cfg['slug'])}
             <div class="art-cta">
-                <a class="btn-x" href="{X}" target="_blank" rel="noopener">Follow new work on X</a>
-                <a class="text-link text-link--in" href="/writing/">Back to the archive</a>
+                <a class="btn-x" href="{X}" target="_blank" rel="noopener">Follow on X</a>
+                <a class="text-link text-link--in" href="/writing/">All writing</a>
             </div>"""
 
     page = shell(f"{cfg['title']} — Lauris", cfg["deck"].replace("&amp;", "&"),
@@ -772,35 +652,11 @@ def build_article(cfg, data, fingerprints=None, counts=None):
 
 
 def build_article_css():
-    """The article's own styles, as one generated file.
-
-    Both the static pages and the reader need these rules: the reader
-    transports the article's DOM, and DOM without its CSS is not the article.
-    Generating one file keeps build_writing.py the single source — the
-    alternative is a second copy in index.html that drifts the first time the
-    type scale moves.
-    """
+    """Write the shared article styles."""
     dest = ROOT / "assets" / "article.css"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text("/* Generated by tools/build_writing.py — do not edit. */\n" + ARTICLE_STYLE.strip() + "\n")
     return dest
-
-
-def build_shelf(counts: dict):
-    """The reader's index — slugs, numerals, titles, counts. ~500 bytes.
-
-    An index, not the text: the prose exists exactly once, in the HTML. This
-    is generated so the counts can never drift from what the pages say.
-    """
-    data = [
-        {"slug": c["slug"], "num": ROMAN[c["num"]], "title": c["title"], "words": counts[c["slug"]]}
-        for c in ARTICLES
-    ]
-    dest = ROOT / "assets" / "shelf.json"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(json.dumps(data, ensure_ascii=False) + "\n")
-    return dest
-
 
 def build_index():
     lead = ARTICLES[0]
@@ -810,7 +666,6 @@ def build_index():
         hero = cfg["hero"] or cfg.get("thumb")
         rows.append(f"""
                     <a class="arch-item" href="/writing/{cfg['slug']}/" data-animate>
-                        <span class="arch-item-num">{ROMAN[cfg['num']]}</span>
                         <time datetime="{cfg['iso']}">{cfg['date']}</time>
                         <span class="arch-item-copy">
                             <span class="arch-item-title">{html.escape(cfg['title'])}</span>
@@ -820,11 +675,9 @@ def build_index():
                         <span class="arch-thumb"><img src="/assets/writing/{hero['file']}" alt="" width="{hero['w']}" height="{hero['h']}" loading="lazy"></span>
                     </a>""")
     notes = []
-    for index, (title, date, deck, url) in enumerate(NOTES, 1):
-        iso = ""
+    for title, date, deck, url in NOTES:
         notes.append(f"""
                     <a class="note-item" href="{url}" target="_blank" rel="noopener" data-animate>
-                        <span class="note-num">{index:02d}</span>
                         <time>{date}</time>
                         <span class="note-title">{title}<span class="note-deck">{deck}</span></span>
                         <span class="note-arrow">↗</span>
@@ -833,12 +686,10 @@ def build_index():
     body = f"""
             <header class="arch-head">
                 <div>
-                    <p class="arch-kicker">The writing archive</p>
-                    <h1 class="arch-title">Essays and working notes.</h1>
+                    <h1 class="arch-title">Essays and notes.</h1>
                 </div>
-                <p class="arch-intro">Event risk, corporate hedging, exchange design, and the institutional machinery that makes a contract usable. Everything below appeared first on <a href="{X}" target="_blank" rel="noopener">X</a>; the articles live here in full.</p>
+                <p class="arch-intro">I write about event risk, corporate hedging, and exchange design. Longer articles are archived here; shorter notes remain on <a href="{X}" target="_blank" rel="noopener">X</a>.</p>
             </header>
-            <div class="arch-ledger"><span>Six articles · seven working notes</span><span>November 2025 — July 2026</span></div>
             <section class="arch-section" aria-label="Articles">
                 <p class="arch-label">Articles</p>
                 <a class="arch-lead" href="/writing/{lead['slug']}/" data-animate>
@@ -856,17 +707,10 @@ def build_index():
                 </div>
             </section>
             <section class="arch-section" aria-label="Working notes">
-                <p class="arch-label">Working notes · on X</p>
+                <p class="arch-label">Notes on X</p>
                 <div class="note-list">{''.join(notes)}
                 </div>
-            </section>
-            <div class="arch-endcap">
-                <p>The archive is the record. <em>The live work appears first on X.</em></p>
-                <div class="art-cta">
-                    <a class="btn-x" href="{X}" target="_blank" rel="noopener">Follow @lzminsky</a>
-                    <a class="text-link text-link--in" href="/">Back to the front page</a>
-                </div>
-            </div>"""
+            </section>"""
 
     page = shell("Writing — Lauris", "Essays and working notes on event risk, corporate hedging, and exchange design.",
                  INDEX_STYLE, body, "https://lauris.xyz/writing/")
@@ -880,17 +724,11 @@ def main():
     articles = json.loads((DATA / "articles.json").read_text())
     by_num = {a["num"]: a for a in articles}
 
-    # Pass one: word counts, so every page's shelf can show all six.
-    counts = {c["slug"]: len(prose_of(render_body(c, by_num[c["num"]]["paragraphs"])).split())
-              for c in ARTICLES}
-
-    # Pass two: render.
     fingerprints = {}
     for cfg in ARTICLES:
-        dest = build_article(cfg, by_num[cfg["num"]], fingerprints, counts)
+        dest = build_article(cfg, by_num[cfg["num"]], fingerprints)
         print("wrote", dest.relative_to(ROOT))
     print("wrote", build_index().relative_to(ROOT))
-    print("wrote", build_shelf(counts).relative_to(ROOT))
     print("wrote", build_article_css().relative_to(ROOT))
     check_prose(fingerprints)
 
