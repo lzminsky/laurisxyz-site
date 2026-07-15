@@ -3,750 +3,897 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lauris</title>
+    <title>Lauris — Markets, ventures, and research</title>
+    <meta name="description" content="Lauris builds and researches market infrastructure across event contracts, derivatives, corporate risk, and institutional finance.">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="Lauris — Markets, ventures, and research">
+    <meta property="og:description" content="I work on how states of the world become financial markets.">
+    <meta property="og:url" content="https://lauris.xyz">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Cpath d='M8 9h16v14' fill='none' stroke='%23011614' stroke-width='2.6'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&amp;display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f9f7f4;
-            --fg: #111;
-            --fg-dim: #444;
-            --fg-dimmer: #6b6b6b;
-            --accent: #000;
+            --type-display: 'Newsreader', Georgia, serif;
+            --type-body: 'Geist', system-ui, sans-serif;
+            --type-mono: 'Geist Mono', ui-monospace, monospace;
+            --type-display-weight: 300;
+            --type-display-tracking: -.02em;
+            --type-label-tracking: .05em;
+            --paper: #ffffff;
+            --paper-raised: #ffffff;
+            --ink: #011614;
+            --ink-soft: #34423e;
+            --ink-muted: #65706d;
+            --rule: #d7ddda;
+            --rule-soft: #edf0ee;
+            --teal: #0c5c43;
+            --wine: #0c5c43;
+            --green: #0c5c43;
+            --rail: 150px;
+            --gutter: 54px;
+            --content-start: calc(var(--rail) + var(--gutter));
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-construct: cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        ::selection {
-            background: var(--fg);
-            color: var(--bg);
-        }
-
-        html {
-            font-size: 18px;
-            scroll-behavior: smooth;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: var(--ink); color: var(--paper); }
+        html { font-size: 18px; scroll-behavior: smooth; }
         body {
-            background: var(--bg);
-            color: var(--fg);
-            font-family: 'EB Garamond', Georgia, serif;
-            line-height: 1.6;
             min-height: 100vh;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--type-body);
+            font-size: 16px;
+            line-height: 1.55;
+            letter-spacing: -.01em;
             -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
 
-        .container {
-            max-width: 640px;
-            margin: 0 auto;
-            padding: 120px 40px 80px;
-        }
-
-        .title {
-            font-size: 2.2rem;
-            font-weight: 500;
-            letter-spacing: -0.02em;
-            margin-bottom: 48px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.1s forwards;
-        }
-
-        .mark {
-            font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        .mark-link {
-            color: var(--fg);
+        a { color: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
+        .skip-link {
+            position: fixed;
+            z-index: 100;
+            top: 12px;
+            left: 12px;
+            padding: 11px 14px;
+            background: var(--ink);
+            color: var(--paper);
+            font: 600 .667rem/1 var(--type-mono);
+            letter-spacing: .04em;
             text-decoration: none;
-            transition: opacity 0.2s ease;
-            display: inline-block;
-        }
-
-        .mark-link:hover {
-            opacity: 0.5;
-        }
-
-        .mark-symbol {
-            font-size: 2.5rem;
-            display: block;
-            line-height: 1;
-        }
-
-        .mark-equation {
-            font-size: 1.1rem;
-            color: var(--fg-dim);
-            letter-spacing: 0.1em;
-        }
-
-        .nav {
-            margin-bottom: 48px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.05s forwards;
-            white-space: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .nav::-webkit-scrollbar { display: none; }
-
-        .nav a {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: lowercase;
-            letter-spacing: 0.05em;
-            color: var(--fg-dimmer);
-            text-decoration: none;
-            margin-right: 24px;
-            transition: color 0.2s ease;
-        }
-
-        .nav a:hover {
-            color: var(--fg);
-        }
-
-        .bio {
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.1s forwards;
-        }
-
-        .bio p {
-            font-size: 0.95rem;
-            color: var(--fg-dim);
-            line-height: 1.75;
-            margin-bottom: 20px;
-        }
-
-        .bio p:last-child {
-            margin-bottom: 0;
-        }
-
-        .bio p:first-child {
-            color: var(--fg);
-            font-size: 1rem;
-        }
-
-        .bio .current {
-            color: var(--fg);
-            margin-top: 24px;
-        }
-
-        .cv {
-            margin-bottom: 48px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.2s forwards;
-        }
-
-        .cv-item {
-            font-size: 0.95rem;
-            color: var(--fg-dim);
-            margin-bottom: 8px;
-            padding-left: 16px;
-            position: relative;
-        }
-
-        .cv-item::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: var(--fg-dimmer);
-        }
-
-        .links {
-            margin-bottom: 64px;
-            padding: 20px 0;
-            border-top: 1px solid #e8e4df;
-            border-bottom: 1px solid #e8e4df;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.2s forwards;
-        }
-
-        .links a {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--fg);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            margin-right: 32px;
-        }
-
-        .links a:hover {
-            color: var(--fg-dim);
-        }
-
-        .section {
-            margin-bottom: 64px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.25s forwards;
-        }
-
-        .section:nth-child(4) { animation-delay: 0.3s; }
-        .section:nth-child(5) { animation-delay: 0.35s; }
-
-        .section-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--fg-dimmer);
-            margin-bottom: 32px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e8e4df;
+            transform: translateY(calc(-100% - 18px));
+            transition: transform 180ms var(--ease-out);
         }
+        .skip-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; transform: none; }
+        .container { width: min(1180px, calc(100% - 80px)); margin: 0 auto; padding: 42px 0 88px; }
+        .mono, .section-kicker, .work-meta, .nav a, .text-link,
+        .writing-date, .book-number { font-family: var(--type-mono); }
+        .writing-num, .writing-date, .book-number, .record-date, .lineage-date { font-variant-numeric: tabular-nums; }
 
-        .section-intro {
-            font-size: 0.9rem;
-            color: var(--fg-dim);
-            line-height: 1.7;
-            margin-bottom: 28px;
-        }
-
-        .project {
-            margin-bottom: 28px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid #f0ece7;
-        }
-
-        .project:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .project-name {
-            font-weight: 600;
-            font-size: 1.05rem;
-            color: var(--fg);
-            margin-bottom: 6px;
-        }
-
-        .project-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--fg-dimmer);
-            margin-left: 8px;
-        }
-
-        .project-mark {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--fg-dimmer);
-            margin-left: 4px;
-        }
-
-        .project-desc {
-            font-size: 0.9rem;
-            color: var(--fg-dim);
-            line-height: 1.6;
-        }
-
-        /* Nested sub-products under a parent entity */
-        .sub-project {
-            position: relative;
-            margin-top: 0;
-            margin-bottom: 22px;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .sub-project-name {
-            font-style: italic;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: var(--fg);
-            margin-bottom: 4px;
-        }
-
-        .sub-project-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--fg-dimmer);
-            margin-left: 8px;
-            font-style: normal;
-            font-weight: 400;
-        }
-
-        .sub-project-desc {
-            font-size: 0.875rem;
-            color: var(--fg-dim);
-            line-height: 1.65;
-        }
-
-        /* Inline links inside descriptions and writing pointer */
-        .bio a,
-        .project-desc a,
-        .sub-project-desc a,
-        .writing-pointer a {
-            color: var(--fg);
-            text-decoration: underline;
-            text-decoration-color: var(--fg-dimmer);
-            text-underline-offset: 3px;
-            transition: text-decoration-color 0.2s ease;
-        }
-
-        .bio a:hover,
-        .project-desc a:hover,
-        .sub-project-desc a:hover,
-        .writing-pointer a:hover {
-            text-decoration-color: var(--fg);
-        }
-
-        .writing-pointer {
-            font-size: 0.95rem;
-            color: var(--fg-dim);
-            line-height: 1.7;
-        }
-
-        .divider {
-            width: 40px;
-            height: 1px;
-            background: #e8e4df;
-            margin: 48px 0;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.45s forwards;
-        }
-
-        .books-section {
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.5s forwards;
-        }
-
-        .books-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--fg-dimmer);
-            margin-bottom: 32px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e8e4df;
-        }
-
-        .books-list {
-            list-style: none;
-        }
-
-        .book-item {
-            margin-bottom: 0;
-            padding: 16px 0;
-            line-height: 1.5;
-            border-bottom: 1px solid #e8e4df;
-        }
-
-        .book-item:last-child {
-            border-bottom: none;
-        }
-
-        .book-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--fg-dimmer);
-            margin-right: 12px;
-        }
-
-        .book-name {
-            font-size: 0.95rem;
-            color: var(--fg);
-            font-weight: 500;
-        }
-
-        .book-author {
-            color: var(--fg-dimmer);
-            font-style: italic;
-            font-size: 0.9rem;
-        }
-
-        .book-note {
-            font-size: 0.9rem;
-            color: var(--fg-dim);
-            margin-top: 4px;
-            padding-left: 32px;
-            line-height: 1.6;
-        }
-
-        .footer {
-            margin-top: 64px;
-            padding-top: 32px;
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.6s forwards;
-        }
-
-        .footer-mark {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.2rem;
-            color: var(--fg-dimmer);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ─── Reveal-on-scroll (below-the-fold sections) ─── */
-        .js [data-reveal] {
-            opacity: 0;
-            animation: none;
-            transform: translateY(16px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-            will-change: opacity, transform;
-        }
-
-        .js [data-reveal].is-visible {
-            opacity: 1;
-            transform: none;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .js [data-reveal],
-            .title, .mark, .nav, .bio, .links,
-            .section, .divider, .books-section, .footer {
-                opacity: 1 !important;
-                transform: none !important;
-                animation: none !important;
-                transition: none !important;
-            }
-        }
-
-        /* ─── Project header row (name + date chip) ─── */
-        .project-head,
-        .sub-project-head {
+        .masthead {
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             justify-content: space-between;
-            gap: 12px;
+            gap: 32px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--rule);
+            animation: none;
         }
-
-        .project-head { margin-bottom: 7px; }
-        .sub-project-head { margin-bottom: 4px; }
-
-        .project-head .project-name,
-        .sub-project-head .sub-project-name {
-            margin-bottom: 0;
+        .masthead-origin { display: flex; align-items: flex-start; gap: 17px; min-width: 0; }
+        .mark-link {
+            display: grid;
+            min-width: 36px;
+            min-height: 44px;
+            color: var(--ink);
+            text-decoration: none;
+            place-content: start;
         }
-
-        .project-date,
-        .sub-project-date {
-            flex: none;
-            margin-left: 0;
-            border: 1px solid #e4e0da;
-            border-radius: 999px;
-            padding: 2px 9px;
-            font-size: 0.68rem;
-            color: var(--fg-dimmer);
-            white-space: nowrap;
-        }
-
-        /* ─── Sub-project timeline rail ─── */
-        .sub-projects {
-            margin-top: 22px;
-            margin-left: 6px;
-            padding-left: 26px;
-            border-left: 1px solid #e2ded8;
-        }
-
-        .sub-project::before {
-            content: "";
-            position: absolute;
-            left: -30px;
-            top: 7px;
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--bg);
-            border: 1px solid #bdb8b0;
-        }
-
-        .sub-project:last-child { margin-bottom: 0; }
-
-        /* ─── Branded research objects (SLAM / Hedgebook) ─── */
-        .obj {
-            border-left: 2px solid;
-            border-bottom: none !important;
-            padding: 14px 16px 14px 17px;
-            margin-bottom: 14px;
-            border-radius: 0 6px 6px 0;
-            transition: background 0.25s ease;
-        }
-
-        .obj:last-child {
-            margin-bottom: 0;
-            padding-bottom: 14px;
-        }
-
-        .obj-slam {
-            border-left-color: #0d7680;
-            background: rgba(13, 118, 128, 0.04);
-        }
-
-        .obj-slam:hover { background: rgba(13, 118, 128, 0.08); }
-
-        .obj-hedge {
-            border-left-color: #15803d;
-            background: rgba(21, 128, 61, 0.04);
-        }
-
-        .obj-hedge:hover { background: rgba(21, 128, 61, 0.08); }
-
-        .slam-mark {
-            font-family: 'JetBrains Mono', monospace;
-            color: #0d7680;
-            margin-left: 6px;
+        .mark-symbol { font: 2rem/0.8 var(--type-mono); }
+        .nav { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 8px 22px; padding-top: 1px; }
+        .nav a {
+            color: var(--ink-muted);
+            min-height: 44px;
+            display: inline-flex;
+            align-items: flex-start;
+            padding-top: 5px;
+            font-family: var(--type-body);
+            font-size: .78rem;
             font-weight: 500;
+            letter-spacing: -.01em;
+            text-decoration: none;
+            transition: color 180ms var(--ease-out);
+        }
+        .nav a.nav-x {
+            padding-bottom: 3px;
+            border-bottom: 1px solid currentColor;
+            color: var(--teal);
+        }
+        .nav a:focus-visible, .mark-link:focus-visible, .text-link:focus-visible, .work-link:focus-visible,
+        .btn-x:focus-visible, .archive-door:focus-visible, .shelf-toggle:focus-visible,
+        .writing-row:focus-visible, .writing-feature-media a:focus-visible, .book-row:focus-visible {
+            outline: 2px solid var(--teal);
+            outline-offset: 4px;
         }
 
-        .obj-slam .project-desc a {
-            color: #0d7680;
-            text-decoration-color: rgba(13, 118, 128, 0.4);
+        .epigraph {
+            width: min(320px, calc(100vw - 150px));
+            margin: 0;
+            padding-left: 17px;
+            border-left: 1px solid var(--rule);
+        }
+        .epigraph blockquote { font-size: .96rem; font-style: italic; line-height: 1.25; }
+        .epigraph figcaption {
+            margin-top: 5px;
+            color: var(--ink-muted);
+            font: 600 .667rem/1.45 var(--type-mono);
+            letter-spacing: .05em;
+            text-transform: uppercase;
         }
 
-        .obj-slam .project-desc a:hover { text-decoration-color: #0d7680; }
+        .hero {
+            padding: 96px 0 108px;
+            animation: none;
+        }
+        .section-kicker, .work-meta {
+            color: var(--ink-muted);
+            font-size: .667rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .hero h1 {
+            max-width: 930px;
+            font-size: clamp(3.35rem, 7vw, 5.85rem);
+            font-weight: 300;
+            letter-spacing: -.025em;
+            line-height: .96;
+        }
+        .hero-support { min-width: 0; margin-top: 38px; }
+        .hero-deck {
+            max-width: 700px;
+            color: var(--ink-soft);
+            font-size: 1.24rem;
+            line-height: 1.5;
+            text-wrap: pretty;
+        }
+        .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; margin-top: 27px; }
+        .hero-side { max-width: 690px; margin-top: 34px; padding-left: 20px; border-left: 1px solid var(--rule); }
+        .hero-side p { color: var(--ink-soft); font-size: .86rem; line-height: 1.6; text-wrap: pretty; }
+        .hero-side em { color: var(--ink); font-style: normal; font-weight: 500; }
 
-        .hedge-badge {
+        .btn-x {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 17px;
-            height: 17px;
-            border-radius: 4px;
-            background: #15803d;
-            color: #fff;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.66rem;
-            font-weight: 500;
-            line-height: 1;
-            margin-left: 7px;
-            vertical-align: middle;
+            gap: 10px;
+            padding: 2px 0 5px;
+            border-bottom: 1px solid currentColor;
+            color: var(--ink);
+            min-height: 44px;
+            font: 500 .76rem/1.2 var(--type-body);
+            letter-spacing: -.01em;
+            text-decoration: none;
+            transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out), transform 140ms var(--ease-out);
+        }
+        .btn-x::before { content: '@lzminsky'; font-family: var(--type-mono); font-size: .667rem; letter-spacing: .02em; }
+        .btn-x::after { content: '↗'; margin-left: 1px; }
+        .btn-x:active { transform: scale(.98); }
+
+        .now-strip {
+            display: grid;
+            grid-template-columns: var(--rail) minmax(0, 1fr);
+            gap: var(--gutter);
+            padding: 42px 0 48px;
+            border-top: 1px solid var(--rule);
+        }
+        .now-label {
+            color: var(--ink);
+            font: 600 .667rem/1.45 var(--type-mono);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .now-label time { display: block; margin-top: 7px; color: var(--ink-muted); font-size: .667rem; letter-spacing: .04em; }
+        .now-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr); gap: 64px; }
+        .now-lede { max-width: 570px; font-size: 1.18rem; line-height: 1.55; }
+        .now-secondary { padding-left: 24px; border-left: 1px solid var(--rule); }
+        .now-caption { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
+        .now-list { margin-top: 12px; list-style: none; }
+        .now-list li { position: relative; padding-left: 16px; color: var(--ink-soft); font-size: .88rem; line-height: 1.5; }
+        .now-list li + li { margin-top: 7px; }
+        .now-list li::before { position: absolute; left: 0; color: var(--ink-muted); content: '—'; }
+        .now-list a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
+
+        .text-link, .work-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--ink);
+            min-height: 44px;
+            font: 500 .76rem/1.4 var(--type-body);
+            letter-spacing: -.01em;
+            text-decoration: none;
+            transition: transform 140ms var(--ease-out);
+        }
+        .text-link::after, .work-link::after { content: '↗'; transition: transform 180ms var(--ease-out); }
+        .text-link--down::after { content: '↓'; }
+        .text-link--in::after { content: '→'; }
+        .text-link:active, .work-link:active { transform: scale(.98); }
+
+        .folio-section, .books-section {
+            display: grid;
+            grid-template-columns: var(--rail) minmax(0, 1fr);
+            gap: var(--gutter);
+            padding: 86px 0;
+            border-top: 1px solid var(--rule);
+        }
+        .section-label { position: relative; }
+        .section-kicker { color: var(--ink); font-weight: 400; }
+        .section-label--inline { display: flex; align-items: baseline; gap: 11px; }
+        .section-content { min-width: 0; }
+        .section-heading { max-width: 760px; font-size: clamp(2rem, 3.5vw, 3.05rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.08; }
+        .section-intro { max-width: 680px; margin-top: 20px; color: var(--ink-soft); font-size: 1.06rem; line-height: 1.65; }
+
+        /* ── 01 · Formation — compact editorial composition ─────────────── */
+        #formation { padding: 64px 0 68px; }
+        .formation-heading { font-size: clamp(1.5rem, 2.4vw, 1.9rem); font-weight: 400; letter-spacing: -.02em; line-height: 1.1; }
+        .formation-grid {
+            display: grid;
+            grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
+            gap: 20px 56px;
+            margin-top: 26px;
+        }
+        .formation-grid p { color: var(--ink-soft); font-size: .93rem; line-height: 1.62; text-wrap: pretty; }
+        .formation-grid p + p { margin-top: 13px; }
+        .formation-path p:first-child { color: var(--ink); font-size: .98rem; }
+        .formation-research { padding-left: 26px; border-left: 1px solid var(--rule); }
+
+        .record { margin-top: 34px; border-top: 1px solid var(--ink); }
+        .record-caption { padding-top: 12px; color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
+        .record-row { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 6px 30px; padding: 15px 0 17px; border-bottom: 1px solid var(--rule); }
+        .record-who { min-width: 0; }
+        .record-name { font-size: .98rem; font-weight: 600; line-height: 1.3; }
+        .record-name .project-mark { margin-left: 4px; color: var(--ink-muted); font: .72rem/1 var(--type-mono); }
+        .record-date { display: block; margin-top: 3px; color: var(--ink-muted); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .04em; }
+        .record-desc { color: var(--ink-soft); font-size: .87rem; line-height: 1.58; text-wrap: pretty; }
+        .record-desc a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
+        .record-detail { min-width: 0; }
+        .record-proof {
+            margin-top: 10px;
+            color: var(--teal);
+            font: 600 .667rem/1.5 var(--type-mono);
+            letter-spacing: .055em;
+            text-transform: uppercase;
+        }
+        .record-lineage {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0;
+            margin-top: 16px;
+            border-top: 1px solid var(--rule);
+            list-style: none;
+        }
+        .lineage-item { position: relative; padding: 14px 18px 0 16px; }
+        .lineage-item:first-child { padding-left: 0; }
+        .lineage-item + .lineage-item { border-left: 1px solid var(--rule); }
+        .lineage-item::before {
+            position: absolute;
+            top: -3px;
+            left: 16px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--paper);
+            border: 1px solid var(--teal);
+            content: '';
+        }
+        .lineage-item:first-child::before { left: 0; }
+        .lineage-name { font-size: .76rem; font-weight: 600; }
+        .lineage-date { display: block; margin-top: 2px; color: var(--ink-muted); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .035em; }
+        .lineage-item p { margin-top: 6px; color: var(--ink-soft); font-size: .74rem; line-height: 1.5; text-wrap: pretty; }
+
+        /* ── Research work — one changing state-space ───────────────────── */
+        #work { display: block; padding-top: 0; border-top: 0; }
+        .atlas {
+            display: grid;
+            grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+            column-gap: 64px;
+            margin-top: 0;
+        }
+        .atlas-entries { min-width: 0; }
+        .atlas-entry {
+            display: flex;
+            min-height: 72vh;
+            padding: 40px 0 54px;
+            border-top: 1px solid var(--rule);
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .atlas-entry:first-child { border-top-color: var(--ink); }
+        .atlas-index {
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+            color: var(--ink-muted);
+            font: 600 .667rem/1 var(--type-mono);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            transition: color 300ms var(--ease-out);
+        }
+        .atlas-entry.is-active .atlas-index { color: var(--teal); }
+        .atlas-title { margin-top: 15px; font-family: var(--type-display); font-size: 2rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.02; }
+        .atlas-sub { margin-top: 5px; color: var(--ink-muted); font-family: var(--type-display); font-size: 1.02rem; font-style: italic; font-weight: 300; }
+        .atlas-desc { max-width: 54ch; margin-top: 13px; color: var(--ink-soft); font-size: .93rem; line-height: 1.62; text-wrap: pretty; }
+        .atlas-desc a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
+        .atlas-proof { margin: 24px 0 0; }
+        .atlas-proof a { display: block; text-decoration: none; }
+        .atlas-proof img {
+            width: 100%;
+            border: 1px solid var(--rule);
+            background: var(--paper-raised);
+            object-fit: cover;
+        }
+        .atlas-proof figcaption {
+            margin-top: 8px;
+            color: var(--ink-muted);
+            font: 600 .667rem/1.5 var(--type-mono);
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+        .atlas-actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-top: 18px; }
+        .work-status { color: var(--ink-muted); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .04em; text-transform: uppercase; }
+        .atlas-note { margin-top: 17px; padding-top: 14px; border-top: 1px solid var(--rule); }
+        .atlas-note-title { display: block; font-size: .86rem; font-weight: 600; }
+        .atlas-note-title span { margin-left: 8px; color: var(--ink-muted); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
+        .atlas-note p { margin-top: 6px; color: var(--ink-soft); font-size: .81rem; line-height: 1.55; }
+        .entry-poster { display: none; }
+        .atlas-stage-col { position: relative; min-width: 0; }
+        .atlas-stage {
+            position: sticky;
+            top: 9vh;
+            display: flex;
+            height: 78vh;
+            flex-direction: column;
+            transition: opacity 600ms var(--ease-out);
+        }
+        .atlas-stage.is-dimmed { opacity: .08; }
+        .stage-frame { position: relative; min-height: 0; flex: 1; }
+        #atlas-canvas, #atlas-fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #atlas-canvas { z-index: 1; }
+        #atlas-fallback { z-index: 0; transition: opacity 300ms var(--ease-out); }
+        .stage-plates { position: absolute; top: 7px; right: 2px; left: 2px; pointer-events: none; }
+        .stage-plate { position: absolute; inset: 0 0 auto; opacity: 0; transform: translateY(7px); transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out); }
+        .stage-plate.is-active { opacity: 1; transform: none; }
+        .stage-plate-index { color: var(--teal); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
+        .stage-plate-name { display: block; max-width: 460px; margin-top: 4px; color: var(--ink-soft); font-family: var(--type-display); font-size: 1.12rem; font-weight: 300; line-height: 1.25; }
+        .stage-note { position: absolute; right: 2px; bottom: 0; max-width: 280px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .04em; text-align: right; text-transform: uppercase; }
+        .stage-axes { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 2px 2px; border-top: 1px solid var(--rule); color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .04em; text-transform: uppercase; }
+
+        /* ── Writing — editorial issue, not a card grid ─────────────────── */
+        .writing-index { margin-top: 50px; border-top: 1px solid var(--ink); }
+        .writing-feature {
+            display: grid;
+            grid-template-columns: minmax(0, 1.42fr) minmax(280px, .58fr);
+            gap: 46px;
+            padding: 32px 0 42px;
+            border-bottom: 1px solid var(--rule);
+        }
+        .writing-feature-media, .writing-row-media { overflow: hidden; border: 1px solid var(--rule); }
+        .writing-feature-media a, .writing-row-media a { display: block; text-decoration: none; }
+        .writing-feature-media img, .writing-row-media img { width: 100%; transition: transform 900ms var(--ease-out); }
+        .writing-feature-body { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+        .writing-kicker { color: var(--ink-muted); font: 600 .667rem/1.55 var(--type-mono); letter-spacing: .06em; text-transform: uppercase; }
+        .writing-title { margin-top: 12px; font-family: var(--type-display); font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.02; }
+        .writing-deck { max-width: 42ch; margin-top: 14px; color: var(--ink-soft); font-size: .94rem; line-height: 1.6; text-wrap: pretty; }
+        .writing-open { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 24px; font-size: .78rem; font-weight: 500; text-decoration: none; }
+        .writing-open::after { content: '→'; transition: transform 180ms var(--ease-out); }
+        .writing-rows { border-bottom: 1px solid var(--ink); }
+        .writing-row {
+            display: grid;
+            grid-template-columns: 54px 110px minmax(0, 1fr) 190px;
+            gap: 24px;
+            align-items: start;
+            padding: 25px 0 27px;
+            border-bottom: 1px solid var(--rule);
+            text-decoration: none;
+        }
+        .writing-row:last-child { border-bottom: 0; }
+        .writing-num, .writing-date { padding-top: 4px; color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; text-transform: uppercase; }
+        .writing-row-title { display: block; font-family: var(--type-display); font-size: 1.34rem; font-weight: 400; letter-spacing: -.015em; line-height: 1.12; transition: color 180ms var(--ease-out); }
+        .writing-row-deck { display: block; max-width: 55ch; margin-top: 6px; color: var(--ink-soft); font-size: .85rem; line-height: 1.52; }
+        .writing-row-media img { aspect-ratio: 1.75 / 1; object-fit: cover; }
+
+        .archive-door {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px 28px;
+            margin-top: 58px;
+            padding: 27px 2px 30px;
+            border-top: 1px solid var(--ink);
+            border-bottom: 1px solid var(--rule);
+            text-decoration: none;
+        }
+        .archive-door-title { font-size: clamp(1.55rem, 2.8vw, 2.2rem); font-weight: 400; letter-spacing: -.02em; }
+        .archive-door-title::after { content: ' →'; color: var(--ink-muted); transition: color 200ms var(--ease-out); }
+        .archive-door-meta { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
+
+        /* ── 05 · Library ────────────────────────────────────────────────── */
+        .books-section { opacity: 1; animation: none; }
+        .books-title { max-width: 520px; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.08; }
+        .books-intro { max-width: 650px; margin: 16px 0 26px; color: var(--ink-soft); font-size: .98rem; }
+        .books-list { list-style: none; columns: 2; column-gap: 48px; border-top: 1px solid var(--ink); }
+        .book-item { break-inside: avoid; padding: 15px 0 17px; border-bottom: 1px solid var(--rule); line-height: 1.45; }
+        .book-number { margin-right: 10px; color: var(--ink-muted); font-size: .667rem; }
+        .book-name { font-size: .94rem; font-weight: 600; }
+        .book-author { color: var(--ink-muted); font-size: .86rem; font-style: italic; }
+        .book-note { margin-top: 5px; padding-left: 28px; color: var(--ink-soft); font-size: .82rem; line-height: 1.5; }
+        .books-list:not(.is-open) .book-extra { display: none; }
+        .shelf-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 24px;
+            padding: 0;
+            border: 0;
+            background: none;
+            color: var(--ink);
+            min-height: 44px;
+            font: 500 .76rem/1.4 var(--type-body);
+            letter-spacing: -.01em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .shelf-toggle::after { content: '→'; transition: transform 200ms var(--ease-out); }
+        .books-list.is-open + .shelf-toggle::after { content: '↑'; }
+
+        /* ── Endcap ──────────────────────────────────────────────────────── */
+        .endcap {
+            display: grid;
+            grid-template-columns: var(--rail) minmax(0, 1fr);
+            gap: var(--gutter);
+            padding: 78px 0 84px;
+            border-top: 1px solid var(--ink);
+        }
+        .endcap-kicker { color: var(--ink); font: 600 .667rem/1.45 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
+        .endcap-line { max-width: 620px; font-size: clamp(1.45rem, 2.6vw, 2rem); font-weight: 400; letter-spacing: -.02em; line-height: 1.25; text-wrap: pretty; }
+        .endcap-line em { color: var(--ink-soft); }
+        .endcap-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 28px; }
+
+        .footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding-top: 44px; border-top: 1px solid var(--rule); }
+        .footer-mark { color: var(--ink-muted); font: 1.2rem/1 var(--type-mono); }
+        .footer-copy { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .045em; text-align: right; text-transform: uppercase; }
+
+
+        /* ── Type roles ───────────────────────────────────────────────────
+           Newsreader Light for display (Teodor's silhouette, open licence,
+           and already the display face of Statebook); Geist for reading;
+           Geist Mono for labels. Numbers from hpccc/src/typography.css. */
+        .hero h1, .section-heading, .formation-heading, .books-title,
+        .endcap-line, .archive-door-title,
+        .record-name, .book-name, .now-lede, .hero-deck {
+            font-family: var(--type-display);
+            font-weight: var(--type-display-weight);
+            letter-spacing: var(--type-display-tracking);
+        }
+        .hero h1, .section-heading, .formation-heading, .books-title, .archive-door-title { line-height: 1.02; }
+        .record-name, .book-name { font-weight: 500; letter-spacing: -.01em; }
+        .epigraph blockquote {
+            font-family: var(--type-display);
+            font-weight: 300;
         }
 
-        .obj-hedge .project-desc a {
-            color: #15803d;
-            text-decoration-color: rgba(21, 128, 61, 0.4);
+
+        .mono, .section-kicker, .work-meta, .nav a, .text-link,
+        .writing-date, .book-number, .now-label, .now-caption, .record-date,
+        .record-caption, .work-status, .archive-door-meta,
+        .shelf-toggle, .endcap-kicker, .footer-copy, .btn-x,
+        .atlas-proof figcaption, .atlas-index, .stage-plate-index {
+            font-weight: 600;
         }
 
-        .obj-hedge .project-desc a:hover { text-decoration-color: #15803d; }
+        @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        [data-reveal] { opacity: 1; transform: none; }
+        .motion-ready [data-animate] { opacity: 0; transform: translateY(18px); }
+        .motion-ready [data-animate].is-visible { opacity: 1; transform: none; transition: opacity 720ms var(--ease-out), transform 720ms var(--ease-out); }
+        .motion-ready [data-animate="image"] { opacity: 1; transform: none; }
+        .motion-ready [data-animate="image"] img { transform: scale(1.018); transition: transform 900ms var(--ease-out); }
+        .motion-ready [data-animate="image"].is-visible img { transform: none; }
 
-        @media (max-width: 600px) {
-            html {
-                font-size: 17px;
-            }
+        @media (hover: hover) and (pointer: fine) {
+            .nav a:hover { color: var(--ink); }
+            .nav a.nav-x:hover, .btn-x:hover { color: var(--teal); }
+            .mark-link:hover { opacity: .58; }
+            .text-link:hover::after, .work-link:hover::after { transform: translate(2px, -2px); }
+            .text-link--down:hover::after { transform: translateY(2px); }
+            .text-link--in:hover::after { transform: translateX(3px); }
+            .writing-feature-media:hover img, .writing-row:hover img { transform: scale(1.025); }
+            .writing-row:hover .writing-row-title { color: var(--teal); }
+            .writing-open:hover::after { transform: translateX(3px); }
+            .archive-door:hover .archive-door-title::after { color: var(--teal); }
+            .shelf-toggle:hover::after { transform: translateX(3px); }
+        }
 
-            .container {
-                padding: 80px 24px 60px;
-            }
-
-            .mark-symbol {
-                font-size: 2rem;
-            }
-
-            .nav {
-                margin-bottom: 36px;
-            }
-
-            .nav a {
-                margin-right: 14px;
-                font-size: 0.68rem;
-            }
-
-            .title {
-                font-size: 1.8rem;
-                margin-bottom: 36px;
-            }
-
-            .links {
-                padding: 16px 0;
-            }
-
-            .links a {
-                display: block;
-                margin-right: 0;
-                margin-bottom: 12px;
-            }
-
-            .links a:last-child {
-                margin-bottom: 0;
-            }
-
-            .section-title {
-                font-size: 0.7rem;
-                margin-bottom: 24px;
-            }
-
-            .books-title {
-                font-size: 0.7rem;
-                margin-bottom: 24px;
-            }
-
-            .book-note {
-                padding-left: 0;
-                margin-top: 8px;
-                font-size: 0.875rem;
-            }
-
-            .book-item {
-                padding: 14px 0;
-            }
-
-            .sub-projects {
-                margin-left: 4px;
-                padding-left: 18px;
-            }
+        @media (max-width: 1100px) { .atlas { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); column-gap: 40px; } }
+        @media (max-width: 900px) {
+            .container { width: min(100% - 48px, 760px); }
+            .hero { padding: 72px 0 86px; }
+            .now-strip { grid-template-columns: 1fr; gap: 26px; padding: 38px 0 44px; }
+            .now-label { display: flex; align-items: baseline; gap: 12px; }
+            .now-label time { display: inline; margin-top: 0; }
+            .now-grid { gap: 40px; }
+            .folio-section, .books-section, .endcap { grid-template-columns: 1fr; gap: 30px; padding: 68px 0; }
+            #formation { padding: 56px 0; }
+            .section-label { display: flex; gap: 12px; align-items: baseline; }
+            .formation-grid { grid-template-columns: 1fr; gap: 14px; }
+            .formation-research { padding-left: 0; border-left: 0; }
+            .atlas { grid-template-columns: 1fr; margin-top: 40px; }
+            .atlas-stage-col { display: none; }
+            .atlas-entry { min-height: 0; padding: 42px 0 48px; }
+            .entry-poster { display: block; width: 100%; aspect-ratio: 16 / 10; margin-top: 22px; }
+            .writing-feature { grid-template-columns: 1fr; }
+            .writing-feature-body { min-height: 250px; }
+            .writing-row { grid-template-columns: 44px 96px minmax(0, 1fr); }
+            .writing-row-media { display: none; }
+        }
+        @media (max-width: 640px) {
+            html { font-size: 18px; }
+            .container { width: calc(100% - 40px); padding: 32px 0 62px; }
+            .masthead { display: block; padding-bottom: 22px; }
+            .nav { justify-content: flex-start; gap: 10px 18px; margin-top: 26px; }
+            .nav a[href="#now"], .nav a[href="#formation"] { display: none; }
+            .epigraph { width: min(280px, calc(100vw - 94px)); }
+            .hero { padding: 62px 0 72px; }
+            .hero h1 { font-size: clamp(3rem, 15vw, 4.5rem); }
+            .hero-deck { font-size: 1.1rem; }
+            .now-grid { grid-template-columns: 1fr; gap: 28px; }
+            .now-secondary { padding: 20px 0 0; border-top: 1px solid var(--rule); border-left: 0; }
+            .folio-section, .books-section { padding: 58px 0; }
+            .record-row { grid-template-columns: 1fr; gap: 4px; }
+            .record-date { margin-top: 1px; }
+            .record-lineage { grid-template-columns: 1fr; padding-left: 7px; border-top: 0; border-left: 1px solid var(--rule); }
+            .lineage-item, .lineage-item:first-child { padding: 0 0 17px 17px; }
+            .lineage-item + .lineage-item { border-left: 0; }
+            .lineage-item::before, .lineage-item:first-child::before { top: 6px; left: -4px; }
+            .atlas-title { font-size: 1.7rem; }
+            .writing-feature-body { min-height: 0; }
+            .writing-row { grid-template-columns: 36px minmax(0, 1fr); gap: 8px 18px; }
+            .writing-date { grid-column: 2; padding-top: 0; }
+            .writing-row-copy { grid-column: 2; }
+            .books-list { columns: 1; }
+            .book-note { padding-left: 0; }
+            .endcap { padding: 62px 0; }
+            .footer { align-items: flex-start; flex-direction: column; }
+            .footer-copy { text-align: left; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+            [data-reveal] { opacity: 1; transform: none; }
+            .motion-ready [data-animate] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
         }
     </style>
-    <script>document.documentElement.className += ' js';</script>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="container">
-        <div class="mark">
-            <a href="http://homepages.math.uic.edu/~kauffman/Laws.pdf" target="_blank" rel="noopener" class="mark-link">
-                <span class="mark-symbol">┐</span><br>
-                <span class="mark-equation">J = ┐J</span>
-            </a>
-        </div>
-
-        <nav class="nav">
-            <a href="#now">Now</a>
-            <a href="#research">Research</a>
-            <a href="#projects">Projects</a>
-            <a href="#writing">Writing</a>
-            <a href="#library">Library</a>
-        </nav>
-
-        <h1 class="title">Lauris</h1>
-
-        <div class="bio">
-            <p>I think of myself as a Forward Deployed Philosopher: I work in the overlap of market structure, law, and code, writing and building to turn ideas into objects, pointed at global practical problems that carry real theoretical weight.</p>
-
-            <p>I like thinking about systems and how to best formalize them from a market structure perspective. How they form, why they fail, what emerges from the wreckage. Mostly I'm trying to understand information failure: who knows what, who can't know what, and what happens in the gap.</p>
-
-            <p>Philosophy first: International Philosophy Olympiad laureate. A first and a distinction at the London School of Economics after transferring in, then internships at world-leading law firms, before becoming a builder and researcher in open-source finance.</p>
-        </div>
-
-        <div class="links">
-            <a href="https://twitter.com/lzminsky" target="_blank" rel="noopener">@lzminsky</a>
-            <a href="mailto:hello@lauris.xyz">hello@lauris.xyz</a>
-        </div>
-
-        <div class="section" id="now" data-reveal>
-            <div class="section-title">Now</div>
-            <p class="section-intro">Lately, prediction markets as an asset class. I am in the early formation of a new venture with a senior FICC co-founder, researching origination and swaps.</p>
-            <p class="section-intro" style="margin-bottom: 16px;">Outside of that, I am:</p>
-            <div class="cv-item">advising portfolio companies</div>
-            <div class="cv-item">working on research projects, independently or with larger market players (below)</div>
-            <div class="cv-item">exploring and designing event-contract structures with potential originators</div>
-            <div class="cv-item">writing on Twitter</div>
-        </div>
-
-        <div class="section" id="research" data-reveal>
-            <div class="section-title">Research and Objects</div>
-
-            <p class="section-intro">My previous academic research at the LSE centered on systemic risk: pathological contagion models, Arrow-Debreu securities, and permutations of those securities structured around swaps, which led naturally to my interest in the institutional use of event contracts. A separate strand examined the economic efficiency of the ISDA MA / CSA structure.</p>
-
-            <div class="project obj obj-slam">
-                <div class="project-name">SLAM: Seeing Like a Market <span class="slam-mark">⌐</span></div>
-                <p class="project-desc">A Lakatosian research programme on prediction-market microstructure, first set out in a thesis manuscript. Presented at the inaugural Kalshi Research Conference alongside Cyril Goddeeris, Toby Moskowitz and Robin Hanson. The manuscript is an early draft; a reworked version lands by end of Q2 2026. Interactive at <a href="https://slampaper.xyz" target="_blank" rel="noopener">slampaper.xyz</a>.</p>
+        <header class="masthead">
+            <div class="masthead-origin">
+                <a href="https://homepages.math.uic.edu/~kauffman/Laws.pdf" target="_blank" rel="noopener" class="mark-link" aria-label="Open Louis Kauffman's exploration of Laws of Form">
+                    <span class="mark-symbol">┐</span>
+                </a>
+                <figure class="epigraph">
+                    <blockquote>“Draw a distinction.”</blockquote>
+                    <figcaption>G. Spencer-Brown · <cite>Laws of Form</cite></figcaption>
+                </figure>
             </div>
+            <nav class="nav" aria-label="Primary navigation">
+                <a href="#now">Now</a>
+                <a href="#formation">Formation</a>
+                <a href="#work">Work</a>
+                <a href="#writing">Writing</a>
+                <a href="#library">Library</a>
+                <a class="nav-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+            </nav>
+        </header>
 
-            <div class="project obj obj-hedge">
-                <div class="project-name">Hedgebook <span class="hedge-badge">H</span></div>
-                <p class="project-desc">Maps every company in the S&amp;P 500 to the Kalshi event contracts pricing its key risks, each paired to its traditional-derivative analog. → <a href="https://hedgespx.com" target="_blank" rel="noopener">hedgespx.com</a></p>
-            </div>
-        </div>
-
-        <div class="section" id="projects" data-reveal>
-            <div class="section-title">Projects and Products</div>
-
-            <p class="section-intro">As an operator, I have built products across consumer markets and financial infrastructure.</p>
-
-            <div class="project">
-                <div class="project-head">
-                    <div class="project-name">Insrt Labs <span class="project-mark">┐</span></div>
-                    <span class="project-date">2022–2025</span>
-                </div>
-                <p class="project-desc">A consumer fintech company building unified trading experiences: consumer products that fuse a game layer with live-market trading. Three products drove 8-figures in user spend and 7-figures in revenue, backed by ~$3M in venture funding. Happy to see the mantle carried on by my friends at Euphoria.</p>
-
-                <div class="sub-projects">
-                    <div class="sub-project">
-                        <div class="sub-project-head">
-                            <div class="sub-project-name">Multiplier</div>
-                            <span class="sub-project-date">2024–2025</span>
-                        </div>
-                        <p class="sub-project-desc">A competitive trading experience built around real assets. Partners included the Solana Foundation and Raydium; creator-led growth with FaZe Kay and Bryce Hall.</p>
-                    </div>
-
-                    <div class="sub-project">
-                        <div class="sub-project-head">
-                            <div class="sub-project-name">Insrt / Blast</div>
-                            <span class="sub-project-date">2024</span>
-                        </div>
-                        <p class="sub-project-desc">A gamified path to acquiring assets, on a just-in-time inventory engine built under tight capital.</p>
-                    </div>
-
-                    <div class="sub-project">
-                        <div class="sub-project-head">
-                            <div class="sub-project-name">Insrt</div>
-                            <span class="sub-project-date">2022–2023</span>
-                        </div>
-                        <p class="sub-project-desc">A marketplace for digital collectibles, with tools to split ownership and earn on idle holdings. Partners included Pudgy Penguins.</p>
+        <main id="main-content">
+            <section class="hero">
+                <h1>I work on how states of the world become financial markets.</h1>
+                <div class="hero-support">
+                    <p class="hero-deck">My work connects event contracts, derivatives, and corporate risk through systems design and legal structures—from exposure discovery and contract design to execution, margin, and institutional ownership.</p>
+                    <div class="hero-links">
+                        <a class="btn-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Read the live work on X</a>
+                        <a class="text-link text-link--down" href="#work">Explore research</a>
                     </div>
                 </div>
-            </div>
+                <aside class="hero-side">
+                    <p><em>I think of myself as a Forward Deployed Philosopher:</em> technical competence across a few domains, plus natural language programming (writing and posting to materialize ideas), pointed at global practical problems that carry real theoretical weight.</p>
+                </aside>
+            </section>
 
-            <div class="project">
-                <div class="project-head">
-                    <div class="project-name">Vaal</div>
-                    <span class="project-date">2020–2021</span>
+            <section class="now-strip" id="now" aria-labelledby="now-label">
+                <h2 class="now-label" id="now-label">Now <time datetime="2026-07">July 2026</time></h2>
+                <div class="now-grid">
+                    <p class="now-lede">Lately, prediction markets as an asset class. I am in the early formation of a new venture with a senior FICC co-founder, researching origination and swaps.</p>
+                    <div class="now-secondary">
+                        <p class="now-caption">Also on the desk:</p>
+                        <ul class="now-list">
+                            <li>advising portfolio companies</li>
+                            <li>consulting major exchanges and policy centers on event contracts and market design (<a href="#work">below</a>)</li>
+                            <li>exploring and designing event-contract structures with potential originators</li>
+                            <li>writing on <a href="https://x.com/lzminsky" target="_blank" rel="noopener">X</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <p class="project-desc">Building the European version of dv01. A plumbing engine for securitization that we built with some of my best friends from the LSE.</p>
-            </div>
+            </section>
 
-            <div class="project">
-                <div class="project-name">LSE Systemic Risk Centre</div>
-                <p class="project-desc">Researcher. Worked on financial contagion models and the propagation of systemic risk across interconnected institutions.</p>
-            </div>
+            <section class="folio-section" id="formation" data-reveal>
+                <div class="section-label">
+                    <span class="section-kicker">Formation</span>
+                </div>
+                <div class="section-content">
+                    <h2 class="formation-heading">Philosophy first.</h2>
+                    <div class="formation-grid">
+                        <div class="formation-path">
+                            <p>International Philosophy Olympiad laureate in high school, then a first and a distinction at the London School of Economics. Internships at leading law firms followed.</p>
+                        </div>
+                        <div class="formation-research">
+                            <p>My academic research at the LSE centered on systemic risk: pathological contagion models, Arrow–Debreu securities, and permutations of those securities structured around swaps. A separate strand examined the economic efficiency of the ISDA Master Agreement / CSA structure.</p>
+                            <p>I like thinking about systems and how to best formalize them from a market-structure perspective. How they form, why they fail, what emerges from the wreckage. Mostly I am trying to understand information failure: who knows what, who cannot know what, and what happens in the gap.</p>
+                        </div>
+                    </div>
 
-            <p class="section-intro" style="margin-top: 28px; margin-bottom: 0;">More closed- and open-source projects and builds available on request.</p>
-        </div>
+                    <div class="record">
+                        <p class="record-caption">Record</p>
+                        <article class="record-row">
+                            <div class="record-who">
+                                <h3 class="record-name">Vaal</h3>
+                                <span class="record-date">2020–2021 · Built and sold</span>
+                            </div>
+                            <p class="record-desc">The European version of dv01: a plumbing engine for securitization, made with some of my best friends from the LSE.</p>
+                        </article>
+                        <article class="record-row record-row--feature">
+                            <div class="record-who">
+                                <h3 class="record-name">Insrt Labs <span class="project-mark">┐</span></h3>
+                                <span class="record-date">2022–2025 · Founder</span>
+                            </div>
+                            <div class="record-detail">
+                                <p class="record-desc">Founded and ran Insrt Labs for 39 months. Five audited products explored three versions of the same microstructure problem: fractional ownership and yield, just-in-time inventory, and routing new demand into long-tail spot markets. Wound down December 2025.</p>
+                                <p class="record-proof">$3.5m raised · five audited products · ≈$20m gross spend · protocol fees exceeded capital raised</p>
+                                <ol class="record-lineage" aria-label="Insrt Labs product lineage">
+                                    <li class="lineage-item">
+                                        <span class="lineage-name">Multiplier</span>
+                                        <span class="lineage-date">2023–2025</span>
+                                        <p>Gamified leverage trading app. Partners included the Solana Foundation and Raydium Foundation.</p>
+                                    </li>
+                                    <li class="lineage-item">
+                                        <span class="lineage-name">Insrt</span>
+                                        <span class="lineage-date">2022–2023</span>
+                                        <p>Fractional ownership over onchain intellectual property.</p>
+                                    </li>
+                                </ol>
+                            </div>
+                        </article>
+                        <article class="record-row">
+                            <div class="record-who">
+                                <h3 class="record-name">Independent work</h3>
+                                <span class="record-date">2026–</span>
+                            </div>
+                            <p class="record-desc">Independent research and advisory work across market design, secondary-allocation transactions, major exchanges, and policy centers.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
 
-        <div class="section" id="writing" data-reveal>
-            <div class="section-title">Writing</div>
-            <p class="writing-pointer"><a href="https://twitter.com/lzminsky/highlights" target="_blank">Twitter highlights</a>. Mostly prediction markets, microstructure, mechanism design, and market regimes.</p>
-        </div>
+            <section class="folio-section" id="work" data-reveal aria-label="Research work">
+                <div class="atlas">
+                    <div class="atlas-entries">
+                        <article class="atlas-entry" data-pose="statebook" id="statebook">
+                            <p class="atlas-index"><span>I</span><span>Define the space</span></p>
+                            <h3 class="atlas-title">Statebook</h3>
+                            <p class="atlas-sub">Markets for every state of the world.</p>
+                            <p class="atlas-desc">An interactive policy publication developed in collaboration with the <a href="https://hyperliquidpolicy.org" target="_blank" rel="noopener">Hyperliquid Policy Center</a>. It shows how real businesses could use perpetuals and event contracts against risks that ordinary listed markets do not match. The cases and figures are synthetic.</p>
+                            <canvas class="entry-poster" data-pose="statebook" aria-hidden="true"></canvas>
+                            <figure class="atlas-proof" data-animate="image">
+                                <a href="https://hpc-markets.vercel.app" target="_blank" rel="noopener">
+                                    <img src="assets/statebook.png" alt="Statebook publication showing markets for every state of the world" width="1200" height="630" loading="lazy">
+                                </a>
+                                <figcaption>Statebook · Interactive publication · Private review</figcaption>
+                            </figure>
+                            <div class="atlas-note">
+                                <span class="atlas-note-title">Markets for All States of the World <span>Associated working paper</span></span>
+                                <p>An order book organizes liquidity by contract. A statebook organizes executable liquidity by terminal payoff. The paper asks what must be true before that relationship becomes tradable: common state definitions, explicit payoffs, firm routes, and risk treatment that survives settlement and default.</p>
+                            </div>
+                            <div class="atlas-actions">
+                                <span class="work-status">Public release forthcoming</span>
+                            </div>
+                        </article>
 
-        <div class="divider" data-reveal></div>
+                        <article class="atlas-entry" data-pose="slam" id="slam">
+                            <p class="atlas-index"><span>II</span><span>Price the route</span></p>
+                            <h3 class="atlas-title">SLAM</h3>
+                            <p class="atlas-sub">Seeing Like a Market.</p>
+                            <p class="atlas-desc">An empirical and theoretical programme on the cost of acquiring state exposure: directly through an event contract, or indirectly through the derivative that shadows it. The programme began with the original <em>Seeing Like a Market</em> manuscript—90 pages, 87 contracts across five asset classes—and now extends beyond it.</p>
+                            <canvas class="entry-poster" data-pose="slam" aria-hidden="true"></canvas>
+                            <figure class="atlas-proof" data-animate="image">
+                                <a href="writing/seeing-like-a-market/">
+                                    <img src="assets/writing/article4_slam_hero.jpg" alt="The Decision Surface comparing event claims with the derivatives that shadow them" width="1878" height="751" loading="lazy">
+                                </a>
+                                <figcaption>90 pages · 87 contracts · five asset classes</figcaption>
+                            </figure>
+                            <div class="atlas-actions">
+                                <a class="work-link" href="https://www.slampaper.xyz" target="_blank" rel="noopener">Enter the programme</a>
+                                <a class="text-link text-link--in" href="writing/seeing-like-a-market/">The founding essay</a>
+                                <a class="text-link" href="https://stateriskpremium.com" target="_blank" rel="noopener">Cited in State Risk Premium</a>
+                            </div>
+                        </article>
 
-        <div class="books-section" id="library" data-reveal>
-            <div class="books-title">The Library and the Shibboleth</div>
+                        <article class="atlas-entry" data-pose="hedgebook" id="hedgebook">
+                            <p class="atlas-index"><span>III</span><span>Map the exposures</span></p>
+                            <h3 class="atlas-title">Hedgebook</h3>
+                            <p class="atlas-sub">Corporate exposure, matched to live contracts.</p>
+                            <p class="atlas-desc">A daily-updated public reference connecting Kalshi event contracts to the S&amp;P 500 companies they reference. The current edition contains 500 company dossiers, 47 market pages, and roughly 2,500 issuer–market links, with traditional-market analogues alongside them.</p>
+                            <canvas class="entry-poster" data-pose="hedgebook" aria-hidden="true"></canvas>
+                            <figure class="atlas-proof" data-animate="image">
+                                <a href="https://www.hedgespx.com" target="_blank" rel="noopener">
+                                    <img src="assets/hedgebook.png" alt="Hedgebook connecting event contracts to S&amp;P 500 companies" width="1200" height="630" loading="lazy">
+                                </a>
+                                <figcaption>500 dossiers · 47 market pages · ≈2,500 links</figcaption>
+                            </figure>
+                            <div class="atlas-actions">
+                                <a class="work-link" href="https://www.hedgespx.com" target="_blank" rel="noopener">Explore Hedgebook</a>
+                            </div>
+                        </article>
 
-            <ol class="books-list">
+                        <article class="atlas-entry" data-pose="bizhedge" id="bizhedge">
+                            <p class="atlas-index"><span>IV</span><span>Act inside it</span></p>
+                            <h3 class="atlas-title">BizHedge</h3>
+                            <p class="atlas-sub">One business, one exposure, one defensible hedge.</p>
+                            <p class="atlas-desc">Describe what could hurt the business in ordinary language. BizHedge searches current Kalshi markets, identifies the strongest legitimate relationship, and makes the cost, payout, and remaining risk legible. If no market genuinely fits, it says so.</p>
+                            <canvas class="entry-poster" data-pose="bizhedge" aria-hidden="true"></canvas>
+                            <figure class="atlas-proof" data-animate="image">
+                                <a href="https://bizhedge.app" target="_blank" rel="noopener">
+                                    <img src="assets/bizhedge.png" alt="BizHedge mapping a business exposure to a live event contract" width="1200" height="630" loading="lazy">
+                                </a>
+                                <figcaption>One business · one candidate contract · residual shown</figcaption>
+                            </figure>
+                            <div class="atlas-actions">
+                                <a class="work-link" href="https://bizhedge.app" target="_blank" rel="noopener">Try BizHedge</a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="atlas-stage-col" aria-hidden="true">
+                        <div class="atlas-stage" id="atlas-stage">
+                            <div class="stage-frame">
+                                <canvas id="atlas-fallback"></canvas>
+                                <canvas id="atlas-canvas"></canvas>
+                                <div class="stage-plates">
+                                    <div class="stage-plate" data-pose="statebook">
+                                        <span class="stage-plate-index">Plate I · State space</span>
+                                        <span class="stage-plate-name">Liquidity organized by terminal payoff.</span>
+                                    </div>
+                                    <div class="stage-plate" data-pose="slam">
+                                        <span class="stage-plate-index">Plate II · Decision surface</span>
+                                        <span class="stage-plate-name">The claim and the derivative that shadows it.</span>
+                                    </div>
+                                    <div class="stage-plate" data-pose="hedgebook">
+                                        <span class="stage-plate-index">Plate III · Exposure map</span>
+                                        <span class="stage-plate-name">Real companies landing on live contracts.</span>
+                                    </div>
+                                    <div class="stage-plate" data-pose="bizhedge">
+                                        <span class="stage-plate-index">Plate IV · One exposure</span>
+                                        <span class="stage-plate-name">One candidate contract. Residual shown.</span>
+                                    </div>
+                                </div>
+                                <div class="stage-note" id="stage-note"></div>
+                            </div>
+                            <div class="stage-axes">
+                                <span>x · states</span>
+                                <span>y · payoff</span>
+                                <span>z · route</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="folio-section" id="writing" data-reveal>
+                <div class="section-label">
+                    <span class="section-kicker">Writing</span>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-heading">Selected writing.</h2>
+                    <p class="section-intro">Essays and working notes on event risk, corporate hedging, and exchange design. The conversation happens on X; the durable versions are archived here.</p>
+
+                    <div class="writing-index">
+                        <article class="writing-feature">
+                            <figure class="writing-feature-media" data-animate="image">
+                                <a href="writing/a-hedge-is-not-a-product/">
+                                    <img src="assets/writing/article1_hedge_hero.jpg" alt="A hedge is not a product" width="2048" height="819" loading="lazy">
+                                </a>
+                            </figure>
+                            <div class="writing-feature-body" data-animate>
+                                <div>
+                                    <p class="writing-kicker">X Article · 14 Jul 2026</p>
+                                    <h3 class="writing-title">A hedge is not a product</h3>
+                                    <p class="writing-deck">A contract can be bought. A hedge has to be constructed around an exposure.</p>
+                                </div>
+                                <a class="writing-open" href="writing/a-hedge-is-not-a-product/">Read the essay</a>
+                            </div>
+                        </article>
+
+                        <div class="writing-rows">
+                            <a class="writing-row" href="writing/credit-already-trades-event-risk/" data-animate>
+                                <span class="writing-num">02</span>
+                                <time class="writing-date" datetime="2026-07-09">09 Jul 2026</time>
+                                <span class="writing-row-copy">
+                                    <span class="writing-row-title">Credit already trades event risk</span>
+                                    <span class="writing-row-deck">What €800bn of synthetic risk transfer teaches event markets about institutional ownership.</span>
+                                </span>
+                                <span class="writing-row-media"><img src="assets/writing/exh_credit_hero.jpg" alt="" width="2048" height="771" loading="lazy"></span>
+                            </a>
+                            <a class="writing-row" href="https://x.com/lzminsky/status/2077174969738363261" target="_blank" rel="noopener" data-animate>
+                                <span class="writing-num">03</span>
+                                <time class="writing-date" datetime="2026-07-15">15 Jul 2026</time>
+                                <span class="writing-row-copy">
+                                    <span class="writing-row-title">The exchange stack is converging</span>
+                                    <span class="writing-row-deck">Venue labels increasingly describe the front door, not the payoff stack.</span>
+                                </span>
+                                <span class="writing-row-media"><img src="assets/writing/postE_exchange_stack_map.png" alt="" width="1600" height="1000" loading="lazy"></span>
+                            </a>
+                            <a class="writing-row" href="https://x.com/lzminsky/status/2073033302064132119" target="_blank" rel="noopener" data-animate>
+                                <span class="writing-num">04</span>
+                                <time class="writing-date" datetime="2026-07-03">03 Jul 2026</time>
+                                <span class="writing-row-copy">
+                                    <span class="writing-row-title">Compute, sliced four ways</span>
+                                    <span class="writing-row-deck">The level, the shape, the residual, and the jumps—and the instrument each one gets.</span>
+                                </span>
+                                <span class="writing-row-media"><img src="assets/writing/exh_compute_matrix.jpg" alt="" width="1400" height="764" loading="lazy"></span>
+                            </a>
+                            <a class="writing-row" href="writing/philosophical-precision-is-the-new-assembly/" data-animate>
+                                <span class="writing-num">05</span>
+                                <time class="writing-date" datetime="2026-02-05">05 Feb 2026</time>
+                                <span class="writing-row-copy">
+                                    <span class="writing-row-title">Philosophical Precision Is the New Assembly</span>
+                                    <span class="writing-row-deck">Precise conceptual vocabulary as a control language for agentic reasoning.</span>
+                                </span>
+                                <span class="writing-row-media"><img src="assets/writing/article5_claude_hero.png" alt="" width="600" height="240" loading="lazy"></span>
+                            </a>
+                        </div>
+
+                        <a class="archive-door" href="writing/">
+                            <span class="archive-door-title">Enter the writing archive</span>
+                            <span class="archive-door-meta">Six articles · working notes · originals on X</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="books-section" id="library" data-reveal>
+                <div class="section-label">
+                    <span class="section-kicker">Library</span>
+                </div>
+                <div class="section-content">
+                    <h2 class="books-title">The Library and the Shibboleth</h2>
+                    <p class="books-intro">A partial map of the ideas underneath the work. A selected shelf; the rest on request below.</p>
+            <ol class="books-list" id="books-list">
                 <li class="book-item">
                     <span class="book-number">01</span>
                     <span class="book-name">Seeing Like a State</span> <span class="book-author">— Scott</span>
                     <p class="book-note">The map is not the territory and how a map can kill millions.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">02</span>
                     <span class="book-name">The Venture of Islam</span> <span class="book-author">— Hodgson</span>
                     <p class="book-note">Civilizational history at its best.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">03</span>
                     <span class="book-name">Models of Bounded Rationality</span> <span class="book-author">— Simon</span>
                     <p class="book-note">We all satisfice to our computational and emotional limits.</p>
@@ -756,17 +903,17 @@
                     <span class="book-name">On the Nature of Things</span> <span class="book-author">— Lucretius</span>
                     <p class="book-note">The most beautiful poetry ever written.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">05</span>
                     <span class="book-name">The Count of Monte Cristo</span> <span class="book-author">— Dumas</span>
                     <p class="book-note">Patience as strategy. The revenge plot as mechanism design problem.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">06</span>
                     <span class="book-name">A History of Philosophy</span> <span class="book-author">— Copleston</span>
                     <p class="book-note">The topography of the history of thought.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">07</span>
                     <span class="book-name">Critique of Pure Reason</span> <span class="book-author">— Kant</span>
                     <p class="book-note">The only thing that still annoys me is that the Terminus is the Manifold.</p>
@@ -781,27 +928,27 @@
                     <span class="book-name">Law, Legislation and Liberty</span> <span class="book-author">— Hayek</span>
                     <p class="book-note">Cosmos versus Taxis. Spontaneous order versus constructed order. The source code for everything I work on.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">10</span>
                     <span class="book-name">Genetic Epistemology</span> <span class="book-author">— Piaget</span>
                     <p class="book-note">The biological precursor to Kantian epistemology.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">11</span>
                     <span class="book-name">The Concept of the Political</span> <span class="book-author">— Schmitt</span>
                     <p class="book-note">Sovereignty. Friend/Foe. Which is which?</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">12</span>
                     <span class="book-name">Collected Poems</span> <span class="book-author">— Cavafy</span>
                     <p class="book-note">Above all, don't fool yourself, don't say it was a dream, your ears deceived you.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">13</span>
                     <span class="book-name">The Origins of Political Order</span> <span class="book-author">— Fukuyama</span>
                     <p class="book-note">How institutions actually form. The state, rule of law, accountability and why most places fail to get all three.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">14</span>
                     <span class="book-name">The Swerve</span> <span class="book-author">— Greenblatt</span>
                     <p class="book-note">How Lucretius got rediscovered and changed everything. Ideas have material histories.</p>
@@ -816,12 +963,12 @@
                     <span class="book-name">From Third World to First</span> <span class="book-author">— Lee Kuan Yew</span>
                     <p class="book-note">Whoever rules must have that iron in him. This is not a game of cards. This is your life and mine.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">17</span>
                     <span class="book-name">Changing Fortunes</span> <span class="book-author">— Volcker & Gyohten</span>
                     <p class="book-note">Monetary history from the people who made it. Central banking as craft, not science.</p>
                 </li>
-                <li class="book-item">
+                <li class="book-item book-extra">
                     <span class="book-number">18</span>
                     <span class="book-name">With the Old Breed</span> <span class="book-author">— Sledge</span>
                     <p class="book-note">War as it actually is. The corrective to every abstraction about conflict.</p>
@@ -837,29 +984,498 @@
                     <p class="book-note">We live in a hyperreality and it is only getting more strange. A prophetic monograph.</p>
                 </li>
             </ol>
-        </div>
+                    <button class="shelf-toggle" id="shelf-toggle" aria-expanded="false" aria-controls="books-list">The complete shelf</button>
+                </div>
+            </section>
 
-        <div class="footer" data-reveal>
+            <section class="endcap" aria-label="Follow on X">
+                <p class="endcap-kicker">Signal</p>
+                <div>
+                    <p class="endcap-line">Research is archived here. <em>The live work appears first on X.</em></p>
+                    <div class="endcap-actions">
+                        <a class="btn-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow @lzminsky</a>
+                        <a class="text-link text-link--in" href="writing/">The writing archive</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer" data-reveal>
             <span class="footer-mark">┐</span>
-        </div>
+            <span class="footer-copy">Lauris · Markets, ventures, research, and writing<br><a href="mailto:hello@lauris.xyz">hello@lauris.xyz</a> · <a href="https://x.com/lzminsky" target="_blank" rel="noopener">@lzminsky</a></span>
+        </footer>
     </div>
 
+    <!-- The reader builds its own surface and reads /assets/shelf.json.
+         Every trigger is a real link, so this is pure enhancement: with JS
+         off, articles simply navigate. -->
+    <script src="/assets/reader.js" defer></script>
+
     <script>
-        (function () {
-            var els = document.querySelectorAll('[data-reveal]');
-            if (!('IntersectionObserver' in window)) {
-                els.forEach(function (el) { el.classList.add('is-visible'); });
-                return;
+        (() => {
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const animated = Array.from(document.querySelectorAll('[data-animate]'));
+            if (!reducedMotion && animated.length && 'IntersectionObserver' in window) {
+                document.documentElement.classList.add('motion-ready');
+                const reveal = new IntersectionObserver((observations) => {
+                    observations.forEach((observation) => {
+                        if (!observation.isIntersecting) return;
+                        observation.target.classList.add('is-visible');
+                        reveal.unobserve(observation.target);
+                    });
+                }, { rootMargin: '0px 0px -10% 0px', threshold: .08 });
+                animated.forEach((element) => reveal.observe(element));
             }
-            var io = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        io.unobserve(entry.target);
-                    }
+
+            /* ── Library shelf toggle ─────────────────────────────────────── */
+            const shelfToggle = document.getElementById('shelf-toggle');
+            const booksList = document.getElementById('books-list');
+            if (shelfToggle && booksList) {
+                shelfToggle.addEventListener('click', () => {
+                    const open = booksList.classList.toggle('is-open');
+                    shelfToggle.setAttribute('aria-expanded', String(open));
+                    shelfToggle.textContent = open ? 'The selected shelf' : 'The complete shelf';
                 });
-            }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-            els.forEach(function (el) { io.observe(el); });
+            }
+
+            /* ── 03 · The state-space stage ───────────────────────────────── */
+            // One scene, four authored poses. Semantic axes: x = states of the
+            // world, y = payoff, z = the route from exposure to ownership.
+            const N = 12;
+            const lerp = (a, b, t) => a + (b - a) * t;
+
+            const rootStyle = getComputedStyle(document.documentElement);
+            const INK = rootStyle.getPropertyValue('--ink').trim() || '#181713';
+            const TEAL = rootStyle.getPropertyValue('--teal').trim() || '#0e6670';
+            const WINE = rootStyle.getPropertyValue('--wine').trim() || '#78384f';
+            const PAPER = rootStyle.getPropertyValue('--paper').trim() || '#ffffff';
+            const rgba = (hex, a) => {
+                const v = hex.replace('#', '');
+                const r = parseInt(v.slice(0, 2), 16), g = parseInt(v.slice(2, 4), 16), b = parseInt(v.slice(4, 6), 16);
+                return `rgba(${r},${g},${b},${a})`;
+            };
+
+            // Terminal-payoff distribution along the states axis.
+            const DIST = [];
+            for (let i = 0; i <= N; i += 1) {
+                DIST.push(.22 + 5.4 * Math.exp(-Math.pow(i - 4.4, 2) / 5.2) + 1.7 * Math.exp(-Math.pow(i - 9.4, 2) / 3.4));
+            }
+            // Decision surface: replication cost relief over (state, route).
+            const SURF = [];
+            for (let i = 0; i <= N; i += 1) {
+                SURF.push([]);
+                for (let k = 0; k <= N; k += 1) {
+                    SURF[i].push(
+                        2.8 * Math.exp(-(Math.pow(i - 8.2, 2) / 8 + Math.pow(k - 3.4, 2) / 10)) +
+                        3.6 * Math.exp(-(Math.pow(i - 2.8, 2) / 6 + Math.pow(k - 8.6, 2) / 8)) +
+                        .55 * Math.sin(i * .9) * Math.cos(k * .7) + .5
+                    );
+                }
+            }
+            // Corporate exposures raining onto the surface (Plate III).
+            const SCATTER = [
+                { i: 2.4, k: 9.6, h: 4.6, ci: 3, ck: 9, ok: true },
+                { i: 4.6, k: 10.4, h: 5.8, ci: 5, ck: 10, ok: true },
+                { i: 8.6, k: 8.4, h: 5.1, ci: 9, ck: 8, ok: true },
+                { i: 10.2, k: 5.6, h: 3.9, ci: 10, ck: 5, ok: true },
+                { i: 6.4, k: 6.6, h: 6.4, ci: 6, ck: 6, ok: true },
+                { i: 1.6, k: 4.6, h: 3.6, ci: null, ck: null, ok: false },
+                { i: 5.4, k: 3.2, h: 4.9, ci: null, ck: null, ok: false },
+                { i: 9.4, k: 10.8, h: 6, ci: 9, ck: 11, ok: true },
+                { i: 11.2, k: 8.8, h: 3.4, ci: null, ck: null, ok: false }
+            ];
+
+            const POSES = {
+                statebook: { bars: 1, boundary: 1, surface: 0, relief: 1, routes: 0, scatter: 0, focus: 0 },
+                slam:      { bars: 0, boundary: 0, surface: 1, relief: 1, routes: 1, scatter: 0, focus: 0 },
+                hedgebook: { bars: 0, boundary: 0, surface: .6, relief: .3, routes: 0, scatter: 1, focus: 0 },
+                bizhedge:  { bars: 0, boundary: 0, surface: .14, relief: .28, routes: 0, scatter: 0, focus: 1 }
+            };
+            const NOTES = {
+                statebook: 'terminal payoffs · the governance boundary',
+                slam: 'direct claim — teal · replication — wine',
+                hedgebook: 'matched, solid · unmatched, dashed',
+                bizhedge: 'hedged, filled · residual, hatched'
+            };
+
+            const stage = document.getElementById('atlas-stage');
+            const canvas = document.getElementById('atlas-canvas');
+            const fallbackCanvas = document.getElementById('atlas-fallback');
+            const stageNote = document.getElementById('stage-note');
+            const plates = Array.from(document.querySelectorAll('.stage-plate'));
+            const entries = Array.from(document.querySelectorAll('.atlas-entry'));
+
+            const makeScene = (cv) => {
+                const ctx = cv.getContext('2d');
+                let w = 0, h = 0, S = 0, OX = 0, OY = 0;
+
+                const size = () => {
+                    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                    const rect = cv.getBoundingClientRect();
+                    if (!rect.width || !rect.height) return false;
+                    w = rect.width; h = rect.height;
+                    cv.width = Math.round(w * dpr);
+                    cv.height = Math.round(h * dpr);
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    S = Math.min(w / 23.5, h / 22.5);
+                    OX = w / 2;
+                    OY = h * .5 + (N * S) * .12;
+                    return true;
+                };
+
+                const P = (i, j, k) => [
+                    OX + (i - k) * S * .866,
+                    OY + (i + k) * S * .5 - j * S
+                ];
+
+                const seg = (a, b, style, width, dash) => {
+                    ctx.strokeStyle = style;
+                    ctx.lineWidth = width;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    ctx.moveTo(a[0], a[1]);
+                    ctx.lineTo(b[0], b[1]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                };
+
+                const poly = (pts, style, width, dash, close) => {
+                    ctx.strokeStyle = style;
+                    ctx.lineWidth = width;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    pts.forEach((p, idx) => idx ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+                    if (close) ctx.closePath();
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                };
+
+                const fillPoly = (pts, style) => {
+                    ctx.fillStyle = style;
+                    ctx.beginPath();
+                    pts.forEach((p, idx) => idx ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+                    ctx.closePath();
+                    ctx.fill();
+                };
+
+                // A 3D column over floor cell [i0..i1]×[k0..k1], height jh.
+                const column = (i0, i1, k0, k1, jh, d, stroke, fillTop, fillSide, widthPx, dash) => {
+                    const b00 = P(i0, 0, k0, d), b10 = P(i1, 0, k0, d), b11 = P(i1, 0, k1, d), b01 = P(i0, 0, k1, d);
+                    const t00 = P(i0, jh, k0, d), t10 = P(i1, jh, k0, d), t11 = P(i1, jh, k1, d), t01 = P(i0, jh, k1, d);
+                    if (fillSide) { fillPoly([b10, b11, t11, t10], fillSide); fillPoly([b01, b11, t11, t01], fillSide); }
+                    if (fillTop) fillPoly([t00, t10, t11, t01], fillTop);
+                    poly([t00, t10, t11, t01], stroke, widthPx, dash, true);
+                    seg(b10, t10, stroke, widthPx, dash);
+                    seg(b11, t11, stroke, widthPx, dash);
+                    seg(b01, t01, stroke, widthPx, dash);
+                };
+
+                const surfJ = (i, k, relief) => {
+                    const ii = Math.max(0, Math.min(N, i));
+                    const kk = Math.max(0, Math.min(N, k));
+                    const i0 = Math.floor(ii), k0 = Math.floor(kk);
+                    const i1 = Math.min(N, i0 + 1), k1 = Math.min(N, k0 + 1);
+                    const ti = ii - i0, tk = kk - k0;
+                    const a = lerp(SURF[i0][k0], SURF[i1][k0], ti);
+                    const b = lerp(SURF[i0][k1], SURF[i1][k1], ti);
+                    return lerp(a, b, tk) * relief;
+                };
+
+                const draw = (V) => {
+                    ctx.clearRect(0, 0, w, h);
+                    const d = 0;
+
+                    // Floor grid — always present: the space itself.
+                    for (let g = 0; g <= N; g += 1) {
+                        seg(P(g, 0, 0, d), P(g, 0, N, d), rgba(INK, g === 0 || g === N ? .3 : .1), g === 0 || g === N ? 1 : .7);
+                        seg(P(0, 0, g, d), P(N, 0, g, d), rgba(INK, g === 0 || g === N ? .3 : .1), g === 0 || g === N ? 1 : .7);
+                    }
+
+                    // Plate I — terminal-payoff columns along the states axis.
+                    if (V.bars > .01) {
+                        ctx.globalAlpha = V.bars;
+                        // vertical back-wall frame
+                        seg(P(0, 9.4, 0, d), P(N, 9.4, 0, d), rgba(INK, .16), .7);
+                        seg(P(0, 0, 0, d), P(0, 9.4, 0, d), rgba(INK, .16), .7);
+                        seg(P(N, 0, 0, d), P(N, 9.4, 0, d), rgba(INK, .16), .7);
+                        for (let i = 0; i < N; i += 1) {
+                            const jh = DIST[i] * V.bars;
+                            const hot = i === 8;
+                            column(i + .12, i + .88, .3, 1.05, jh, d,
+                                hot ? rgba(WINE, .75) : rgba(TEAL, .55),
+                                hot ? rgba(WINE, .16) : rgba(TEAL, .1),
+                                hot ? rgba(WINE, .07) : rgba(TEAL, .045), hot ? 1.2 : .8);
+                        }
+                        // Governance / market boundary plane.
+                        if (V.boundary > .01) {
+                            ctx.globalAlpha = V.bars * V.boundary;
+                            const bi = 6.5;
+                            seg(P(bi, 0, 0, d), P(bi, 0, N, d), rgba(WINE, .55), 1, [5, 4]);
+                            seg(P(bi, 0, 0, d), P(bi, 7.6, 0, d), rgba(WINE, .45), 1, [5, 4]);
+                            seg(P(bi, 0, N, d), P(bi, 7.6, N, d), rgba(WINE, .45), 1, [5, 4]);
+                            seg(P(bi, 7.6, 0, d), P(bi, 7.6, N, d), rgba(WINE, .3), 1, [5, 4]);
+                        }
+                        ctx.globalAlpha = 1;
+                    }
+
+                    // Plate II — the decision surface.
+                    if (V.surface > .01) {
+                        ctx.globalAlpha = V.surface;
+                        for (let k = 0; k <= N; k += 1) {
+                            const pts = [];
+                            for (let i = 0; i <= N; i += 1) pts.push(P(i, surfJ(i, k, V.relief), k, d));
+                            poly(pts, rgba(TEAL, .16 + .22 * (k / N)), .8);
+                        }
+                        for (let i = 0; i <= N; i += 1) {
+                            const pts = [];
+                            for (let k = 0; k <= N; k += 1) pts.push(P(i, surfJ(i, k, V.relief), k, d));
+                            poly(pts, rgba(INK, .1), .65);
+                        }
+                        ctx.globalAlpha = 1;
+                    }
+
+                    // Plate II — the two routes to the same state.
+                    if (V.routes > .01) {
+                        ctx.globalAlpha = V.routes;
+                        const E = [1.4, surfJ(1.4, 10.6, V.relief) + 2.3, 10.6];
+                        const T = [9.2, surfJ(9.2, 2.4, V.relief), 2.4];
+                        // Direct claim: one clean line down onto the state.
+                        const direct = [];
+                        for (let t = 0; t <= 1; t += 1 / 22) {
+                            const i = lerp(E[0], T[0], t), k = lerp(E[2], T[2], t);
+                            const lift = Math.sin(t * Math.PI) * 1.5 + (1 - t) * 2.3;
+                            direct.push(P(i, surfJ(i, k, V.relief) + lift, k, d));
+                        }
+                        poly(direct, rgba(TEAL, .8), 1.5);
+                        // Replication: the strike ladder, dog-legged and dashed.
+                        const ladder = [[E[0], E[1], E[2]], [3.4, surfJ(3.4, 8.4, V.relief) + 2.9, 8.4], [5.2, surfJ(5.2, 6.4, V.relief) + 2.2, 6.4], [6.9, surfJ(6.9, 4.4, V.relief) + 1.5, 4.4], [8.2, surfJ(8.2, 3.2, V.relief) + .9, 3.2], T];
+                        poly(ladder.map(p => P(p[0], p[1], p[2], d)), rgba(WINE, .7), 1.2, [6, 4]);
+                        ladder.slice(1, -1).forEach(p => {
+                            const q = P(p[0], p[1], p[2], d);
+                            ctx.fillStyle = PAPER;
+                            ctx.strokeStyle = rgba(WINE, .8);
+                            ctx.lineWidth = 1;
+                            ctx.strokeRect(q[0] - 2.4, q[1] - 2.4, 4.8, 4.8);
+                            ctx.fillRect(q[0] - 1.7, q[1] - 1.7, 3.4, 3.4);
+                        });
+                        const e = P(E[0], E[1], E[2], d), t2 = P(T[0], T[1], T[2], d);
+                        ctx.fillStyle = PAPER;
+                        ctx.strokeStyle = rgba(INK, .85);
+                        ctx.lineWidth = 1.2;
+                        ctx.beginPath(); ctx.arc(e[0], e[1], 3.4, 0, 7); ctx.fill(); ctx.stroke();
+                        ctx.fillStyle = rgba(WINE, .9);
+                        ctx.beginPath(); ctx.arc(t2[0], t2[1], 3, 0, 7); ctx.fill();
+                        ctx.globalAlpha = 1;
+                    }
+
+                    // Plate III — exposures landing on live contracts.
+                    if (V.scatter > .01) {
+                        ctx.globalAlpha = V.scatter;
+                        SCATTER.forEach(pt => {
+                            const top = P(pt.i, pt.h, pt.k, d);
+                            if (pt.ok) {
+                                const cell = [
+                                    P(pt.ci - .5, .02, pt.ck - .5, d), P(pt.ci + .5, .02, pt.ck - .5, d),
+                                    P(pt.ci + .5, .02, pt.ck + .5, d), P(pt.ci - .5, .02, pt.ck + .5, d)
+                                ];
+                                fillPoly(cell, rgba(TEAL, .14));
+                                poly(cell, rgba(TEAL, .55), .9, null, true);
+                                seg(top, P(pt.ci, 0, pt.ck, d), rgba(TEAL, .5), 1);
+                            } else {
+                                seg(top, P(pt.i, pt.h * .35, pt.k, d), rgba(INK, .3), 1, [3, 4]);
+                            }
+                            ctx.fillStyle = pt.ok ? rgba(INK, .85) : rgba(INK, .45);
+                            ctx.beginPath(); ctx.arc(top[0], top[1], 2.7, 0, 7); ctx.fill();
+                        });
+                        ctx.globalAlpha = 1;
+                    }
+
+                    // Plate IV — one exposure, one contract, a visible residual.
+                    if (V.focus > .01) {
+                        ctx.globalAlpha = V.focus;
+                        const fi = 6.6, fk = 6.6;
+                        const exposure = 7.2, payoff = 4.3;
+                        // The exposure, as an open dashed outline.
+                        column(fi, fi + 1.15, fk, fk + 1.15, exposure, d, rgba(INK, .55), null, null, 1, [4, 4]);
+                        // The contract payoff, funded and filled.
+                        column(fi, fi + 1.15, fk, fk + 1.15, payoff, d, rgba(WINE, .8), rgba(WINE, .16), rgba(WINE, .08), 1.2);
+                        // The residual — hatched between payoff and exposure.
+                        for (let jj = payoff + .42; jj < exposure - .12; jj += .46) {
+                            seg(P(fi + 1.15, jj, fk, d), P(fi + 1.15, jj - .34, fk + 1.15, d), rgba(WINE, .45), .9);
+                        }
+                        const tip = P(fi + .575, exposure + .9, fk + .575, d);
+                        ctx.fillStyle = PAPER;
+                        ctx.strokeStyle = rgba(INK, .85);
+                        ctx.lineWidth = 1.2;
+                        ctx.beginPath(); ctx.arc(tip[0], tip[1], 3.4, 0, 7); ctx.fill(); ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
+                };
+
+                return { size, draw };
+            };
+
+            /* ── The driver ───────────────────────────────────────────────
+               scroll -> one 0..1 float -> a pure function -> named scalars
+               -> a dumb renderer. Ported from hpccc's landingV2Timeline.
+
+               There is no clock here. The old build tweened poses on their own
+               780ms timer, which meant the scene animated at you while you sat
+               still — and left a stale t0 that snapped the pose if you tabbed
+               away mid-transition. Scroll position cannot go stale. */
+            const clamp01 = (v) => Math.min(1, Math.max(0, v));
+            const smooth01 = (v) => { const t = clamp01(v); return t * t * (3 - 2 * t); };
+
+            // Dwell while reading, move in the gap between entries.
+            const stationProgress = (p) => {
+                const seg = 1 / 3;
+                const i = Math.min(2, Math.floor(clamp01(p) / seg));
+                const local = (clamp01(p) - i * seg) / seg;
+                const s = i + smooth01(clamp01((local - 0.22) / 0.56));
+                return reducedMotion ? Math.round(s) : s;   // the ONLY rm branch
+            };
+
+            const atlas = document.querySelector('.atlas');
+            const POSE_ORDER = ['statebook', 'slam', 'hedgebook', 'bizhedge'];
+            const canvasScene = (fallbackCanvas && fallbackCanvas.getContext) ? makeScene(fallbackCanvas) : null;
+            const mobileQuery = window.matchMedia('(max-width: 900px)');
+
+            let three = null;          // the three.js atlas, once loaded
+            let threeTried = false;
+            let station = 0;
+            let raf = 0;
+            // Scroll must never depend on IntersectionObserver. Where IO is
+            // slow, throttled, or broken, the drawing must still track your
+            // hand — it only loses the offscreen saving. Correctness first.
+            let live = true;
+
+            const applyStation = (s) => {
+                station = s;
+                const idx = Math.round(s);
+                const name = POSE_ORDER[idx];
+                plates.forEach(p => p.classList.toggle('is-active', p.dataset.pose === name));
+                entries.forEach((el, i) => el.classList.toggle('is-active', i === idx));
+                if (stageNote) stageNote.textContent = NOTES[name];
+                if (three) three.render(s, performance.now());
+                else if (canvasScene) canvasScene.draw({ ...POSES[name] });
+            };
+
+            const readRail = () => {
+                if (!atlas) return 0;
+                const total = Math.max(1, atlas.offsetHeight - window.innerHeight);
+                return clamp01(-atlas.getBoundingClientRect().top / total);
+            };
+
+            // Near enough to be worth the library: the section is within a
+            // screen of the viewport. Driven by scroll, not by an observer,
+            // so the load can't be missed if IO misbehaves.
+            const nearWork = () => {
+                if (!atlas) return false;
+                const r = atlas.getBoundingClientRect();
+                return r.top < window.innerHeight * 1.6 && r.bottom > -window.innerHeight * 0.6;
+            };
+
+            const tick = () => {
+                raf = 0;
+                if (nearWork()) loadThree();
+                applyStation(stationProgress(readRail()));
+                // Only keep a loop alive while the payoff is breathing at IV.
+                if (live && three && !reducedMotion && station > 2.8) raf = requestAnimationFrame(tick);
+            };
+            const request = () => { if (!raf && live) raf = requestAnimationFrame(tick); };
+
+            /* ── three, or the drawing we already have ────────────────────
+               Three layers before the library is ever fetched (BizHedge's
+               StageBackdrop): width gate, WebGL probe, then the import. Below
+               901px three is never downloaded — a phone gets the flat
+               drawing, which is a real drawing, not a gradient. */
+            const wantsThree = () => window.matchMedia('(min-width: 901px)').matches && !reducedMotion;
+
+            const loadThree = () => {
+                if (threeTried || !wantsThree() || !canvas) return;
+                threeTried = true;
+                const probe = document.createElement('canvas');
+                if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) return;
+                const s = document.createElement('script');
+                s.src = '/assets/atlas.js';
+                s.onload = () => {
+                    try {
+                        three = window.__atlas.createAtlas(canvas, { reducedMotion });
+                        if (fallbackCanvas) fallbackCanvas.style.opacity = '0';
+                        applyStation(station);
+                    } catch {
+                        three = null;
+                        if (fallbackCanvas) fallbackCanvas.style.opacity = '1';
+                    }
+                };
+                document.head.appendChild(s);
+            };
+
+            if (canvasScene && stage) {
+                canvasScene.size();
+                applyStation(0);
+
+                request();
+
+                if ('IntersectionObserver' in window) {
+                    // Purely an optimisation: stop the loop when the section is
+                    // nowhere near. It can never gate correctness.
+                    const io = new IntersectionObserver((obs) => {
+                        live = obs[0].isIntersecting;
+                        if (live) request();
+                        else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+                    }, { rootMargin: '600px 0px' });
+                    const work = document.getElementById('work');
+                    if (work) io.observe(work);
+
+                    const writing = document.getElementById('writing');
+                    if (writing) {
+                        new IntersectionObserver((obs) => {
+                            stage.classList.toggle('is-dimmed', obs[0].isIntersecting);
+                        }, { rootMargin: '0px 0px -72% 0px', threshold: 0 }).observe(writing);
+                    }
+                } else {
+                    live = true;
+                }
+
+                window.addEventListener('scroll', request, { passive: true });
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+                    else request();
+                });
+
+                let resizeTimer = 0;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        if (mobileQuery.matches) { renderPosters(); return; }
+                        if (three) three.resize(); else canvasScene.size();
+                        applyStation(station);
+                    }, 160);
+                });
+
+                // Mobile: authored static posters, one per entry. Deferred —
+                // don't paint four canvases nobody has scrolled to yet.
+                const posters = Array.from(document.querySelectorAll('.entry-poster'));
+                let postersDone = false;
+                const renderPosters = () => {
+                    if (postersDone || !mobileQuery.matches) return;
+                    posters.forEach(cv => {
+                        const s = makeScene(cv);
+                        if (s.size()) s.draw({ ...POSES[cv.dataset.pose] });
+                    });
+                    postersDone = true;
+                };
+                if ('IntersectionObserver' in window) {
+                    const pio = new IntersectionObserver((obs) => {
+                        if (obs.some(o => o.isIntersecting)) { renderPosters(); pio.disconnect(); }
+                    }, { rootMargin: '400px 0px' });
+                    posters.forEach(cv => pio.observe(cv));
+                } else {
+                    renderPosters();
+                }
+                mobileQuery.addEventListener?.('change', () => { postersDone = false; renderPosters(); });
+            }
         })();
     </script>
 </body>

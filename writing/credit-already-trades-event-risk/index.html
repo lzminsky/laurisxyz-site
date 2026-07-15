@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit already trades event risk — Lauris</title>
+    <meta name="description" content="Or how to scale non-sports event contract markets: what synthetic risk transfer teaches about institutional ownership.">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="Credit already trades event risk — Lauris">
+    <meta property="og:description" content="Or how to scale non-sports event contract markets: what synthetic risk transfer teaches about institutional ownership.">
+    <meta property="og:url" content="https://lauris.xyz/writing/credit-already-trades-event-risk/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Cpath d='M8 9h16v14' fill='none' stroke='%23011614' stroke-width='2.6'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --type-display: 'Newsreader', Georgia, serif;
+            --type-body: 'Geist', system-ui, sans-serif;
+            --type-mono: 'Geist Mono', ui-monospace, monospace;
+            --type-display-weight: 300;
+            --type-display-tracking: -.02em;
+            --type-label-tracking: .05em;
+            --paper: #ffffff; --paper-raised: #ffffff; --ink: #011614; --ink-soft: #34423e;
+            --ink-muted: #65706d; --rule: #d7ddda; --teal: #0c5c43; --wine: #0c5c43;
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: var(--ink); color: var(--paper); }
+        html { font-size: 18px; }
+        body {
+            min-height: 100vh;
+            background: var(--paper);
+            color: var(--ink); font-family: var(--type-body); line-height: 1.62;
+            letter-spacing: -.01em; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+        }
+        a { color: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
+        .skip-link {
+            position: fixed; z-index: 100; top: 12px; left: 12px; padding: 11px 14px;
+            background: var(--ink); color: var(--paper); font: 600 .667rem/1 var(--type-mono);
+            letter-spacing: .04em; text-decoration: none; text-transform: uppercase;
+            transform: translateY(calc(-100% - 18px)); transition: transform 180ms var(--ease-out);
+        }
+        .skip-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; transform: none; }
+        .container { width: min(1180px, calc(100% - 80px)); margin: 0 auto; padding: 42px 0 88px; }
+        .mono { font-family: var(--type-mono); }
+        .masthead { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+            padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
+        .masthead-origin { display: flex; align-items: flex-start; gap: 17px; min-width: 0; }
+        .mark-link { display: grid; min-width: 36px; min-height: 44px; color: var(--ink); text-decoration: none; place-content: start; }
+        .mark-symbol { font: 2rem/0.8 var(--type-mono); }
+        .crumb { padding-top: 6px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .05em; text-transform: uppercase; }
+        .crumb a { color: var(--ink-muted); text-decoration: none; transition: color 180ms var(--ease-out); }
+        .crumb a:hover, .crumb a:focus-visible { color: var(--ink); }
+        .crumb span { margin: 0 7px; color: var(--rule); }
+        .nav { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 8px 24px; padding-top: 3px; }
+        .nav a { display: inline-flex; align-items: flex-start; min-height: 44px; padding-top: 5px; color: var(--ink-muted);
+            font: 500 .78rem/1.4 var(--type-body); letter-spacing: -.01em;
+            text-decoration: none; transition: color 180ms var(--ease-out); }
+        .nav a:hover { color: var(--ink); }
+        .nav a.nav-x { padding-bottom: 3px; border-bottom: 1px solid currentColor; color: var(--teal); }
+        .nav a.nav-x:hover { color: var(--ink); }
+        a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+        .text-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--ink);
+            font: 500 .76rem/1.4 var(--type-body); letter-spacing: -.01em;
+            text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
+        .text-link::after { content: '↗'; transition: transform 180ms var(--ease-out); }
+        .text-link--in::after { content: '→'; }
+        .text-link:hover::after { transform: translate(2px, -2px); }
+        .text-link--in:hover::after { transform: translateX(3px); }
+        .btn-x { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 2px 0 5px;
+            border: 0; border-bottom: 1px solid currentColor; color: var(--ink);
+            font: 500 .76rem/1.2 var(--type-body); letter-spacing: -.01em;
+            text-decoration: none; transition: color 180ms var(--ease-out); }
+        .btn-x::after { content: '↗'; }
+        .btn-x:hover { color: var(--teal); }
+        .foot-strip { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 96px;
+            padding-top: 40px; border-top: 1px solid var(--rule); }
+        .footer-mark { color: var(--ink-muted); font: 1.2rem/1 var(--type-mono); }
+        .footer-copy { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .045em;
+            text-align: right; text-transform: uppercase; }
+        .art-title, .arch-title, .arch-item-title, .shelf-title {
+            font-family: var(--type-display); font-weight: var(--type-display-weight); letter-spacing: var(--type-display-tracking);
+        }
+        .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
+        @media (max-width: 640px) {
+            html { font-size: 18px; }
+            .container { width: calc(100% - 40px); padding: 32px 0 62px; }
+            .masthead { display: block; }
+            .nav { justify-content: flex-start; margin-top: 22px; }
+            .foot-strip { flex-direction: column; align-items: flex-start; }
+            .footer-copy { text-align: left; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+        }
+</style>
+    <link rel="stylesheet" href="/assets/article.css">
+    <script src="/assets/reader.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="container">
+        <header class="masthead">
+            <div class="masthead-origin">
+                <a href="/" class="mark-link" aria-label="Lauris — home"><span class="mark-symbol">┐</span></a>
+                <p class="crumb"><a href="/">Lauris</a><span>/</span><a href="/writing/">Writing</a></p>
+            </div>
+            <nav class="nav" aria-label="Primary navigation">
+                <a href="/#work">Work</a>
+                <a href="/writing/">Writing</a>
+                <a href="/#library">Library</a>
+                <a class="nav-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow on X ↗</a>
+            </nav>
+        </header>
+        <main id="main-content">
+
+            <article data-slug="credit-already-trades-event-risk">
+                <header class="art-head">
+                    <p class="art-kicker">Event markets · credit</p>
+                    <h1 class="art-title">Credit already trades event risk</h1>
+                    <p class="art-deck">Or how to scale non-sports event contract markets: what synthetic risk transfer teaches about institutional ownership.</p>
+                    <div class="art-meta">
+                        <time datetime="2026-07-09">X Article · 09 Jul 2026</time>
+                        <span class="art-extent">1,213 words — 5 min</span>
+                        <a class="text-link" href="https://x.com/lzminsky/status/2075235328995033576" target="_blank" rel="noopener">Originally published on X</a>
+                    </div>
+                </header>
+                <figure class="art-hero">
+                    <img src="/assets/writing/exh_credit_hero.jpg" alt="How a synthetic risk transfer works: the bank keeps the loans, sells the first loss, and holds less capital." width="2048" height="771">
+                    <figcaption>How a synthetic risk transfer works: the bank keeps the loans, sells the first loss, and holds less capital.</figcaption>
+                </figure>
+                <div class="art-body">
+                    <div class="folio-rule" aria-hidden="true"></div>
+<p>What synthetic risk transfer says about whether institutions will hold event contracts</p>
+<p>Will institutions ever hold event contracts? People treat this as an open question about prediction markets. I think credit already answered it quite some time ago.</p>
+<p>Since about 2016, banks have been buying default protection on their loan books through synthetic risk transfer.</p>
+<p>The bank keeps the loans and issues a credit-linked note against the first losses in the pool. The investor puts up cash, earns a spread, and eats losses when borrowers in the pool default. The BIS counted roughly €800bn of protected loan pools at end-2024. Issuance in 2025 was about $41bn. The US mostly sat this market out until September 2023, when the Fed confirmed in a few FAQ paragraphs that the CLN format counts for capital relief. Morgan Stanley got approval within days. Same instrument as before, new capital treatment, and the market followed.</p>
+<p>Who sits on the other side matters here. PGGM has written this protection for the Dutch healthcare scheme since 2006, usually splitting deals with Alecta: €6bn of BBVA loans in one trade, €8bn of BNP Paribas in another. AXA IM raised €2.3bn for the strategy. ArrowMark closed a $1.1b fund in January. These positions went through investment committees and live in policy documents under credit. Pension money, in size, short a defined set of credit events.</p>
+<p>Credit also shows what the liquid version looks like. Index CDS was 99% of EU traded notional in ISDA's Q1 2025 data, and iTraxx Europe alone did about half a trillion in the quarter. But look at what lets dealers make that market. An index CDS position is unfunded and margined, it nets at the clearinghouse, and it can be hedged against single names or other series. The dealer's balance sheet has somewhere to put the risk.</p>
+<p>The event contract gives none of that relief, and that is by design. It is the simplest version of the payoff, a terminal binary posted in full, and each simplification lands as a constraint on whoever holds it.</p>
+<p>Full collateral means posting your whole maximum loss in cash, so size is expensive and nothing nets.
+A terminal claim pays nothing while you wait, so there is no coupon and no obvious mandate line to book it under.
+A discrete state gives you nothing to delta-hedge, so a market maker who fills your order holds the event outright until offsetting flow arrives, which in macro markets can be never.</p>
+<p>The instrument is simple because every hard problem was pushed onto the holder (though, admittely, margin is being solved by some of the main titular exchanges).</p>
+<p>You can see that last constraint in the order book. A recent paper on 41.6 million Kalshi trades puts the equilibrium plainly: these books have almost no Glosten-Milgrom liquidity traders, because almost nobody trading them has a hedging or rebalancing reason to be there.</p>
+<p>It is speculators cross-subsidizing each other, retail optimism on longshot yes contracts funding informed traders at roughly 1.5 to 1 on the single-name markets that settle no. Nobody in the book is buying insurance. Hedging today is a defensive corner, and a corner does not make a market. The two prints that did look like hedges both went off-book.</p>
+<p>Credit relaxed exactly these constraints with the funded note. The CLN pays a coupon, books under credit, and moves the warehouse onto an investor who is paid to hold the risk to resolution.</p>
+<p>That packaging has now reached event contracts. In April, Marex issued what looks like the first institutional structured note on a prediction-market outcome: up to $10m, sold to a Swiss client, a 7% coupon conditional on Nvidia still being the largest company in a year. Marex takes no view. It hedges in the event contracts on Kalshi and keeps the spread between the coupon and the hedge cost, and its CEO says it plans to build more.</p>
+<p>Anyone who has read a CLN term sheet knows the shape: a conditional coupon on a named state, a dealer in the middle running the replication.</p>
+<p>So I read the adverse-selection result the other way from most people. The uninformed leg of the equity market, the index and rebalancing flow, took decades of wrapper-building to exist.</p>
+<figure class="art-fig" id="f2-fig1"><a class="folio-tick folio-tick--fig" href="#f2-fig1" aria-hidden="true" tabindex="-1"></a><img src="/assets/writing/article2_credit_3_liquidity.png" alt="Where the liquidity comes from: speculators cross-subsidising each other today; a funded note supplies the uninformed side." width="2048" height="1152" loading="lazy"><figcaption>Where the liquidity comes from: speculators cross-subsidising each other today; a funded note supplies the uninformed side.</figcaption></figure>
+<p>Event markets need the two populations credit already built: dealers whose books net against event risk, for whom the trade is inventory management, and note buyers who are uninformed by construction, the way a cat bond investor is, paid a coupon to carry the state to resolution.</p>
+<p>The cat bond market is exactly this, pensions and specialist funds paid a coupon to hold hurricane and earthquake triggers, and often the same institutions that write synthetic risk transfer. PGGM sits in both. The investor who will hold a naked event for yield already exists. Nobody has handed it an exchange-listed one.</p>
+<p>Look at which side the Marex note sits on. Retail overpays for the longshot, so the wrapper gets built on the favorite, where the coupon is cheapest to make. If that flow grows, the longshot bias in those markets should compress. That is a claim you can test. The instrument has to plug into a balance sheet that already exists, or the hedging story is a costume.</p>
+<p>The traffic between the two markets will not run one way. Single-name CDS barely trades anymore, so outside a shrinking list of large issuers there is no market price of default risk at all.</p>
+<figure class="art-fig" id="f2-fig2"><a class="folio-tick folio-tick--fig" href="#f2-fig2" aria-hidden="true" tabindex="-1"></a><img src="/assets/writing/article2_credit_4_traffic.png" alt="The traffic runs both ways: a public price of default risk one way, hedging demand for the recession tail the other." width="2048" height="1152" loading="lazy"><figcaption>The traffic runs both ways: a public price of default risk one way, hedging demand for the recession tail the other.</figcaption></figure>
+<p>An exchange-listed default contract would be that price, and a cleaner one, since a CDS spread prices probability times severity while a binary prices probability alone. Where both trade you could back out implied recovery off a public screen, which credit has never had. It would not even need the committee.</p>
+<p>A bankruptcy filing or a missed coupon is a public fact an exchange can settle on directly, which is the simpler trigger the oracle problem above keeps pointing at. And an event decided by an ISDA committee on one venue and an exchange rulebook on the other is a basis that will eventually trade.</p>
+<figure class="art-fig" id="f2-fig3"><a class="folio-tick folio-tick--fig" href="#f2-fig3" aria-hidden="true" tabindex="-1"></a><img src="/assets/writing/article2_credit_2_who_decides.png" alt="Who decides the event: an ISDA committee vote against an exchange rulebook with a named public source." width="2048" height="1152" loading="lazy"><figcaption>Who decides the event: an ISDA committee vote against an exchange rulebook with a named public source.</figcaption></figure>
+<p>It runs the other way too. An SRT investor is short correlated defaults through the cycle, and the tail on that book is a recession, which is exactly the state event venues already quote.</p>
+<p>A desk that already warehouses that book does not need convincing to hedge, it needs an instrument that plugs in. Credit also tells you the order things get built in. Single-name notes first, then baskets, then tranches on the baskets, at which point the correlation between events becomes its own priced object and dealers get a hedging complex instead of naked inventory. Credit took about a decade to walk that path.</p>
+<p>None of this is clean, and it is worth saying where it breaks. Synthetic risk transfer has its own critics: the ECB has warned that banks sometimes lend to the very funds buying their protection, so the risk leaves the capital ratio without quite leaving the system.</p>
+<p>I am working through this with a former Head of FICC Coverage at Goldman Sachs for a major region, pairing the theory with how the flow actually gets done. Some of it is public, some is not yet. DMs open if you allocate, structure, or run risk near this.</p>
+                </div>
+            </article>
+            <aside class="art-after">
+                <p class="art-after-kicker">Adjacent</p>
+                <ul><li><a href="https://x.com/lzminsky/status/2075646380500987956" target="_blank" rel="noopener">Companion note — on Bartlett &amp; O'Hara, “Adverse Selection in Prediction Markets” ↗</a></li></ul>
+            </aside>
+            <nav class="shelf" aria-label="All writing"><p class="shelf-label">The writing</p><a class="shelf-item" href="/writing/a-hedge-is-not-a-product/" data-article="a-hedge-is-not-a-product"><span class="shelf-num">I</span><span class="shelf-title">A hedge is not a product</span><span class="shelf-extent">2,518w</span></a><a class="shelf-item is-here" href="/writing/credit-already-trades-event-risk/" aria-current="page" data-article="credit-already-trades-event-risk"><span class="shelf-num">II</span><span class="shelf-title">Credit already trades event risk</span><span class="shelf-extent">1,213w</span></a><a class="shelf-item" href="/writing/benchmarks-and-institutional-scale/" data-article="benchmarks-and-institutional-scale"><span class="shelf-num">III</span><span class="shelf-title">Benchmarks are key to scaling prediction markets institutionally</span><span class="shelf-extent">3,828w</span></a><a class="shelf-item" href="/writing/seeing-like-a-market/" data-article="seeing-like-a-market"><span class="shelf-num">IV</span><span class="shelf-title">Seeing Like a Market</span><span class="shelf-extent">2,189w</span></a><a class="shelf-item" href="/writing/philosophical-precision-is-the-new-assembly/" data-article="philosophical-precision-is-the-new-assembly"><span class="shelf-num">V</span><span class="shelf-title">In the Age of Claude, Philosophical Precision Is the New Assembly</span><span class="shelf-extent">1,678w</span></a><a class="shelf-item" href="/writing/welcome-to-post-ct/" data-article="welcome-to-post-ct"><span class="shelf-num">VI</span><span class="shelf-title">Welcome to Post-CT</span><span class="shelf-extent">2,245w</span></a></nav>
+            <div class="art-cta">
+                <a class="btn-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Follow new work on X</a>
+                <a class="text-link text-link--in" href="/writing/">Back to the archive</a>
+            </div>
+        </main>
+        <footer class="foot-strip">
+            <span class="footer-mark">┐</span>
+            <span class="footer-copy">Lauris · Markets, ventures, research, and writing<br><a href="mailto:hello@lauris.xyz">hello@lauris.xyz</a> · <a href="https://x.com/lzminsky" target="_blank" rel="noopener">@lzminsky</a></span>
+        </footer>
+    </div>
+    <script>
+        (() => {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const items = Array.from(document.querySelectorAll('[data-animate]'));
+            if (!items.length || !('IntersectionObserver' in window)) return;
+            document.documentElement.classList.add('motion-ready');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            }, { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+            items.forEach((item) => observer.observe(item));
+        })();
+    </script>
+</body>
+</html>

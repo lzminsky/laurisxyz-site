@@ -1,0 +1,7 @@
+.git
+.gstack
+.vercel
+.DS_Store
+*.log
+README.md
+tools
