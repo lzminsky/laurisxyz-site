@@ -366,11 +366,6 @@ STYLE = """
             text-decoration: none; transition: color 180ms var(--ease-out); }
         .btn-x::after { content: '↗'; }
         .btn-x:hover { color: var(--teal); }
-        .foot-strip { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 96px;
-            padding-top: 40px; border-top: 1px solid var(--rule); }
-        .footer-mark { color: var(--ink-muted); font: 1.2rem/1 var(--type-mono); }
-        .footer-copy { color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .045em;
-            text-align: right; text-transform: uppercase; }
         .art-title, .arch-title, .arch-item-title, .shelf-title {
             font-family: var(--type-display); font-weight: var(--type-display-weight); letter-spacing: var(--type-display-tracking);
         }
@@ -380,8 +375,6 @@ STYLE = """
             .container { width: calc(100% - 40px); padding: 32px 0 62px; }
             .masthead { display: block; }
             .nav { justify-content: flex-start; margin-top: 22px; }
-            .foot-strip { flex-direction: column; align-items: flex-start; }
-            .footer-copy { text-align: left; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
@@ -452,7 +445,7 @@ ARTICLE_STYLE = """
         .art-kicker, .art-meta time, .art-meta .text-link, .art-after-kicker,
         .shelf-label, .arch-label,
         .arch-item-open, .art-fig figcaption, .art-hero figcaption, .art-body h3,
-        .crumb, .nav a, .btn-x, .footer-copy, .note-item time {
+        .crumb, .nav a, .btn-x, .note-item time {
             font-weight: 600;
         }
 """
@@ -559,10 +552,6 @@ def shell(title, description, style_extra, body, canonical, article_css=False,
         <main id="main-content">
 {body}
         </main>
-        <footer class="foot-strip">
-            <span class="footer-mark">┐</span>
-            <span class="footer-copy">Lauris · Markets, ventures, research, and writing<br><a href="mailto:hello@lauris.xyz">hello@lauris.xyz</a> · <a href="{X}" target="_blank" rel="noopener">@lzminsky</a></span>
-        </footer>
     </div>
     <script>
         (() => {{
