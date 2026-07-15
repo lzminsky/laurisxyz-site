@@ -532,29 +532,79 @@
             .writing-row-media { display: none; }
         }
         @media (max-width: 640px) {
-            html { font-size: 18px; }
-            .container { width: calc(100% - 40px); padding: 32px 0 62px; }
-            .masthead { display: block; padding-bottom: 22px; }
-            .nav { justify-content: flex-start; gap: 10px 18px; margin-top: 26px; }
-            .nav a[href="#now"], .nav a[href="#formation"] { display: none; }
-            .epigraph { width: min(280px, calc(100vw - 94px)); }
-            .hero { padding: 62px 0 72px; }
-            .hero h1 { font-size: clamp(3rem, 15vw, 4.5rem); }
-            .hero-deck { font-size: 1.1rem; }
-            .now-grid { grid-template-columns: 1fr; gap: 28px; }
-            .now-secondary { padding: 20px 0 0; border-top: 1px solid var(--rule); border-left: 0; }
-            .folio-section, .books-section { padding: 58px 0; }
-            .record-row { grid-template-columns: 1fr; gap: 4px; }
+            html { font-size: 17px; }
+            .container { width: calc(100% - 32px); padding: 22px 0 48px; }
+
+            /* On a phone the header is navigation, not a second composition. */
+            .masthead { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 15px; }
+            .masthead-origin { flex: 0 0 28px; }
+            .mark-link { min-width: 28px; min-height: 38px; }
+            .mark-symbol { font-size: 1.7rem; }
+            .epigraph { display: none; }
+            .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 17px; margin-top: 0; padding-top: 0; }
+            .nav a { min-height: 38px; padding-top: 4px; font-size: .72rem; white-space: nowrap; }
+            .nav a[href="#now"], .nav a[href="#formation"], .nav a[href="#library"] { display: none; }
+
+            .hero { padding: 43px 0 50px; }
+            .hero h1 { max-width: 10.5em; font-size: clamp(2.6rem, 12vw, 3.05rem); line-height: .95; }
+            .hero-support { margin-top: 25px; }
+            .hero-deck { font-size: 1rem; line-height: 1.5; }
+            .hero-links { gap: 8px 20px; margin-top: 17px; }
+            .hero-side { display: none; }
+
+            .now-strip { gap: 18px; padding: 30px 0 36px; }
+            .now-label { gap: 9px; }
+            .now-grid { grid-template-columns: 1fr; gap: 20px; }
+            .now-lede { font-size: 1.06rem; line-height: 1.48; }
+            .now-secondary { padding: 17px 0 0; border-top: 1px solid var(--rule); border-left: 0; }
+            .now-list { margin-top: 9px; }
+
+            .folio-section, .books-section { gap: 21px; padding: 46px 0; }
+            #formation { padding: 44px 0 48px; }
+            .section-heading { font-size: 2rem; }
+            .section-intro { margin-top: 14px; font-size: .94rem; line-height: 1.55; }
+            .formation-heading { font-size: 1.55rem; }
+            .formation-grid { gap: 18px; margin-top: 20px; }
+            .formation-grid p { font-size: .86rem; line-height: 1.55; }
+            .formation-grid p + p { margin-top: 10px; }
+            .formation-path p:first-child { font-size: .92rem; }
+            .record { margin-top: 27px; }
+            .record-row { grid-template-columns: 1fr; gap: 7px; padding: 14px 0 16px; }
             .record-date { margin-top: 1px; }
-            .record-lineage { grid-template-columns: 1fr; padding-left: 7px; border-top: 0; border-left: 1px solid var(--rule); }
-            .lineage-item, .lineage-item:first-child { padding: 0 0 17px 17px; }
-            .lineage-item + .lineage-item { border-left: 0; }
-            .lineage-item::before, .lineage-item:first-child::before { top: 6px; left: -4px; }
-            .atlas-title { font-size: 1.7rem; }
+            .record-desc { font-size: .82rem; line-height: 1.52; }
+            .record-proof { margin-top: 8px; font-size: .61rem; }
+            .record-lineage { grid-template-columns: 1fr; margin-top: 13px; border-top: 1px solid var(--rule); border-left: 0; }
+            .lineage-item, .lineage-item:first-child { padding: 12px 0 0; }
+            .lineage-item + .lineage-item { margin-top: 12px; border-left: 0; border-top: 1px solid var(--rule-soft); }
+            .lineage-item::before, .lineage-item:first-child::before { display: none; }
+
+            .atlas { margin-top: 0; }
+            .atlas-entry { min-height: 0; padding: 34px 0 39px; }
+            .atlas-title { margin-top: 11px; font-size: 1.75rem; }
+            .atlas-sub { font-size: .96rem; }
+            .atlas-desc { margin-top: 11px; font-size: .86rem; line-height: 1.54; }
+            .entry-poster { display: none; }
+            .atlas-proof { margin-top: 19px; }
+            .atlas-proof figcaption { margin-top: 6px; font-size: .61rem; }
+            .atlas-note { margin-top: 14px; padding-top: 12px; }
+            .atlas-note p { font-size: .77rem; line-height: 1.5; }
+            .atlas-actions { gap: 2px 18px; margin-top: 13px; }
+
+            .writing-index { margin-top: 31px; }
+            .writing-feature { gap: 22px; padding: 24px 0 30px; }
             .writing-feature-body { min-height: 0; }
-            .writing-row { grid-template-columns: 1fr; gap: 7px; }
+            .writing-title { margin-top: 9px; font-size: 1.85rem; }
+            .writing-deck { margin-top: 10px; font-size: .87rem; line-height: 1.5; }
+            .writing-open { margin-top: 14px; }
+            .writing-row { grid-template-columns: 1fr; gap: 6px; padding: 20px 0 22px; }
             .writing-date { padding-top: 0; }
+            .writing-row-title { font-size: 1.24rem; }
+            .writing-row-deck { margin-top: 5px; font-size: .81rem; }
+            .archive-door { margin-top: 36px; padding: 22px 0 24px; }
+            .archive-door-title { font-size: 1.65rem; }
+
             .books-list { columns: 1; }
+            .book-item { padding: 13px 0 15px; }
             .book-note { padding-left: 0; }
         }
         @media (prefers-reduced-motion: reduce) {

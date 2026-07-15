@@ -371,10 +371,16 @@ STYLE = """
         }
         .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
         @media (max-width: 640px) {
-            html { font-size: 18px; }
-            .container { width: calc(100% - 40px); padding: 32px 0 62px; }
-            .masthead { display: block; }
-            .nav { justify-content: flex-start; margin-top: 22px; }
+            html { font-size: 17px; }
+            .container { width: calc(100% - 32px); padding: 22px 0 48px; }
+            .masthead { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 15px; }
+            .masthead-origin { flex: 0 0 28px; }
+            .mark-link { min-width: 28px; min-height: 38px; }
+            .mark-symbol { font-size: 1.7rem; }
+            .crumb { display: none; }
+            .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 17px; margin-top: 0; padding-top: 0; }
+            .nav a { display: none; min-height: 38px; padding-top: 4px; font-size: .72rem; white-space: nowrap; }
+            .nav a[href="/writing/"], .nav a.nav-x { display: inline-flex; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
@@ -427,6 +433,20 @@ ARTICLE_STYLE = """
         .art-after li { margin-bottom: 9px; }
         .art-after a { font-size: .98rem; text-decoration-color: var(--rule); text-underline-offset: 3px; }
         .art-cta { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; margin-top: 34px; }
+        @media (max-width: 640px) {
+            .art-head { padding: 50px 0 0; }
+            .art-title { margin-top: 12px; font-size: 2.48rem; line-height: .96; }
+            .art-deck { margin-top: 17px; font-size: 1.03rem; line-height: 1.48; }
+            .art-meta { gap: 7px 20px; margin-top: 22px; padding-top: 12px; }
+            .art-hero { margin-top: 32px; }
+            .art-body { margin-top: 38px; }
+            .art-body p, .art-body li { font-size: .98rem; line-height: 1.62; }
+            .art-body h2 { margin: 37px 0 13px; font-size: 1.32rem; line-height: 1.12; }
+            .art-body h3 { margin-top: 26px; }
+            .art-fig { margin: 30px 0; }
+            .shelf { margin-top: 54px; }
+            .art-after { margin-top: 50px; }
+        }
         /* ── Type roles — appended last so they win the cascade ───────────
            Newsreader Light display / Geist reading / Geist Mono 600 labels.
            Numbers taken from hpccc/src/typography.css, which is the same
@@ -491,8 +511,16 @@ INDEX_STYLE = """
             .note-arrow { display: none; }
         }
         @media (max-width: 560px) {
-            .arch-title { font-size: clamp(3rem, 16vw, 4.8rem); }
-            .arch-item, .note-item { grid-template-columns: 1fr; gap: 6px; }
+            .arch-head { gap: 20px; padding: 50px 0 36px; }
+            .arch-title { max-width: 5.5em; font-size: 3.12rem; line-height: .92; }
+            .arch-intro { font-size: .93rem; line-height: 1.55; }
+            .arch-section { margin-top: 30px; }
+            .arch-lead { gap: 25px; margin-top: 14px; padding: 24px 0 31px; }
+            .arch-lead-title { font-size: 2rem; }
+            .arch-lead-deck { margin-top: 10px; font-size: .86rem; line-height: 1.5; }
+            .arch-item, .note-item { grid-template-columns: 1fr; gap: 6px; padding: 20px 0 22px; }
+            .arch-item-title { font-size: 1.25rem; }
+            .arch-item-deck, .note-deck { font-size: .81rem; }
         }
 """
 

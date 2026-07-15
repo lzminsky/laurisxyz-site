@@ -44,6 +44,20 @@
         .art-after li { margin-bottom: 9px; }
         .art-after a { font-size: .98rem; text-decoration-color: var(--rule); text-underline-offset: 3px; }
         .art-cta { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; margin-top: 34px; }
+        @media (max-width: 640px) {
+            .art-head { padding: 50px 0 0; }
+            .art-title { margin-top: 12px; font-size: 2.48rem; line-height: .96; }
+            .art-deck { margin-top: 17px; font-size: 1.03rem; line-height: 1.48; }
+            .art-meta { gap: 7px 20px; margin-top: 22px; padding-top: 12px; }
+            .art-hero { margin-top: 32px; }
+            .art-body { margin-top: 38px; }
+            .art-body p, .art-body li { font-size: .98rem; line-height: 1.62; }
+            .art-body h2 { margin: 37px 0 13px; font-size: 1.32rem; line-height: 1.12; }
+            .art-body h3 { margin-top: 26px; }
+            .art-fig { margin: 30px 0; }
+            .shelf { margin-top: 54px; }
+            .art-after { margin-top: 50px; }
+        }
         /* ── Type roles — appended last so they win the cascade ───────────
            Newsreader Light display / Geist reading / Geist Mono 600 labels.
            Numbers taken from hpccc/src/typography.css, which is the same

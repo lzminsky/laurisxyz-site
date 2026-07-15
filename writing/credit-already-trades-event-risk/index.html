@@ -95,10 +95,16 @@
         }
         .art-deck, .arch-intro { font-family: var(--type-display); font-weight: 300; font-style: italic; }
         @media (max-width: 640px) {
-            html { font-size: 18px; }
-            .container { width: calc(100% - 40px); padding: 32px 0 62px; }
-            .masthead { display: block; }
-            .nav { justify-content: flex-start; margin-top: 22px; }
+            html { font-size: 17px; }
+            .container { width: calc(100% - 32px); padding: 22px 0 48px; }
+            .masthead { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 15px; }
+            .masthead-origin { flex: 0 0 28px; }
+            .mark-link { min-width: 28px; min-height: 38px; }
+            .mark-symbol { font-size: 1.7rem; }
+            .crumb { display: none; }
+            .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 17px; margin-top: 0; padding-top: 0; }
+            .nav a { display: none; min-height: 38px; padding-top: 4px; font-size: .72rem; white-space: nowrap; }
+            .nav a[href="/writing/"], .nav a.nav-x { display: inline-flex; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
