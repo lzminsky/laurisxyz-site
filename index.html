@@ -413,13 +413,6 @@
             background: var(--paper-raised);
             object-fit: cover;
         }
-        .atlas-proof figcaption {
-            margin-top: 8px;
-            color: var(--ink-muted);
-            font: 600 .667rem/1.5 var(--type-mono);
-            letter-spacing: .05em;
-            text-transform: uppercase;
-        }
         .atlas-actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-top: 18px; }
         .work-status { color: var(--ink-muted); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .04em; text-transform: uppercase; }
         .atlas-note { margin-top: 17px; padding-top: 14px; border-top: 1px solid var(--rule); }
@@ -549,13 +542,15 @@
         .writing-date, .book-number, .now-label, .now-caption, .record-date,
         .record-caption, .work-status,
         .shelf-toggle, .btn-x, .writing-open, .nav-menu summary,
-        .atlas-proof figcaption, .atlas-index, .stage-plate-index {
+        .atlas-index, .stage-plate-index {
             font-family: var(--type-mono);
             font-size: 12px;
             font-weight: 600;
             letter-spacing: .05em;
             text-transform: uppercase;
         }
+        .btn-x, .text-link, .work-link, .writing-open, .shelf-toggle { font-size: 14px; }
+        .btn-x::before { font-size: 14px; }
 
         @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
         [data-reveal] { opacity: 1; transform: none; }
@@ -668,7 +663,6 @@
             .atlas-sub { font-size: 20px; }
             .atlas-desc { margin-top: 11px; font-size: .86rem; line-height: 1.3; }
             .atlas-proof { margin-top: 19px; }
-            .atlas-proof figcaption { margin-top: 6px; font-size: .61rem; }
             .atlas-note { margin-top: 14px; padding-top: 12px; }
             .atlas-note p { font-size: .77rem; line-height: 1.3; }
             .atlas-actions { gap: 2px 18px; margin-top: 13px; }
@@ -838,7 +832,6 @@
                                 <a href="https://hpc-markets.vercel.app" target="_blank" rel="noopener">
                                     <img src="assets/statebook.png" alt="Statebook publication showing markets for every state of the world" width="1200" height="630" loading="lazy">
                                 </a>
-                                <figcaption>Statebook, 2026</figcaption>
                             </figure>
                             <div class="atlas-note">
                                 <span class="atlas-note-title">Markets for All States of the World <span>Working paper</span></span>
@@ -858,7 +851,6 @@
                                 <a href="writing/seeing-like-a-market/">
                                     <img src="assets/slam.png" alt="Seeing Like a Market research program" width="1440" height="900" loading="lazy">
                                 </a>
-                                <figcaption>90 pages · 87 contracts · five asset classes</figcaption>
                             </figure>
                             <div class="atlas-actions">
                                 <a class="work-link" href="https://www.slampaper.xyz" target="_blank" rel="noopener">Visit SLAM</a>
@@ -876,7 +868,6 @@
                                 <a href="https://www.hedgespx.com" target="_blank" rel="noopener">
                                     <img src="assets/hedgebook.png" alt="Hedgebook connecting event contracts to S&amp;P 500 companies" width="1200" height="630" loading="lazy">
                                 </a>
-                                <figcaption>500 dossiers · 47 market pages · ≈2,500 links</figcaption>
                             </figure>
                             <div class="atlas-actions">
                                 <a class="work-link" href="https://www.hedgespx.com" target="_blank" rel="noopener">Explore Hedgebook</a>
@@ -892,7 +883,6 @@
                                 <a href="https://bizhedge.app" target="_blank" rel="noopener">
                                     <img src="assets/bizhedge.png" alt="BizHedge mapping a business exposure to a live event contract" width="1200" height="630" loading="lazy">
                                 </a>
-                                <figcaption>One business · one candidate contract · residual shown</figcaption>
                             </figure>
                             <div class="atlas-actions">
                                 <a class="work-link" href="https://bizhedge.app" target="_blank" rel="noopener">Try BizHedge</a>
@@ -908,19 +898,19 @@
                                 <div class="stage-plates">
                                     <div class="stage-plate" data-pose="statebook">
                                         <span class="stage-plate-index">Statebook</span>
-                                        <span class="stage-plate-name">Liquidity by terminal payoff.</span>
+                                        <span class="stage-plate-name">States of the world, ordered by terminal payoff.</span>
                                     </div>
                                     <div class="stage-plate" data-pose="slam">
                                         <span class="stage-plate-index">SLAM</span>
-                                        <span class="stage-plate-name">The claim and the derivative that shadows it.</span>
+                                        <span class="stage-plate-name">One exposure, two ways to own it.</span>
                                     </div>
                                     <div class="stage-plate" data-pose="hedgebook">
                                         <span class="stage-plate-index">Hedgebook</span>
-                                        <span class="stage-plate-name">Companies and the contracts that reference them.</span>
+                                        <span class="stage-plate-name">Corporate exposures mapped to live contracts.</span>
                                     </div>
                                     <div class="stage-plate" data-pose="bizhedge">
                                         <span class="stage-plate-index">BizHedge</span>
-                                        <span class="stage-plate-name">A business exposure matched to one live contract.</span>
+                                        <span class="stage-plate-name">Exposure, candidate hedge, residual.</span>
                                     </div>
                                 </div>
                                 <div class="stage-note" id="stage-note"></div>
@@ -1217,10 +1207,10 @@
                 bizhedge:  { bars: 0, boundary: 0, surface: .14, relief: .28, routes: 0, scatter: 0, focus: 1 }
             };
             const NOTES = {
-                statebook: 'each bar is a terminal payoff',
-                slam: 'event contract · derivative',
-                hedgebook: 'matched · unmatched',
-                bizhedge: 'covered · residual'
+                statebook: 'state → payoff',
+                slam: 'event claim · synthetic route',
+                hedgebook: 'company → market',
+                bizhedge: 'exposure − hedge = residual'
             };
 
             const stage = document.getElementById('atlas-stage');

@@ -6,8 +6,8 @@
  *   k = the route from exposure to ownership (back <-> front)
  *   h = payoff / exposure           (up)
  *
- *   I   Statebook   h = DIST[i]              payoff depends on the STATE only,
- *                                            so the field is uniform along k
+ *   I   Statebook   h = DIST[i] at k = 1     a readable book of terminal
+ *                                            states, one payoff column each
  *   II  SLAM        h = SURF[i][k]           payoff now depends on state AND
  *                                            route — the field deforms
  *   III Hedgebook   h = SURF[i][k] * 0.3     settles into ground; exposures
@@ -52,19 +52,25 @@ for (let i = 0; i <= N; i += 1) {
     );
   }
 }
-// Corporate exposures and the cells they match (Plate III).
+// Corporate exposures and the live-contract cells they match (Plate III).
 const SCATTER = [
-  { i: 3, k: 9, ok: true }, { i: 5, k: 10, ok: true }, { i: 9, k: 8, ok: true },
-  { i: 10, k: 5, ok: true }, { i: 6, k: 6, ok: true }, { i: 9, k: 11, ok: true },
-  { i: 2, k: 4, ok: false }, { i: 5, k: 3, ok: false }, { i: 11, k: 9, ok: false },
+  { i: 2.4, k: 9.6, h: 4.6, ci: 3, ck: 9, ok: true },
+  { i: 4.6, k: 10.4, h: 5.8, ci: 5, ck: 10, ok: true },
+  { i: 8.6, k: 8.4, h: 5.1, ci: 9, ck: 8, ok: true },
+  { i: 10.2, k: 5.6, h: 3.9, ci: 10, ck: 5, ok: true },
+  { i: 6.4, k: 6.6, h: 6.4, ci: 6, ck: 6, ok: true },
+  { i: 1.6, k: 4.6, h: 3.6, ci: null, ck: null, ok: false },
+  { i: 5.4, k: 3.2, h: 4.9, ci: null, ck: null, ok: false },
+  { i: 9.4, k: 10.8, h: 6, ci: 9, ck: 11, ok: true },
+  { i: 11.2, k: 8.8, h: 3.4, ci: null, ck: null, ok: false },
 ];
 const FOCUS = { i: 6, k: 6 };    // the one exposure at Plate IV
-const EXPOSURE = 6.2;            // what the business is exposed to
-const FUNDED = 3.6;              // what the contract actually pays
+const EXPOSURE = 7.2;            // what the business is exposed to
+const FUNDED = 4.3;              // what the contract actually pays
 
 // Height of the column at (i,k) for a fractional station 0..3.
 function heightAt(i, k, station) {
-  const dist = DIST[i];
+  const dist = k === 1 ? DIST[i] : 0.02;
   const surf = SURF[i][k];
   if (station <= 1) {
     // I -> II: the route axis turns on. The whole argument, one lerp.
@@ -133,6 +139,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
 
   const camera = new OrthographicCamera(-1, 1, 1, -1, 0.1, 200);
   const world = new Group();
+  const half = N / 2;
   scene.add(world);
 
   scene.add(new HemisphereLight(0xffffff, C.paper.getHex(), 1.9));
@@ -165,6 +172,25 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
   }));
   world.add(edges);
 
+  const lineObject = (segments, color, opacity = 0) => {
+    const values = [];
+    segments.forEach(([a, b]) => values.push(...a, ...b));
+    const geometry = new BufferGeometry().setAttribute(
+      'position',
+      new BufferAttribute(new Float32Array(values), 3)
+    );
+    const lines = new LineSegments(geometry, new LineBasicMaterial({ color, transparent: true, opacity }));
+    world.add(lines);
+    return lines;
+  };
+  const chain = (points) => points.slice(1).map((point, index) => [points[index], point]);
+  const W = (i, j, k) => [i - half, j, k - half];
+  const surfaceValue = (i, k) => (
+    2.8 * Math.exp(-(((i - 8.2) ** 2) / 8 + ((k - 3.4) ** 2) / 10)) +
+    3.6 * Math.exp(-(((i - 2.8) ** 2) / 6 + ((k - 8.6) ** 2) / 8)) +
+    0.55 * Math.sin(i * 0.9) * Math.cos(k * 0.7) + 0.5
+  );
+
   /* floor grid */
   const gridPts = [];
   for (let g = 0; g <= N; g += 1) {
@@ -177,12 +203,61 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
   );
   world.add(grid);
 
+  /* Plate I: the line that distinguishes market states from states that
+     have not yet become governable contracts. */
+  const bx = 6.5 - half;
+  const boundary = lineObject([
+    [[bx, 0, -half], [bx, 0, half]],
+    [[bx, 0, -half], [bx, 7.6, -half]],
+    [[bx, 0, half], [bx, 7.6, half]],
+    [[bx, 7.6, -half], [bx, 7.6, half]],
+  ], C.wine);
+
+  /* Plate II: the event claim and the synthetic route reach the same state
+     by visibly different paths. */
+  const routeFrom = { i: 1.4, k: 10.6 };
+  const routeTo = { i: 9.2, k: 2.4 };
+  const directPoints = [];
+  for (let n = 0; n <= 24; n += 1) {
+    const t = n / 24;
+    const i = lerp(routeFrom.i, routeTo.i, t);
+    const k = lerp(routeFrom.k, routeTo.k, t);
+    const lift = Math.sin(t * Math.PI) * 1.5 + (1 - t) * 2.3;
+    directPoints.push(W(i, surfaceValue(i, k) + lift, k));
+  }
+  const directRoute = lineObject(chain(directPoints), C.teal);
+  const replicationPoints = [
+    [routeFrom.i, surfaceValue(routeFrom.i, routeFrom.k) + 2.3, routeFrom.k],
+    [3.4, surfaceValue(3.4, 8.4) + 2.9, 8.4],
+    [5.2, surfaceValue(5.2, 6.4) + 2.2, 6.4],
+    [6.9, surfaceValue(6.9, 4.4) + 1.5, 4.4],
+    [8.2, surfaceValue(8.2, 3.2) + 0.9, 3.2],
+    [routeTo.i, surfaceValue(routeTo.i, routeTo.k), routeTo.k],
+  ].map(([i, j, k]) => W(i, j, k));
+  const replicationRoute = lineObject(chain(replicationPoints), C.wine);
+
   /* Plate III: the cells that matched, and the exposures that found them */
   const markPos = new Float32Array(SCATTER.length * 8 * 2 * 3);
   const markGeo = new BufferGeometry();
   markGeo.setAttribute('position', new BufferAttribute(markPos, 3));
   const marks = new LineSegments(markGeo, new LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0 }));
   world.add(marks);
+
+  /* Plate IV: the open outline is the full exposure. The filled inner column
+     is the candidate contract; the difference is the residual. */
+  const fx = FOCUS.i - half;
+  const fz = FOCUS.k - half;
+  const fw = CELL * 0.49;
+  const exposureOutline = lineObject([
+    [[fx - fw, EXPOSURE, fz - fw], [fx + fw, EXPOSURE, fz - fw]],
+    [[fx + fw, EXPOSURE, fz - fw], [fx + fw, EXPOSURE, fz + fw]],
+    [[fx + fw, EXPOSURE, fz + fw], [fx - fw, EXPOSURE, fz + fw]],
+    [[fx - fw, EXPOSURE, fz + fw], [fx - fw, EXPOSURE, fz - fw]],
+    [[fx - fw, 0, fz - fw], [fx - fw, EXPOSURE, fz - fw]],
+    [[fx + fw, 0, fz - fw], [fx + fw, EXPOSURE, fz - fw]],
+    [[fx + fw, 0, fz + fw], [fx + fw, EXPOSURE, fz + fw]],
+    [[fx - fw, 0, fz + fw], [fx - fw, EXPOSURE, fz + fw]],
+  ], C.ink);
 
   /* Plate IV: the residual — what the hedge does NOT cover, left visible */
   const resPos = new Float32Array(9 * 2 * 3);
@@ -202,7 +277,6 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
   };
 
   function build(st) {
-    const half = N / 2;
     const hw = CELL * 0.41;
     let e = 0;
     let n = 0;
@@ -239,25 +313,31 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
     edgeGeo.attributes.position.needsUpdate = true;
     edgeGeo.computeBoundingSphere();
 
+    boundary.material.opacity = clamp01(1 - st * 1.4) * 0.62;
+    const showRoutes = clamp01(1 - Math.abs(st - 1) * 1.45);
+    directRoute.material.opacity = showRoutes * 0.86;
+    replicationRoute.material.opacity = showRoutes * 0.72;
+
     // Plate III marks: matched cells get a box, unmatched a dashed-looking stub.
     const showMarks = clamp01(1 - Math.abs(st - 2) * 1.3);
     marks.material.opacity = showMarks * 0.75;
     if (showMarks > 0.01) {
       let mi = 0;
       for (const s of SCATTER) {
-        const x = s.i - half, z = s.k - half;
-        const y = Math.max(0.02, heightAt(s.i, s.k, st)) + 0.04;
+        const sx = s.i - half, sz = s.k - half;
+        const sy = s.h;
+        const tx = (s.ok ? s.ci : s.i) - half;
+        const tz = (s.ok ? s.ck : s.k) - half;
+        const ty = Math.max(0.04, heightAt(Math.round(s.ok ? s.ci : s.i), Math.round(s.ok ? s.ck : s.k), st)) + 0.04;
         const r = s.ok ? 0.42 : 0.22;
-        setEdge(markPos, mi++, x - r, y, z - r, x + r, y, z - r);
-        setEdge(markPos, mi++, x + r, y, z - r, x + r, y, z + r);
-        setEdge(markPos, mi++, x + r, y, z + r, x - r, y, z + r);
-        setEdge(markPos, mi++, x - r, y, z + r, x - r, y, z - r);
-        // the exposure descending onto the cell it matched
-        const drop = s.ok ? 2.6 : 1.1;
-        setEdge(markPos, mi++, x, y, z, x, y + drop, z);
-        setEdge(markPos, mi++, x - 0.1, y + drop, z, x + 0.1, y + drop, z);
-        setEdge(markPos, mi++, x, y + drop, z - 0.1, x, y + drop, z + 0.1);
-        setEdge(markPos, mi++, x, y, z, x, y, z);
+        setEdge(markPos, mi++, tx - r, ty, tz - r, tx + r, ty, tz - r);
+        setEdge(markPos, mi++, tx + r, ty, tz - r, tx + r, ty, tz + r);
+        setEdge(markPos, mi++, tx + r, ty, tz + r, tx - r, ty, tz + r);
+        setEdge(markPos, mi++, tx - r, ty, tz + r, tx - r, ty, tz - r);
+        setEdge(markPos, mi++, sx, sy, sz, tx, ty, tz);
+        setEdge(markPos, mi++, sx - 0.12, sy, sz, sx + 0.12, sy, sz);
+        setEdge(markPos, mi++, sx, sy, sz - 0.12, sx, sy, sz + 0.12);
+        setEdge(markPos, mi++, sx, sy - 0.12, sz, sx, sy + 0.12, sz);
       }
       markGeo.attributes.position.needsUpdate = true;
       markGeo.computeBoundingSphere();
@@ -267,6 +347,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
     const showRes = clamp01((st - 2.35) * 1.6);
     residual.material.opacity = showRes * 0.8;
     focusMat.opacity = showRes * 0.55;
+    exposureOutline.material.opacity = showRes * 0.62;
     if (showRes > 0.01) {
       const x = FOCUS.i - half, z = FOCUS.k - half;
       let ri = 0;
