@@ -16,3 +16,4 @@ Applied rules:
 4. Proof comes from the live artifact and concise copy; decorative scale captions are omitted.
 5. Microtype stays readable; labels are supporting structure, never grey decoration.
 6. Motion explains a system once. It does not compete with screenshots or delay the project inventory.
+7. The state-space projections describe reusable operations — boundary, equivalence, correspondence, and residual — rather than individual products.

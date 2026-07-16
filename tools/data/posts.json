@@ -179,5 +179,81 @@
       "What worries me here is the practical stakes. Those really sit with the regulators. The retail overpayment currently funds market making across these venues, including the markets turning into real coverage tools. Restrict it before institutional money is connected and both disappear.",
       "*(Quotes the Jul 9 \"Credit already trades event risk\" article — same one already in this ledger as Article #2.)*"
     ]
+  },
+  {
+    "id": "L",
+    "title": "Statebook (Hyperliquid as the AWS of finance)",
+    "date": "Jul 15, 2026, 9:44 PM",
+    "url": "https://x.com/lzminsky/status/2077464459522568198",
+    "has_image": true,
+    "image_note": "Video keyframe only; the supplied capture contains a playback spinner, so the public site uses the existing clean Statebook image instead.",
+    "paragraphs": [
+      "ended up thinkimg about this a bit more, especially when it comes to convergence, competition and theory.",
+      "most of us know that Jeff has described @HyperliquidX as the AWS of finance. lets take it literally.",
+      "AWS made the underlying infrastructure for software programmable by replacing capex with costs for cloud. The financial equivalent is a common execution, collateral, risk and settlement substrate on which other people can create markets.",
+      "Several exchanges are approaching this from different directions. Hyperliquid starts with an onchain trading system. @Kalshi @Architect_Fi, CME and CBOE begin with different technology, licenses and customers, but as I noted everthing is converging.",
+      "Perpetuals, event contracts, compute futures and other synthetic exposures are converging into what I would call frontier risk markets.",
+      "If this continues, \"prediction market\" and \"perpetual exchange\" will stop describing entire venues. They will describe payoff forms, with all of the possible combinatorics (a structured product heaven, to be frank).",
+      "But placing these instruments beside one another does not create one market. A threshold claim, an option spread and a perpetual can refer to the same economic variable while living in separate books",
+      "I've been tinkering with a concept I call a Statebook. Slightly grand name, admittedly.",
+      "The basic idea is a coherence layer above multiple source books, organizing contracts by the states in which they pay rather than by whatever product label somebody attached to them.",
+      "A Statebook would compare reference, maturity, settlement and comparator terms. It could route across economically equivalent portfolios and show the residual risk. The perpetual remains the continuing hedge beside the terminal claims.",
+      "That gives us three separate tests. Are the necessary payoffs listed? Can the implied portfolio actually be executed? Does the venue recognize the offset when it calculates collateral and liquidation?",
+      "Product completeness, execution completeness and capital completeness are very different achievements.",
+      "Onchain systems have a head start in shared accounts, programmable collateral and atomic routing. Conventional venues retain advantages in legal certainty, benchmark governance and institutional distribution.",
+      "So the AWS-of-finance race is, imo, a race to turn many isolated books into a coherent market substrate, where new risks can be listed without rebuilding the exchange each time.",
+      "the orderbook was designed to trade one contract. maybe a Statebook is what comes next when all the contracts start describing different pieces of the same world."
+    ]
+  },
+  {
+    "id": "M",
+    "title": "Goldfinch / private-credit adverse selection",
+    "date": "Jun 20, 2026",
+    "url": "https://x.com/lzminsky/status/2068082510911734088",
+    "has_image": false,
+    "image_note": "The referenced Goldfinch dashboard belongs to the quoted third-party post and was not present in the supplied image folder.",
+    "paragraphs": [
+      "- private credit booms",
+      "- private credit crowdfunding platforms start raising and getting traction (good APRs at that time)",
+      "- high APRs increasingly come from adverse selection (highly risky emerging markets), like West Africa. Need to compete",
+      "- Typically, EM requires boots on the ground experience - like, you need to know ground-truth operational rules and be embedded into local networks",
+      "- Instead, Goldfinch is founded by a Coinbase eng and PM (lmfao)",
+      "- The finance pedigree was from a GS middle office guy (credit risk monitoring) and an MS junior IB analyst under the RE group. No senior originations. No one w real private credit experience",
+      "emerging-market private credit underwriting + borrower monitoring + DeFi liquidity expectations + logo-based hiring == ???",
+      "I remember looking at this back in the day and thinking that it was bound to fucking crash.",
+      "My condolences to any of the investors",
+      "you're saying that a GS credit risk analyst (their CIO) does not have the capacity or boots on the ground experience to underwrite loans to other lenders in Kenya (in this case, micromobility lenders, i.e. scooters for third worlders)? that setup was insane"
+    ]
+  },
+  {
+    "id": "N",
+    "title": "Cultural Victory (crypto reflexivity / complete markets)",
+    "date": "May 17, 2026, 6:55 PM",
+    "url": "https://x.com/lzminsky/status/2056040962263077346",
+    "has_image": true,
+    "image_note": "AI-generated Civilization-style Cultural Victory screen; the supplied capture includes surrounding X interface and is not used as a public site thumbnail.",
+    "paragraphs": [
+      "frankly, if someone says that crypto is dying and is becoming \"institutionalized\", the first conclusion I come to is that they are incapable of rotating a shape in their head.",
+      "crypto reflexivity is at the precipice of getting to FULL CULTURAL VICTORY when it comes to capital markets.",
+      "Securitize, Ondo and everyone in that stack have been around for years. don't you think they wore suits when going to talk to traditional allocators and originators?",
+      "people are overindexing on tokenization / vaults as being the \"natural\" point of convergence for \"institutionalization\" (whatever that means) due to fear, fatigue or a lack of optimism. it is a necessary but not sufficient condition, but it's one piece of the workflow.",
+      "for example, you can conceptualize CBRS as almost a low float / high FDV play. AND NOT IN A BAD WAY.",
+      "trade xyz literally ran the pre-IPO perp for two full weeks before the listing. it transitioned cleanly into a standard equity perp. CBRS opened at $350 against a $185 IPO price. the IPO became a settlement step in a market that had been clearing for two weeks.",
+      "crypto unbundles the liquidity event. price discovery, synthetic exposure, hedging an instrument via perps, hedging an epistemic object via event contracts. all of these are becoming different surfaces.",
+      "sometimes the perp comes first. sometimes the event contract for upside or downside protection is better. even market creation through information aggregation is getting solved for by teams like @novadotmarkets.",
+      "the thing people are missing is that tokenized equity / tokenization / w.e. vaults an AM or a bank are building and how they call is only one leg. important but just a leg",
+      "perps, prediction markets, tokenized equity, event contracts, sentiment markets, whatever. these are all attempts to complete markets around previously unpriced states. STUDY THE BLADE, study Arrow-Debreu / complete markets.",
+      "the IPO is no longer the liquidity event in the old sense. @0xsmac tweeted something along the lines that this is dangerous and there will be a conspiracy by the private secondary shadow market and anyone engaged in those shenanigans to bury this + make it look unsafe as aggressively as possible.",
+      "Fear not. IN TWO YEARS, we're going to have low-mid markets going liquid, with pre-liquidity markets where you can go long or short on whichever perps platform you want. or even go harder on proxies, hop on IBKR, use @kalshi event contracts to go long or short on any systematic theme related to it. FOR ANYTHING.",
+      "underwriters and sponsors for mid-markets and IPOs are going to literally have Discord mods handing out gated passes for whales and community members (at least I wish, I really want to see that happen).",
+      "imagine being an employee at some company, hitting up @terrry and @techdollarhq, using the money as margin to triple down on the company you're working for or using IBKR directly to hedge against it dying with some index on @kalshi.",
+      "want something more risky and convex? not going to repeat the old adage about PMs replacing memecoins (tho to an extent may be true) but you have choices outside of the big exchanges.",
+      "go try out @meleemarkets or @pumpcade. different approaches, but both aiming for forms of convexity (liquidity reflexivity vs fast resolution).",
+      "you can't complain about MMs making markets on large exchanges either as at least you know the people making the markets aren't complete criminals. sentiment markets too for a lot of stuff but frankly I dont know @noise_xyz and @lucacs that well.",
+      "tldr = anyone who complains about this is someone I will mentally write off in the future. can't get users or funding?",
+      "maybe you shouldn't ship poopoo or launch on PooChain that has a monkey or an animal mascot (pot calling the kettle black here, biggest mistake I've made as a builder). can't find a job or a way to make money? maybe you just suck and are ignoring the fact that talent price discovery in crypto is far more efficient now due to less information asymmetry.",
+      "its an exciting time, its just that you can't hold a professor coin to 1000x anymore and expect to retire. outside of that, convexity is there.",
+      "imo really good"
+    ]
   }
 ]
