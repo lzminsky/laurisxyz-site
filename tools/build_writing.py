@@ -140,10 +140,26 @@ ARTICLES = [
     },
 ]
 
+FEATURED_NOTES = [
+    {
+        "title": "Statebook",
+        "date": "15 Jul 2026",
+        "iso": "2026-07-15",
+        "deck": "A coherence layer above isolated books, organizing contracts by the states in which they pay.",
+        "url": "https://x.com/lzminsky/status/2077464459522568198",
+        "image": {"src": "/assets/statebook.png", "w": 1200, "h": 630},
+    },
+    {
+        "title": "The exchange stack is converging",
+        "date": "15 Jul 2026",
+        "iso": "2026-07-15",
+        "deck": "Venue labels increasingly describe the front door, not the payoff stack.",
+        "url": "https://x.com/lzminsky/status/2077174969738363261",
+        "image": {"src": "/assets/writing/postE_exchange_stack_map.png", "w": 1600, "h": 1000},
+    },
+]
+
 NOTES = [
-    ("The exchange stack is converging", "15 Jul 2026",
-     "Selected venues are extending a common set of payoff forms across new underliers. The label describes the front door, not the payoff stack.",
-     "https://x.com/lzminsky/status/2077174969738363261"),
     ("I was very wrong — the compute curve, corrected", "14 Jul 2026",
      "A public correction on compute markets, quoting the July 3 framework it revises.",
      "https://x.com/lzminsky/status/2077131007430725932"),
@@ -156,9 +172,15 @@ NOTES = [
     ("Compute, sliced four ways", "03 Jul 2026",
      "The level, the shape, the residual, and the jumps — and the instrument each slice gets.",
      "https://x.com/lzminsky/status/2073033302064132119"),
+    ("Private credit and adverse selection", "20 Jun 2026",
+     "Why local underwriting and borrower monitoring matter when high-yield private-credit platforms move into unfamiliar markets.",
+     "https://x.com/lzminsky/status/2068082510911734088"),
     ("Hedgebook, version one", "30 May 2026",
      "The launch note and product demo: every company's real-world risk, mapped to live contracts.",
      "https://x.com/lzminsky/status/2060758432773280053"),
+    ("Cultural Victory", "17 May 2026",
+     "Perpetuals, event claims, and tokenized equity as different surfaces around previously unpriced states.",
+     "https://x.com/lzminsky/status/2056040962263077346"),
     ("Institutional event-contract structuring workflow", "16 May 2026",
      "The full desk workflow, drawn: from exposure decomposition to documentation and recognition.",
      "https://x.com/lzminsky/status/2055669526939816369"),
@@ -391,7 +413,7 @@ STYLE = """
         .nav-menu-panel .nav-menu-x { display: none; color: var(--teal); }
         a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
         .text-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--ink);
-            font: 600 12px/1.2 var(--type-mono); letter-spacing: .05em;
+            font: 600 14px/1.2 var(--type-mono); letter-spacing: .05em;
             text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; text-transform: uppercase; }
         .text-link::after { content: '↗'; transition: transform 180ms var(--ease-out); }
         .text-link--in::after { content: '→'; }
@@ -399,7 +421,7 @@ STYLE = """
         .text-link--in:hover::after { transform: translateX(3px); }
         .btn-x { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 2px 0 5px;
             border: 0; border-bottom: 1px solid currentColor; color: var(--ink);
-            font: 600 12px/1.2 var(--type-mono); letter-spacing: .05em;
+            font: 600 14px/1.2 var(--type-mono); letter-spacing: .05em;
             text-decoration: none; text-transform: uppercase; transition: color 180ms var(--ease-out); }
         .btn-x::after { content: '↗'; }
         .btn-x:hover { color: var(--teal); }
@@ -543,7 +565,21 @@ INDEX_STYLE = """
         .arch-thumb img { width: 100%; aspect-ratio: 1.8 / 1; background: var(--paper-raised); object-fit: cover; transition: transform 800ms var(--ease-out); }
         .arch-lead:hover .arch-lead-media img, .arch-item:hover .arch-thumb img { transform: scale(1.025); }
         .arch-item:hover .arch-item-title { color: var(--teal); }
-        .note-list { margin-top: 16px; border-top: 1px solid var(--ink); }
+        .note-features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px; margin-top: 16px; padding-top: 22px; border-top: 1px solid var(--ink); }
+        .note-feature { min-width: 0; text-decoration: none; transition: transform 140ms var(--ease-out); }
+        .note-feature:active { transform: scale(.98); }
+        .note-feature-media { display: block; overflow: hidden; border: 1px solid var(--rule); }
+        .note-feature-media img { width: 100%; aspect-ratio: 1.8 / 1; object-fit: cover; transition: transform 800ms var(--ease-out); }
+        .note-feature-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin-top: 13px; }
+        .note-feature time { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .045em; text-transform: uppercase; }
+        .note-feature-arrow { color: var(--ink-muted); font: .8rem/1 var(--type-mono); }
+        .note-feature-title { display: block; margin-top: 9px; font-family: var(--type-display-regular); font-size: 24px; font-weight: 400; line-height: 1.1; transition: color 180ms var(--ease-out); }
+        .note-feature-deck { display: block; max-width: 48ch; margin-top: 7px; color: var(--ink-soft); font-size: .84rem; line-height: 1.3; }
+        @media (hover: hover) and (pointer: fine) {
+            .note-feature:hover .note-feature-media img { transform: scale(1.025); }
+            .note-feature:hover .note-feature-title { color: var(--teal); }
+        }
+        .note-list { margin-top: 31px; border-top: 1px solid var(--ink); }
         .note-item { display: grid; grid-template-columns: 108px minmax(0, 1fr) auto; gap: 8px 26px; align-items: baseline; padding: 18px 0 20px; border-bottom: 1px solid var(--rule); text-decoration: none; }
         .note-item time { color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .045em; text-transform: uppercase; }
         .note-title { font-size: 1rem; font-weight: 400; line-height: 1.3; transition: color 180ms var(--ease-out); }
@@ -571,6 +607,9 @@ INDEX_STYLE = """
             .arch-item, .note-item { grid-template-columns: 1fr; gap: 6px; padding: 20px 0 22px; }
             .arch-item-title { font-size: 20px; }
             .arch-item-deck, .note-deck { font-size: .81rem; }
+            .note-features { grid-template-columns: 1fr; gap: 27px; padding-top: 18px; }
+            .note-feature-title { font-size: 20px; }
+            .note-feature-deck { font-size: .81rem; }
         }
 """
 
@@ -806,6 +845,16 @@ def build_index():
                         <span class="note-title">{title}<span class="note-deck">{deck}</span></span>
                         <span class="note-arrow">↗</span>
                     </a>""")
+    featured_notes = []
+    for note in FEATURED_NOTES:
+        image = note["image"]
+        featured_notes.append(f"""
+                    <a class="note-feature" href="{note['url']}" target="_blank" rel="noopener" data-animate>
+                        <span class="note-feature-media"><img src="{image['src']}" alt="" width="{image['w']}" height="{image['h']}" loading="lazy"></span>
+                        <span class="note-feature-meta"><time datetime="{note['iso']}">{note['date']}</time><span class="note-feature-arrow">↗</span></span>
+                        <span class="note-feature-title">{html.escape(note['title'])}</span>
+                        <span class="note-feature-deck">{note['deck']}</span>
+                    </a>""")
 
     body = f"""
             <header class="arch-head">
@@ -832,6 +881,8 @@ def build_index():
             </section>
             <section class="arch-section" aria-label="Working notes">
                 <p class="arch-label">Notes on X</p>
+                <div class="note-features">{''.join(featured_notes)}
+                </div>
                 <div class="note-list">{''.join(notes)}
                 </div>
             </section>"""

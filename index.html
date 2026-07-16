@@ -440,6 +440,24 @@
         .stage-plate-name { display: block; max-width: 460px; margin-top: 4px; color: var(--ink-soft); font-family: var(--type-display); font-size: 1.12rem; font-weight: 300; line-height: 1.25; }
         .stage-note { position: absolute; right: 2px; bottom: 0; max-width: 280px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .04em; text-align: right; text-transform: uppercase; }
 
+        /* ── Research objects — the visual grammar, independent of products ─ */
+        .objects-section { padding-top: 76px; }
+        .objects-intro { max-width: 660px; margin-top: 18px; color: var(--ink-soft); font-size: .94rem; line-height: 1.3; }
+        .objects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-top: 34px;
+            border-top: 1px solid var(--ink);
+            border-bottom: 1px solid var(--rule);
+            list-style: none;
+        }
+        .object-item { min-height: 154px; padding: 22px 30px 24px 0; }
+        .object-item:nth-child(even) { padding-right: 0; padding-left: 30px; border-left: 1px solid var(--rule); }
+        .object-item:nth-child(n + 3) { border-top: 1px solid var(--rule); }
+        .object-index { color: var(--teal); font: 600 12px/1.4 var(--type-mono); letter-spacing: .07em; text-transform: uppercase; }
+        .object-name { display: block; margin-top: 13px; font-family: var(--type-display-regular); font-size: 24px; font-weight: 400; line-height: 1.1; }
+        .object-desc { max-width: 43ch; margin-top: 7px; color: var(--ink-soft); font-size: .84rem; line-height: 1.3; text-wrap: pretty; }
+
         /* ── Writing — editorial issue, not a card grid ─────────────────── */
         .writing-index { margin-top: 50px; border-top: 1px solid var(--ink); }
         .writing-feature {
@@ -599,6 +617,7 @@
             .atlas-stage-col { display: none; }
             .atlas-entry { min-height: 0; padding: 36px 0 42px; }
             .atlas-proof { width: min(100%, 680px); margin-top: 20px; }
+            .objects-section { padding-top: 62px; }
             .writing-feature { grid-template-columns: 1fr; }
             .writing-feature-body { min-height: 250px; }
             .writing-row { grid-template-columns: 96px minmax(0, 1fr); }
@@ -666,6 +685,14 @@
             .atlas-note { margin-top: 14px; padding-top: 12px; }
             .atlas-note p { font-size: .77rem; line-height: 1.3; }
             .atlas-actions { gap: 2px 18px; margin-top: 13px; }
+
+            .objects-section { padding-top: 46px; }
+            .objects-intro { margin-top: 13px; font-size: .86rem; }
+            .objects-grid { grid-template-columns: 1fr; margin-top: 24px; }
+            .object-item, .object-item:nth-child(even) { min-height: 0; padding: 19px 0 21px; border-left: 0; }
+            .object-item + .object-item { border-top: 1px solid var(--rule); }
+            .object-name { margin-top: 9px; font-size: 20px; }
+            .object-desc { font-size: .81rem; }
 
             .writing-index { margin-top: 31px; }
             .writing-feature { gap: 22px; padding: 24px 0 30px; }
@@ -823,7 +850,7 @@
                 </header>
                 <div class="atlas">
                     <div class="atlas-entries">
-                        <article class="atlas-entry" data-pose="statebook" id="statebook">
+                        <article class="atlas-entry" data-projection="boundary" id="statebook">
                             <p class="atlas-index">Research publication</p>
                             <h3 class="atlas-title">Statebook</h3>
                             <p class="atlas-sub">Markets for every state of the world.</p>
@@ -842,7 +869,7 @@
                             </div>
                         </article>
 
-                        <article class="atlas-entry" data-pose="slam" id="slam">
+                        <article class="atlas-entry" data-projection="equivalence" id="slam">
                             <p class="atlas-index">Research project</p>
                             <h3 class="atlas-title">SLAM</h3>
                             <p class="atlas-sub">Seeing Like a Market.</p>
@@ -859,7 +886,7 @@
                             </div>
                         </article>
 
-                        <article class="atlas-entry" data-pose="hedgebook" id="hedgebook">
+                        <article class="atlas-entry" data-projection="correspondence" id="hedgebook">
                             <p class="atlas-index">Public reference</p>
                             <h3 class="atlas-title">Hedgebook</h3>
                             <p class="atlas-sub">Corporate exposure, matched to live contracts.</p>
@@ -874,7 +901,7 @@
                             </div>
                         </article>
 
-                        <article class="atlas-entry" data-pose="bizhedge" id="bizhedge">
+                        <article class="atlas-entry" data-projection="residual" id="bizhedge">
                             <p class="atlas-index">Prototype</p>
                             <h3 class="atlas-title">BizHedge</h3>
                             <p class="atlas-sub">Matching business risks to live event contracts.</p>
@@ -896,27 +923,59 @@
                                 <canvas id="atlas-fallback"></canvas>
                                 <canvas id="atlas-canvas"></canvas>
                                 <div class="stage-plates">
-                                    <div class="stage-plate" data-pose="statebook">
-                                        <span class="stage-plate-index">Statebook</span>
-                                        <span class="stage-plate-name">States of the world, ordered by terminal payoff.</span>
+                                    <div class="stage-plate" data-projection="boundary">
+                                        <span class="stage-plate-index">Projection I · Boundary</span>
+                                        <span class="stage-plate-name">A continuous world divided into priceable states.</span>
                                     </div>
-                                    <div class="stage-plate" data-pose="slam">
-                                        <span class="stage-plate-index">SLAM</span>
-                                        <span class="stage-plate-name">One exposure, two ways to own it.</span>
+                                    <div class="stage-plate" data-projection="equivalence">
+                                        <span class="stage-plate-index">Projection II · Equivalence</span>
+                                        <span class="stage-plate-name">Different paths to the same terminal state.</span>
                                     </div>
-                                    <div class="stage-plate" data-pose="hedgebook">
-                                        <span class="stage-plate-index">Hedgebook</span>
-                                        <span class="stage-plate-name">Corporate exposures mapped to live contracts.</span>
+                                    <div class="stage-plate" data-projection="correspondence">
+                                        <span class="stage-plate-index">Projection III · Correspondence</span>
+                                        <span class="stage-plate-name">Observed risks aligned with available claims.</span>
                                     </div>
-                                    <div class="stage-plate" data-pose="bizhedge">
-                                        <span class="stage-plate-index">BizHedge</span>
-                                        <span class="stage-plate-name">Exposure, candidate hedge, residual.</span>
+                                    <div class="stage-plate" data-projection="residual">
+                                        <span class="stage-plate-index">Projection IV · Residual</span>
+                                        <span class="stage-plate-name">The distance between exposure and coverage.</span>
                                     </div>
                                 </div>
                                 <div class="stage-note" id="stage-note"></div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section class="folio-section objects-section" id="objects" data-reveal aria-labelledby="objects-heading">
+                <div class="section-label">
+                    <span class="section-kicker">Objects</span>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-heading" id="objects-heading">Four operations behind the work.</h2>
+                    <p class="objects-intro">These projections form a vocabulary for market structure, not an illustration of any one product. Each view isolates a different operation on the same state space.</p>
+                    <ol class="objects-grid">
+                        <li class="object-item">
+                            <span class="object-index">01 · Boundary</span>
+                            <span class="object-name">World → states</span>
+                            <p class="object-desc">A boundary turns a continuous outcome into discrete claims with explicit terminal payoffs.</p>
+                        </li>
+                        <li class="object-item">
+                            <span class="object-index">02 · Equivalence</span>
+                            <span class="object-name">Paths → exposure</span>
+                            <p class="object-desc">Different instruments and portfolios can approach the same economic state by different routes.</p>
+                        </li>
+                        <li class="object-item">
+                            <span class="object-index">03 · Correspondence</span>
+                            <span class="object-name">Risk ↔ claim</span>
+                            <p class="object-desc">An exposure either aligns with an available claim or remains visibly unmatched.</p>
+                        </li>
+                        <li class="object-item">
+                            <span class="object-index">04 · Residual</span>
+                            <span class="object-name">Exposure − coverage</span>
+                            <p class="object-desc">Coverage removes part of an exposure; the unhedged distance is the object that remains.</p>
+                        </li>
+                    </ol>
                 </div>
             </section>
 
@@ -946,13 +1005,13 @@
                         </article>
 
                         <div class="writing-rows">
-                            <a class="writing-row" href="writing/credit-already-trades-event-risk/" data-animate>
-                                <time class="writing-date" datetime="2026-07-09">09 Jul 2026</time>
+                            <a class="writing-row" href="https://x.com/lzminsky/status/2077464459522568198" target="_blank" rel="noopener" data-animate>
+                                <time class="writing-date" datetime="2026-07-15">15 Jul 2026</time>
                                 <span class="writing-row-copy">
-                                    <span class="writing-row-title">Credit already trades event risk</span>
-                                    <span class="writing-row-deck">What €800bn of synthetic risk transfer teaches event markets about institutional ownership.</span>
+                                    <span class="writing-row-title">Statebook</span>
+                                    <span class="writing-row-deck">A coherence layer above isolated books, organizing contracts by the states in which they pay.</span>
                                 </span>
-                                <span class="writing-row-media"><img src="assets/writing/exh_credit_hero.jpg" alt="" width="2048" height="771" loading="lazy"></span>
+                                <span class="writing-row-media"><img src="assets/statebook.png" alt="" width="1200" height="630" loading="lazy"></span>
                             </a>
                             <a class="writing-row" href="https://x.com/lzminsky/status/2077174969738363261" target="_blank" rel="noopener" data-animate>
                                 <time class="writing-date" datetime="2026-07-15">15 Jul 2026</time>
@@ -961,6 +1020,14 @@
                                     <span class="writing-row-deck">Venue labels increasingly describe the front door, not the payoff stack.</span>
                                 </span>
                                 <span class="writing-row-media"><img src="assets/writing/postE_exchange_stack_map.png" alt="" width="1600" height="1000" loading="lazy"></span>
+                            </a>
+                            <a class="writing-row" href="writing/credit-already-trades-event-risk/" data-animate>
+                                <time class="writing-date" datetime="2026-07-09">09 Jul 2026</time>
+                                <span class="writing-row-copy">
+                                    <span class="writing-row-title">Credit already trades event risk</span>
+                                    <span class="writing-row-deck">What €800bn of synthetic risk transfer teaches event markets about institutional ownership.</span>
+                                </span>
+                                <span class="writing-row-media"><img src="assets/writing/exh_credit_hero.jpg" alt="" width="2048" height="771" loading="lazy"></span>
                             </a>
                             <a class="writing-row" href="https://x.com/lzminsky/status/2073033302064132119" target="_blank" rel="noopener" data-animate>
                                 <time class="writing-date" datetime="2026-07-03">03 Jul 2026</time>
@@ -1200,17 +1267,17 @@
                 { i: 11.2, k: 8.8, h: 3.4, ci: null, ck: null, ok: false }
             ];
 
-            const POSES = {
-                statebook: { bars: 1, boundary: 1, surface: 0, relief: 1, routes: 0, scatter: 0, focus: 0 },
-                slam:      { bars: 0, boundary: 0, surface: 1, relief: 1, routes: 1, scatter: 0, focus: 0 },
-                hedgebook: { bars: 0, boundary: 0, surface: .6, relief: .3, routes: 0, scatter: 1, focus: 0 },
-                bizhedge:  { bars: 0, boundary: 0, surface: .14, relief: .28, routes: 0, scatter: 0, focus: 1 }
+            const PROJECTIONS = {
+                boundary:       { bars: 1, boundary: 1, surface: 0, relief: 1, routes: 0, scatter: 0, focus: 0 },
+                equivalence:    { bars: 0, boundary: 0, surface: 1, relief: 1, routes: 1, scatter: 0, focus: 0 },
+                correspondence: { bars: 0, boundary: 0, surface: .6, relief: .3, routes: 0, scatter: 1, focus: 0 },
+                residual:       { bars: 0, boundary: 0, surface: .14, relief: .28, routes: 0, scatter: 0, focus: 1 }
             };
             const NOTES = {
-                statebook: 'state → payoff',
-                slam: 'event claim · synthetic route',
-                hedgebook: 'company → market',
-                bizhedge: 'exposure − hedge = residual'
+                boundary: 'state → payoff',
+                equivalence: 'direct ≃ synthetic',
+                correspondence: 'exposure ↔ claim',
+                residual: 'exposure − coverage'
             };
 
             const stage = document.getElementById('atlas-stage');
@@ -1451,7 +1518,7 @@
             };
 
             const atlas = document.querySelector('.atlas');
-            const POSE_ORDER = ['statebook', 'slam', 'hedgebook', 'bizhedge'];
+            const PROJECTION_ORDER = ['boundary', 'equivalence', 'correspondence', 'residual'];
             const canvasScene = (fallbackCanvas && fallbackCanvas.getContext) ? makeScene(fallbackCanvas) : null;
             const mobileQuery = window.matchMedia('(max-width: 900px)');
 
@@ -1467,12 +1534,12 @@
             const applyStation = (s) => {
                 station = s;
                 const idx = Math.round(s);
-                const name = POSE_ORDER[idx];
-                plates.forEach(p => p.classList.toggle('is-active', p.dataset.pose === name));
+                const name = PROJECTION_ORDER[idx];
+                plates.forEach(p => p.classList.toggle('is-active', p.dataset.projection === name));
                 entries.forEach((el, i) => el.classList.toggle('is-active', i === idx));
                 if (stageNote) stageNote.textContent = NOTES[name];
                 if (three) three.render(s, performance.now());
-                else if (canvasScene) canvasScene.draw({ ...POSES[name] });
+                else if (canvasScene) canvasScene.draw({ ...PROJECTIONS[name] });
             };
 
             const readRail = () => {

@@ -1,18 +1,19 @@
 /* The atlas — section 03's state space.
  *
- * ONE object, four states. Not four drawings.
+ * ONE state space, four projections. Not four product illustrations.
  *
  *   i = the state of the world      (left <-> right)
  *   k = the route from exposure to ownership (back <-> front)
  *   h = payoff / exposure           (up)
  *
- *   I   Statebook   h = DIST[i] at k = 1     a readable book of terminal
- *                                            states, one payoff column each
- *   II  SLAM        h = SURF[i][k]           payoff now depends on state AND
- *                                            route — the field deforms
- *   III Hedgebook   h = SURF[i][k] * 0.3     settles into ground; exposures
- *                                            land on the cells that match
- *   IV  BizHedge    h = 0 except one cell    one exposure, funded + residual
+ *   I   Boundary        h = DIST[i] at k = 1     a continuous world becomes
+ *                                                discrete, priceable states
+ *   II  Equivalence     h = SURF[i][k]           different paths approach the
+ *                                                same economic state
+ *   III Correspondence  h = SURF[i][k] * 0.3     exposures land on claims that
+ *                                                match; failures stay visible
+ *   IV  Residual        h = 0 except one cell    coverage removes one volume;
+ *                                                the remainder stays visible
  *
  * The I -> II morph is the argument, and it is one lerp: the route axis
  * turning on. Nothing crossfades — the same field changes height throughout.
@@ -52,7 +53,7 @@ for (let i = 0; i <= N; i += 1) {
     );
   }
 }
-// Corporate exposures and the live-contract cells they match (Plate III).
+// Observed exposures and the available-claim cells they match (Projection III).
 const SCATTER = [
   { i: 2.4, k: 9.6, h: 4.6, ci: 3, ck: 9, ok: true },
   { i: 4.6, k: 10.4, h: 5.8, ci: 5, ck: 10, ok: true },
@@ -64,7 +65,7 @@ const SCATTER = [
   { i: 9.4, k: 10.8, h: 6, ci: 9, ck: 11, ok: true },
   { i: 11.2, k: 8.8, h: 3.4, ci: null, ck: null, ok: false },
 ];
-const FOCUS = { i: 6, k: 6 };    // the one exposure at Plate IV
+const FOCUS = { i: 6, k: 6 };    // the one exposure in Projection IV
 const EXPOSURE = 7.2;            // what the business is exposed to
 const FUNDED = 4.3;              // what the contract actually pays
 
@@ -203,7 +204,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
   );
   world.add(grid);
 
-  /* Plate I: the line that distinguishes market states from states that
+  /* Projection I: the line that distinguishes market states from states that
      have not yet become governable contracts. */
   const bx = 6.5 - half;
   const boundary = lineObject([
@@ -213,7 +214,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
     [[bx, 7.6, -half], [bx, 7.6, half]],
   ], C.wine);
 
-  /* Plate II: the event claim and the synthetic route reach the same state
+  /* Projection II: the direct claim and the synthetic route reach the same state
      by visibly different paths. */
   const routeFrom = { i: 1.4, k: 10.6 };
   const routeTo = { i: 9.2, k: 2.4 };
@@ -236,14 +237,14 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
   ].map(([i, j, k]) => W(i, j, k));
   const replicationRoute = lineObject(chain(replicationPoints), C.wine);
 
-  /* Plate III: the cells that matched, and the exposures that found them */
+  /* Projection III: the cells that matched, and the exposures that found them */
   const markPos = new Float32Array(SCATTER.length * 8 * 2 * 3);
   const markGeo = new BufferGeometry();
   markGeo.setAttribute('position', new BufferAttribute(markPos, 3));
   const marks = new LineSegments(markGeo, new LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0 }));
   world.add(marks);
 
-  /* Plate IV: the open outline is the full exposure. The filled inner column
+  /* Projection IV: the open outline is the full exposure. The filled inner column
      is the candidate contract; the difference is the residual. */
   const fx = FOCUS.i - half;
   const fz = FOCUS.k - half;
@@ -318,7 +319,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
     directRoute.material.opacity = showRoutes * 0.86;
     replicationRoute.material.opacity = showRoutes * 0.72;
 
-    // Plate III marks: matched cells get a box, unmatched a dashed-looking stub.
+    // Projection III: matched cells get a box, unmatched observations retain a stub.
     const showMarks = clamp01(1 - Math.abs(st - 2) * 1.3);
     marks.material.opacity = showMarks * 0.75;
     if (showMarks > 0.01) {
@@ -343,7 +344,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
       markGeo.computeBoundingSphere();
     }
 
-    // Plate IV: the residual, hatched between what pays and what you're exposed to.
+    // Projection IV: the residual, hatched between coverage and full exposure.
     const showRes = clamp01((st - 2.35) * 1.6);
     residual.material.opacity = showRes * 0.8;
     focusMat.opacity = showRes * 0.55;
