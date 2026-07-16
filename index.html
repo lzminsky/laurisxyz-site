@@ -1521,7 +1521,9 @@
                 const probe = document.createElement('canvas');
                 if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) return;
                 const s = document.createElement('script');
-                s.src = '/assets/atlas.js';
+                // Resolve beside this document so the WebGL bundle also loads
+                // when the site is opened directly from disk with file://.
+                s.src = new URL('./assets/atlas.js', document.baseURI).href;
                 s.onload = () => {
                     try {
                         three = window.__atlas.createAtlas(canvas, { reducedMotion });
@@ -1531,6 +1533,10 @@
                         three = null;
                         if (fallbackCanvas) fallbackCanvas.style.opacity = '1';
                     }
+                };
+                s.onerror = () => {
+                    three = null;
+                    if (fallbackCanvas) fallbackCanvas.style.opacity = '1';
                 };
                 document.head.appendChild(s);
             };
