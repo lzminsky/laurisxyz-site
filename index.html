@@ -591,8 +591,12 @@
             .section-label { display: flex; gap: 12px; align-items: baseline; }
             .formation-grid { grid-template-columns: 1fr; gap: 14px; }
             .formation-research { padding-left: 0; border-left: 0; }
-            .atlas { grid-template-columns: 1fr; margin-top: 40px; }
-            .atlas-stage-col { display: none; }
+            .atlas { position: relative; grid-template-columns: 1fr; margin-top: 40px; }
+            .atlas-entries, .atlas-stage-col { grid-area: 1 / 1; }
+            .atlas-entries { position: relative; z-index: 1; }
+            .atlas-stage-col { display: block; min-height: 100%; pointer-events: none; z-index: 0; }
+            .atlas-stage { top: 12vh; height: 72vh; opacity: .42; }
+            .stage-plates, .stage-note { display: none; }
             .atlas-entry { min-height: 0; padding: 36px 0 42px; }
             .atlas-proof { width: min(100%, 680px); margin-top: 20px; }
             .writing-feature { grid-template-columns: 1fr; }
@@ -655,6 +659,7 @@
             .lineage-item::before, .lineage-item:first-child::before { display: none; }
 
             .atlas { margin-top: 0; }
+            .atlas-stage { top: 18vh; height: 58vh; opacity: .28; }
             .atlas-entry { min-height: 0; padding: 34px 0 39px; }
             .atlas-title { margin-top: 11px; font-size: 24px; }
             .atlas-sub { font-size: 20px; }
@@ -1459,8 +1464,6 @@
             const atlas = document.querySelector('.atlas');
             const PROJECTION_ORDER = ['boundary', 'equivalence', 'correspondence', 'residual'];
             const canvasScene = (fallbackCanvas && fallbackCanvas.getContext) ? makeScene(fallbackCanvas) : null;
-            const mobileQuery = window.matchMedia('(max-width: 900px)');
-
             let three = null;          // the three.js atlas, once loaded
             let threeTried = false;
             let station = 0;
@@ -1506,11 +1509,10 @@
             const request = () => { if (!raf && live) raf = requestAnimationFrame(tick); };
 
             /* ── three, or the drawing we already have ────────────────────
-               Three layers before the library is ever fetched (BizHedge's
-               StageBackdrop): width gate, WebGL probe, then the import. Below
-               901px three is never downloaded — a phone gets the flat
-               drawing, which is a real drawing, not a gradient. */
-            const wantsThree = () => window.matchMedia('(min-width: 901px)').matches && !reducedMotion;
+               The library remains lazy: the section must be near, WebGL must
+               exist, and reduced-motion must be off. The same scene now scales
+               continuously instead of disappearing at a viewport breakpoint. */
+            const wantsThree = () => !reducedMotion;
 
             const loadThree = () => {
                 if (threeTried || !wantsThree() || !canvas) return;
@@ -1524,6 +1526,17 @@
                 s.onload = () => {
                     try {
                         three = window.__atlas.createAtlas(canvas, { reducedMotion });
+                        canvas.addEventListener('webglcontextlost', (event) => {
+                            event.preventDefault();
+                            if (fallbackCanvas) fallbackCanvas.style.opacity = '1';
+                        });
+                        canvas.addEventListener('webglcontextrestored', () => {
+                            if (!three) return;
+                            three.resize();
+                            if (fallbackCanvas) fallbackCanvas.style.opacity = '0';
+                            applyStation(stationProgress(readRail()));
+                            request();
+                        });
                         if (fallbackCanvas) fallbackCanvas.style.opacity = '0';
                         applyStation(station);
                     } catch {
@@ -1572,14 +1585,17 @@
                 });
 
                 let resizeTimer = 0;
-                window.addEventListener('resize', () => {
+                const resizeScene = () => {
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(() => {
-                        if (mobileQuery.matches) return;
                         if (three) three.resize(); else canvasScene.size();
-                        applyStation(station);
-                    }, 160);
-                });
+                        applyStation(stationProgress(readRail()));
+                        request();
+                    }, 80);
+                };
+                window.addEventListener('resize', resizeScene, { passive: true });
+                window.visualViewport?.addEventListener('resize', resizeScene, { passive: true });
+                if ('ResizeObserver' in window) new ResizeObserver(resizeScene).observe(stage);
             }
         })();
     </script>
