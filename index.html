@@ -25,12 +25,28 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="mask-icon" href="/favicon.svg" color="#011614">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://framerusercontent.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Teodor Light';
+            src: url('https://framerusercontent.com/assets/Gx3MGZkSYrrmCVe9sdeh0yV84qk.woff2') format('woff2');
+            font-display: swap;
+            font-style: normal;
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: 'Teodor Regular';
+            src: url('https://framerusercontent.com/assets/bBs7S3Xf56vu9cwECDjtJ2IeE.woff2') format('woff2');
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+        }
         :root {
-            --type-display: 'Newsreader', Georgia, serif;
+            --type-display: 'Teodor Light', Georgia, serif;
+            --type-display-regular: 'Teodor Regular', Georgia, serif;
             --type-body: 'Geist', system-ui, sans-serif;
             --type-mono: 'Geist Mono', ui-monospace, monospace;
             --type-display-weight: 300;
@@ -62,8 +78,9 @@
             color: var(--ink);
             font-family: var(--type-body);
             font-size: 16px;
-            line-height: 1.55;
-            letter-spacing: -.01em;
+            font-weight: 300;
+            line-height: 1.3;
+            letter-spacing: -.02em;
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
         }
@@ -117,11 +134,12 @@
             display: inline-flex;
             align-items: flex-start;
             padding-top: 5px;
-            font-family: var(--type-body);
-            font-size: .78rem;
-            font-weight: 500;
-            letter-spacing: -.01em;
+            font-family: var(--type-mono);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .05em;
             text-decoration: none;
+            text-transform: uppercase;
             transition: color 180ms var(--ease-out);
         }
         .nav a.nav-x {
@@ -138,10 +156,11 @@
             align-items: flex-start;
             justify-content: center;
             color: var(--ink-muted);
-            font: 500 .78rem/1.4 var(--type-body);
-            letter-spacing: -.01em;
+            font: 600 12px/1.2 var(--type-mono);
+            letter-spacing: .05em;
             list-style: none;
             cursor: pointer;
+            text-transform: uppercase;
         }
         .nav-menu summary::-webkit-details-marker { display: none; }
         .nav-menu summary::after { margin-left: 6px; content: '+'; }
@@ -165,7 +184,7 @@
             padding: 11px 12px 9px;
             align-items: center;
             justify-content: flex-start;
-            font-size: .78rem;
+            font-size: 12px;
         }
         .nav-menu-panel a + a { border-top: 1px solid var(--rule); }
         .nav-menu-panel .nav-menu-x { display: none; color: var(--teal); }
@@ -183,7 +202,7 @@
             padding-left: 17px;
             border-left: 1px solid var(--rule);
         }
-        .epigraph blockquote { font-size: .96rem; font-style: italic; line-height: 1.25; }
+        .epigraph blockquote { font-size: .96rem; font-style: normal; line-height: 1.1; }
         .epigraph figcaption {
             margin-top: 5px;
             color: var(--ink-muted);
@@ -204,17 +223,17 @@
         }
         .hero h1 {
             max-width: 930px;
-            font-size: clamp(3.35rem, 7vw, 5.85rem);
+            font-size: 48px;
             font-weight: 300;
-            letter-spacing: -.025em;
-            line-height: .96;
+            letter-spacing: -.02em;
+            line-height: 1;
         }
         .hero-support { min-width: 0; margin-top: 38px; }
         .hero-deck {
             max-width: 700px;
             color: var(--ink-soft);
             font-size: 1.24rem;
-            line-height: 1.5;
+            line-height: 1.1;
             text-wrap: pretty;
         }
         .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; margin-top: 27px; }
@@ -230,9 +249,10 @@
             border-bottom: 1px solid currentColor;
             color: var(--ink);
             min-height: 44px;
-            font: 500 .76rem/1.2 var(--type-body);
-            letter-spacing: -.01em;
+            font: 600 12px/1.2 var(--type-mono);
+            letter-spacing: .05em;
             text-decoration: none;
+            text-transform: uppercase;
             transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out), transform 140ms var(--ease-out);
         }
         .btn-x::before { content: '@lzminsky'; font-family: var(--type-mono); font-size: .667rem; letter-spacing: .02em; }
@@ -269,9 +289,10 @@
             gap: 8px;
             color: var(--ink);
             min-height: 44px;
-            font: 500 .76rem/1.4 var(--type-body);
-            letter-spacing: -.01em;
+            font: 600 12px/1.2 var(--type-mono);
+            letter-spacing: .05em;
             text-decoration: none;
+            text-transform: uppercase;
             transition: transform 140ms var(--ease-out);
         }
         .text-link::after, .work-link::after { content: '↗'; transition: transform 180ms var(--ease-out); }
@@ -290,12 +311,12 @@
         .section-kicker { color: var(--ink); font-weight: 400; }
         .section-label--inline { display: flex; align-items: baseline; gap: 11px; }
         .section-content { min-width: 0; }
-        .section-heading { max-width: 760px; font-size: clamp(2rem, 3.5vw, 3.05rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.08; }
+        .section-heading { max-width: 760px; font-size: 32px; font-weight: 300; letter-spacing: -.02em; line-height: 1.1; }
         .section-intro { max-width: 680px; margin-top: 20px; color: var(--ink-soft); font-size: 1.06rem; line-height: 1.65; }
 
         /* ── 01 · Formation — compact editorial composition ─────────────── */
         #formation { padding: 64px 0 68px; }
-        .formation-heading { font-size: clamp(1.5rem, 2.4vw, 1.9rem); font-weight: 400; letter-spacing: -.02em; line-height: 1.1; }
+        .formation-heading { font-size: 32px; font-weight: 300; letter-spacing: -.02em; line-height: 1.1; }
         .formation-grid {
             display: grid;
             grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
@@ -311,7 +332,7 @@
         .record-caption { padding-top: 12px; color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); letter-spacing: .08em; text-transform: uppercase; }
         .record-row { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 6px 30px; padding: 15px 0 17px; border-bottom: 1px solid var(--rule); }
         .record-who { min-width: 0; }
-        .record-name { font-size: .98rem; font-weight: 600; line-height: 1.3; }
+        .record-name { font-size: 24px; font-weight: 400; line-height: 1.1; }
         .record-name .project-mark { margin-left: 4px; color: var(--ink-muted); font: .72rem/1 var(--type-mono); }
         .record-date { display: block; margin-top: 3px; color: var(--ink-muted); font: 600 .667rem/1.4 var(--type-mono); letter-spacing: .04em; }
         .record-desc { color: var(--ink-soft); font-size: .87rem; line-height: 1.58; text-wrap: pretty; }
@@ -380,8 +401,8 @@
             transition: color 300ms var(--ease-out);
         }
         .atlas-entry.is-active .atlas-index { color: var(--teal); }
-        .atlas-title { margin-top: 15px; font-family: var(--type-display); font-size: 2rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.02; }
-        .atlas-sub { margin-top: 5px; color: var(--ink-muted); font-family: var(--type-display); font-size: 1.02rem; font-style: italic; font-weight: 300; }
+        .atlas-title { margin-top: 15px; font-family: var(--type-display-regular); font-size: 24px; font-weight: 400; letter-spacing: -.02em; line-height: 1.1; }
+        .atlas-sub { margin-top: 5px; color: var(--ink-muted); font-family: var(--type-display); font-size: 20px; font-style: normal; font-weight: 300; line-height: 1.1; }
         .atlas-desc { max-width: 54ch; margin-top: 13px; color: var(--ink-soft); font-size: .93rem; line-height: 1.62; text-wrap: pretty; }
         .atlas-desc a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
         .atlas-proof { margin: 24px 0 0; }
@@ -440,9 +461,9 @@
         .writing-feature-media img, .writing-row-media img { width: 100%; transition: transform 900ms var(--ease-out); }
         .writing-feature-body { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
         .writing-kicker { color: var(--ink-muted); font: 600 .667rem/1.55 var(--type-mono); letter-spacing: .06em; text-transform: uppercase; }
-        .writing-title { margin-top: 12px; font-family: var(--type-display); font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.02; }
+        .writing-title { margin-top: 12px; font-family: var(--type-display-regular); font-size: 32px; font-weight: 400; letter-spacing: -.02em; line-height: 1.1; }
         .writing-deck { max-width: 42ch; margin-top: 14px; color: var(--ink-soft); font-size: .94rem; line-height: 1.6; text-wrap: pretty; }
-        .writing-open { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 24px; font-size: .78rem; font-weight: 500; text-decoration: none; }
+        .writing-open { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 24px; font: 600 12px/1.2 var(--type-mono); letter-spacing: .05em; text-decoration: none; text-transform: uppercase; }
         .writing-open::after { content: '→'; transition: transform 180ms var(--ease-out); }
         .writing-rows { border-bottom: 1px solid var(--ink); }
         .writing-row {
@@ -456,7 +477,7 @@
         }
         .writing-row:last-child { border-bottom: 0; }
         .writing-date { padding-top: 4px; color: var(--ink-muted); font: 600 .667rem/1.5 var(--type-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; text-transform: uppercase; }
-        .writing-row-title { display: block; font-family: var(--type-display); font-size: 1.34rem; font-weight: 400; letter-spacing: -.015em; line-height: 1.12; transition: color 180ms var(--ease-out); }
+        .writing-row-title { display: block; font-family: var(--type-display-regular); font-size: 24px; font-weight: 400; letter-spacing: -.02em; line-height: 1.1; transition: color 180ms var(--ease-out); }
         .writing-row-deck { display: block; max-width: 55ch; margin-top: 6px; color: var(--ink-soft); font-size: .85rem; line-height: 1.52; }
         .writing-row-media img { aspect-ratio: 1.75 / 1; object-fit: cover; }
 
@@ -468,18 +489,18 @@
             border-bottom: 1px solid var(--rule);
             text-decoration: none;
         }
-        .archive-door-title { font-size: clamp(1.55rem, 2.8vw, 2.2rem); font-weight: 400; letter-spacing: -.02em; }
+        .archive-door-title { font-size: 24px; font-weight: 400; letter-spacing: -.02em; }
         .archive-door-title::after { content: ' →'; color: var(--ink-muted); transition: color 200ms var(--ease-out); }
 
         /* ── 05 · Library ────────────────────────────────────────────────── */
         .books-section { opacity: 1; animation: none; }
-        .books-title { max-width: 520px; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.08; }
+        .books-title { max-width: 520px; font-size: 32px; font-weight: 300; letter-spacing: -.02em; line-height: 1.1; }
         .books-intro { max-width: 650px; margin: 16px 0 26px; color: var(--ink-soft); font-size: .98rem; }
         .books-list { list-style: none; columns: 2; column-gap: 48px; border-top: 1px solid var(--ink); }
         .book-item { break-inside: avoid; padding: 15px 0 17px; border-bottom: 1px solid var(--rule); line-height: 1.45; }
         .book-number { margin-right: 10px; color: var(--ink-muted); font-size: .667rem; }
-        .book-name { font-size: .94rem; font-weight: 600; }
-        .book-author { color: var(--ink-muted); font-size: .86rem; font-style: italic; }
+        .book-name { font-size: 20px; font-weight: 400; }
+        .book-author { color: var(--ink-muted); font-size: .86rem; font-style: normal; }
         .book-note { margin-top: 5px; padding-left: 28px; color: var(--ink-soft); font-size: .82rem; line-height: 1.5; }
         .books-list:not(.is-open) .book-extra { display: none; }
         .shelf-toggle {
@@ -492,39 +513,48 @@
             background: none;
             color: var(--ink);
             min-height: 44px;
-            font: 500 .76rem/1.4 var(--type-body);
-            letter-spacing: -.01em;
+            font: 600 12px/1.2 var(--type-mono);
+            letter-spacing: .05em;
             text-transform: uppercase;
             cursor: pointer;
         }
         .shelf-toggle::after { content: '→'; transition: transform 200ms var(--ease-out); }
         .books-list.is-open + .shelf-toggle::after { content: '↑'; }
 
-        /* ── Type roles ───────────────────────────────────────────────────
-           Newsreader Light for display (Teodor's silhouette, open licence,
-           and already the display face of Statebook); Geist for reading;
-           Geist Mono for labels. Numbers from hpccc/src/typography.css. */
+        /* ── Hyperliquid Policy Center type roles ─────────────────────── */
         .hero h1, .section-heading, .formation-heading, .books-title,
-        .archive-door-title,
-        .record-name, .book-name, .now-lede, .hero-deck {
-            font-family: var(--type-display);
-            font-weight: var(--type-display-weight);
-            letter-spacing: var(--type-display-tracking);
-        }
-        .hero h1, .section-heading, .formation-heading, .books-title, .archive-door-title { line-height: 1.02; }
-        .record-name, .book-name { font-weight: 500; letter-spacing: -.01em; }
-        .epigraph blockquote {
+        .now-lede, .hero-deck, .epigraph blockquote, .stage-plate-name {
             font-family: var(--type-display);
             font-weight: 300;
+            letter-spacing: var(--type-display-tracking);
         }
-
-
+        .record-name, .book-name, .atlas-title, .writing-title,
+        .writing-row-title, .archive-door-title {
+            font-family: var(--type-display-regular);
+            font-weight: 400;
+            letter-spacing: -.02em;
+        }
+        .hero h1 { line-height: 1; }
+        .section-heading, .formation-heading, .books-title, .archive-door-title,
+        .record-name, .book-name, .now-lede, .hero-deck { line-height: 1.1; }
+        .hero-side p, .now-list li, .section-intro, .formation-grid p,
+        .record-desc, .lineage-item p, .atlas-desc, .atlas-note p,
+        .writing-deck, .writing-row-deck, .books-intro, .book-note {
+            font-family: var(--type-body);
+            font-weight: 300;
+            letter-spacing: -.02em;
+            line-height: 1.3;
+        }
         .mono, .section-kicker, .work-meta, .nav a, .text-link,
         .writing-date, .book-number, .now-label, .now-caption, .record-date,
         .record-caption, .work-status,
-        .shelf-toggle, .btn-x,
+        .shelf-toggle, .btn-x, .writing-open, .nav-menu summary,
         .atlas-proof figcaption, .atlas-index, .stage-plate-index {
+            font-family: var(--type-mono);
+            font-size: 12px;
             font-weight: 600;
+            letter-spacing: .05em;
+            text-transform: uppercase;
         }
 
         @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
@@ -594,39 +624,39 @@
             .mark-symbol { font-size: 1.7rem; }
             .epigraph { display: none; }
             .nav { flex: 1; flex-wrap: nowrap; justify-content: flex-end; gap: 0 10px; margin-top: 0; padding-top: 0; }
-            .nav > a { min-width: 44px; min-height: 44px; padding: 5px 3px 0; font-size: .72rem; white-space: nowrap; }
+            .nav > a { min-width: 44px; min-height: 44px; padding: 5px 3px 0; font-size: 12px; white-space: nowrap; }
             .nav > .nav-x { display: none; }
-            .nav-menu summary { min-width: 44px; min-height: 44px; padding-top: 5px; font-size: .72rem; }
+            .nav-menu summary { min-width: 44px; min-height: 44px; padding-top: 5px; font-size: 12px; }
             .nav-menu-panel .nav-menu-x { display: flex; }
 
             .hero { padding: 43px 0 50px; }
-            .hero h1 { max-width: 10.5em; font-size: clamp(2.6rem, 12vw, 3.05rem); line-height: .95; }
+            .hero h1 { max-width: 10.5em; font-size: 40px; line-height: 1; }
             .hero-support { margin-top: 25px; }
-            .hero-deck { font-size: 1rem; line-height: 1.5; }
+            .hero-deck { font-size: 24px; line-height: 1.1; }
             .hero-links { gap: 8px 20px; margin-top: 17px; }
             .hero-side { display: none; }
 
             .now-strip { gap: 18px; padding: 30px 0 36px; }
             .now-label { gap: 9px; }
             .now-grid { grid-template-columns: 1fr; gap: 20px; }
-            .now-lede { font-size: 1.06rem; line-height: 1.48; }
+            .now-lede { font-size: 24px; line-height: 1.1; }
             .now-secondary { padding: 17px 0 0; border-top: 1px solid var(--rule); border-left: 0; }
             .now-list { margin-top: 9px; }
 
             .folio-section, .books-section { gap: 21px; padding: 46px 0; }
             .work-header { gap: 21px; padding: 46px 0 24px; }
             #formation { padding: 44px 0 48px; }
-            .section-heading { font-size: 2rem; }
-            .section-intro { margin-top: 14px; font-size: .94rem; line-height: 1.55; }
-            .formation-heading { font-size: 1.55rem; }
+            .section-heading { font-size: 24px; line-height: 1.1; }
+            .section-intro { margin-top: 14px; font-size: .94rem; line-height: 1.3; }
+            .formation-heading { font-size: 24px; line-height: 1.1; }
             .formation-grid { gap: 18px; margin-top: 20px; }
-            .formation-grid p { font-size: .86rem; line-height: 1.55; }
+            .formation-grid p { font-size: .86rem; line-height: 1.3; }
             .formation-grid p + p { margin-top: 10px; }
             .formation-path p:first-child { font-size: .92rem; }
             .record { margin-top: 27px; }
             .record-row { grid-template-columns: 1fr; gap: 7px; padding: 14px 0 16px; }
             .record-date { margin-top: 1px; }
-            .record-desc { font-size: .82rem; line-height: 1.52; }
+            .record-desc { font-size: .82rem; line-height: 1.3; }
             .record-lineage { grid-template-columns: 1fr; margin-top: 13px; border-top: 1px solid var(--rule); border-left: 0; }
             .lineage-item, .lineage-item:first-child { padding: 12px 0 0; }
             .lineage-item + .lineage-item { margin-top: 12px; border-left: 0; border-top: 1px solid var(--rule-soft); }
@@ -634,27 +664,27 @@
 
             .atlas { margin-top: 0; }
             .atlas-entry { min-height: 0; padding: 34px 0 39px; }
-            .atlas-title { margin-top: 11px; font-size: 1.75rem; }
-            .atlas-sub { font-size: .96rem; }
-            .atlas-desc { margin-top: 11px; font-size: .86rem; line-height: 1.54; }
+            .atlas-title { margin-top: 11px; font-size: 24px; }
+            .atlas-sub { font-size: 20px; }
+            .atlas-desc { margin-top: 11px; font-size: .86rem; line-height: 1.3; }
             .atlas-proof { margin-top: 19px; }
             .atlas-proof figcaption { margin-top: 6px; font-size: .61rem; }
             .atlas-note { margin-top: 14px; padding-top: 12px; }
-            .atlas-note p { font-size: .77rem; line-height: 1.5; }
+            .atlas-note p { font-size: .77rem; line-height: 1.3; }
             .atlas-actions { gap: 2px 18px; margin-top: 13px; }
 
             .writing-index { margin-top: 31px; }
             .writing-feature { gap: 22px; padding: 24px 0 30px; }
             .writing-feature-body { min-height: 0; }
-            .writing-title { margin-top: 9px; font-size: 1.85rem; }
-            .writing-deck { margin-top: 10px; font-size: .87rem; line-height: 1.5; }
+            .writing-title { margin-top: 9px; font-size: 24px; }
+            .writing-deck { margin-top: 10px; font-size: .87rem; line-height: 1.3; }
             .writing-open { margin-top: 14px; }
             .writing-row { grid-template-columns: 1fr; gap: 6px; padding: 20px 0 22px; }
             .writing-date { padding-top: 0; }
-            .writing-row-title { font-size: 1.24rem; }
+            .writing-row-title { font-size: 20px; }
             .writing-row-deck { margin-top: 5px; font-size: .81rem; }
             .archive-door { margin-top: 36px; padding: 22px 0 24px; }
-            .archive-door-title { font-size: 1.65rem; }
+            .archive-door-title { font-size: 24px; }
 
             .books-list { columns: 1; }
             .book-item { padding: 13px 0 15px; }
