@@ -440,24 +440,6 @@
         .stage-plate-name { display: block; max-width: 460px; margin-top: 4px; color: var(--ink-soft); font-family: var(--type-display); font-size: 1.12rem; font-weight: 300; line-height: 1.25; }
         .stage-note { position: absolute; right: 2px; bottom: 0; max-width: 280px; color: var(--ink-muted); font: 600 .667rem/1.6 var(--type-mono); letter-spacing: .04em; text-align: right; text-transform: uppercase; }
 
-        /* ── Research objects — the visual grammar, independent of products ─ */
-        .objects-section { padding-top: 76px; }
-        .objects-intro { max-width: 660px; margin-top: 18px; color: var(--ink-soft); font-size: .94rem; line-height: 1.3; }
-        .objects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            margin-top: 34px;
-            border-top: 1px solid var(--ink);
-            border-bottom: 1px solid var(--rule);
-            list-style: none;
-        }
-        .object-item { min-height: 154px; padding: 22px 30px 24px 0; }
-        .object-item:nth-child(even) { padding-right: 0; padding-left: 30px; border-left: 1px solid var(--rule); }
-        .object-item:nth-child(n + 3) { border-top: 1px solid var(--rule); }
-        .object-index { color: var(--teal); font: 600 12px/1.4 var(--type-mono); letter-spacing: .07em; text-transform: uppercase; }
-        .object-name { display: block; margin-top: 13px; font-family: var(--type-display-regular); font-size: 24px; font-weight: 400; line-height: 1.1; }
-        .object-desc { max-width: 43ch; margin-top: 7px; color: var(--ink-soft); font-size: .84rem; line-height: 1.3; text-wrap: pretty; }
-
         /* ── Writing — editorial issue, not a card grid ─────────────────── */
         .writing-index { margin-top: 50px; border-top: 1px solid var(--ink); }
         .writing-feature {
@@ -617,7 +599,6 @@
             .atlas-stage-col { display: none; }
             .atlas-entry { min-height: 0; padding: 36px 0 42px; }
             .atlas-proof { width: min(100%, 680px); margin-top: 20px; }
-            .objects-section { padding-top: 62px; }
             .writing-feature { grid-template-columns: 1fr; }
             .writing-feature-body { min-height: 250px; }
             .writing-row { grid-template-columns: 96px minmax(0, 1fr); }
@@ -648,7 +629,8 @@
             .hero-support { margin-top: 25px; }
             .hero-deck { font-size: 24px; line-height: 1.1; }
             .hero-links { gap: 8px 20px; margin-top: 17px; }
-            .hero-side { display: none; }
+            .hero-side { margin-top: 24px; padding: 16px 0 0; border-top: 1px solid var(--rule); border-left: 0; }
+            .hero-side p { font-size: .82rem; line-height: 1.45; }
 
             .now-strip { gap: 18px; padding: 30px 0 36px; }
             .now-label { gap: 9px; }
@@ -685,14 +667,6 @@
             .atlas-note { margin-top: 14px; padding-top: 12px; }
             .atlas-note p { font-size: .77rem; line-height: 1.3; }
             .atlas-actions { gap: 2px 18px; margin-top: 13px; }
-
-            .objects-section { padding-top: 46px; }
-            .objects-intro { margin-top: 13px; font-size: .86rem; }
-            .objects-grid { grid-template-columns: 1fr; margin-top: 24px; }
-            .object-item, .object-item:nth-child(even) { min-height: 0; padding: 19px 0 21px; border-left: 0; }
-            .object-item + .object-item { border-top: 1px solid var(--rule); }
-            .object-name { margin-top: 9px; font-size: 20px; }
-            .object-desc { font-size: .81rem; }
 
             .writing-index { margin-top: 31px; }
             .writing-feature { gap: 22px; padding: 24px 0 30px; }
@@ -944,38 +918,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <section class="folio-section objects-section" id="objects" data-reveal aria-labelledby="objects-heading">
-                <div class="section-label">
-                    <span class="section-kicker">Objects</span>
-                </div>
-                <div class="section-content">
-                    <h2 class="section-heading" id="objects-heading">Four operations behind the work.</h2>
-                    <p class="objects-intro">These projections form a vocabulary for market structure, not an illustration of any one product. Each view isolates a different operation on the same state space.</p>
-                    <ol class="objects-grid">
-                        <li class="object-item">
-                            <span class="object-index">01 · Boundary</span>
-                            <span class="object-name">World → states</span>
-                            <p class="object-desc">A boundary turns a continuous outcome into discrete claims with explicit terminal payoffs.</p>
-                        </li>
-                        <li class="object-item">
-                            <span class="object-index">02 · Equivalence</span>
-                            <span class="object-name">Paths → exposure</span>
-                            <p class="object-desc">Different instruments and portfolios can approach the same economic state by different routes.</p>
-                        </li>
-                        <li class="object-item">
-                            <span class="object-index">03 · Correspondence</span>
-                            <span class="object-name">Risk ↔ claim</span>
-                            <p class="object-desc">An exposure either aligns with an available claim or remains visibly unmatched.</p>
-                        </li>
-                        <li class="object-item">
-                            <span class="object-index">04 · Residual</span>
-                            <span class="object-name">Exposure − coverage</span>
-                            <p class="object-desc">Coverage removes part of an exposure; the unhedged distance is the object that remains.</p>
-                        </li>
-                    </ol>
                 </div>
             </section>
 
