@@ -826,6 +826,21 @@
                 </header>
                 <div class="atlas">
                     <div class="atlas-entries">
+                        <article class="atlas-entry" data-projection="residual" id="blanket">
+                            <p class="atlas-index">Product</p>
+                            <h3 class="atlas-title">Blanket</h3>
+                            <p class="atlas-sub">Small-business risk, mapped to Kalshi.</p>
+                            <p class="atlas-desc">Describe one business risk. Blanket checks current Kalshi markets for a partial offset, shows what it costs, and keeps no-fit results visible. Trading still happens on Kalshi.</p>
+                            <figure class="atlas-proof" data-animate="image">
+                                <a href="https://tryblanket.app" target="_blank" rel="noopener">
+                                    <img src="assets/blanket.png" alt="Blanket mapping small-business risk to Kalshi markets" width="1200" height="630" loading="lazy">
+                                </a>
+                            </figure>
+                            <div class="atlas-actions">
+                                <a class="work-link" href="https://tryblanket.app" target="_blank" rel="noopener">Try Blanket</a>
+                            </div>
+                        </article>
+
                         <article class="atlas-entry" data-projection="boundary" id="statebook">
                             <p class="atlas-index">Research publication</p>
                             <h3 class="atlas-title">Statebook</h3>
@@ -877,20 +892,6 @@
                             </div>
                         </article>
 
-                        <article class="atlas-entry" data-projection="residual" id="blanket">
-                            <p class="atlas-index">Product</p>
-                            <h3 class="atlas-title">Blanket</h3>
-                            <p class="atlas-sub">Small-business risk, mapped to Kalshi.</p>
-                            <p class="atlas-desc">Describe one business risk. Blanket checks current Kalshi markets for a partial offset, shows what it costs, and keeps no-fit results visible. Trading still happens on Kalshi.</p>
-                            <figure class="atlas-proof" data-animate="image">
-                                <a href="https://tryblanket.app" target="_blank" rel="noopener">
-                                    <img src="assets/blanket.png" alt="Blanket mapping small-business risk to Kalshi markets" width="1200" height="630" loading="lazy">
-                                </a>
-                            </figure>
-                            <div class="atlas-actions">
-                                <a class="work-link" href="https://tryblanket.app" target="_blank" rel="noopener">Try Blanket</a>
-                            </div>
-                        </article>
                     </div>
 
                     <div class="atlas-stage-col" aria-hidden="true">
@@ -899,21 +900,21 @@
                                 <canvas id="atlas-fallback"></canvas>
                                 <canvas id="atlas-canvas"></canvas>
                                 <div class="stage-plates">
+                                    <div class="stage-plate" data-projection="residual">
+                                        <span class="stage-plate-index">Projection I · Residual</span>
+                                        <span class="stage-plate-name">The distance between exposure and coverage.</span>
+                                    </div>
                                     <div class="stage-plate" data-projection="boundary">
-                                        <span class="stage-plate-index">Projection I · Boundary</span>
+                                        <span class="stage-plate-index">Projection II · Boundary</span>
                                         <span class="stage-plate-name">A continuous world divided into priceable states.</span>
                                     </div>
                                     <div class="stage-plate" data-projection="equivalence">
-                                        <span class="stage-plate-index">Projection II · Equivalence</span>
+                                        <span class="stage-plate-index">Projection III · Equivalence</span>
                                         <span class="stage-plate-name">Different paths to the same terminal state.</span>
                                     </div>
                                     <div class="stage-plate" data-projection="correspondence">
-                                        <span class="stage-plate-index">Projection III · Correspondence</span>
+                                        <span class="stage-plate-index">Projection IV · Correspondence</span>
                                         <span class="stage-plate-name">Observed risks aligned with available claims.</span>
-                                    </div>
-                                    <div class="stage-plate" data-projection="residual">
-                                        <span class="stage-plate-index">Projection IV · Residual</span>
-                                        <span class="stage-plate-name">The distance between exposure and coverage.</span>
                                     </div>
                                 </div>
                                 <div class="stage-note" id="stage-note"></div>
@@ -1462,7 +1463,7 @@
             };
 
             const atlas = document.querySelector('.atlas');
-            const PROJECTION_ORDER = ['boundary', 'equivalence', 'correspondence', 'residual'];
+            const PROJECTION_ORDER = ['residual', 'boundary', 'equivalence', 'correspondence'];
             const canvasScene = (fallbackCanvas && fallbackCanvas.getContext) ? makeScene(fallbackCanvas) : null;
             let three = null;          // the three.js atlas, once loaded
             let threeTried = false;

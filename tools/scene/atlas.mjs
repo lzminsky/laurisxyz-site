@@ -6,17 +6,18 @@
  *   k = the route from exposure to ownership (back <-> front)
  *   h = payoff / exposure           (up)
  *
- *   I   Boundary        h = DIST[i] at k = 1     a continuous world becomes
- *                                                discrete, priceable states
- *   II  Equivalence     h = SURF[i][k]           different paths approach the
- *                                                same economic state
- *   III Correspondence  h = SURF[i][k] * 0.3     exposures land on claims that
- *                                                match; failures stay visible
- *   IV  Residual        h = 0 except one cell    coverage removes one volume;
+ *   I   Residual        h = 0 except one cell    coverage removes one volume;
  *                                                the remainder stays visible
+ *   II  Boundary        h = DIST[i] at k = 1     a continuous world becomes
+ *                                                discrete, priceable states
+ *   III Equivalence     h = SURF[i][k]           different paths approach the
+ *                                                same economic state
+ *   IV  Correspondence  h = SURF[i][k] * 0.3     exposures land on claims that
+ *                                                match; failures stay visible
  *
- * The I -> II morph is the argument, and it is one lerp: the route axis
- * turning on. Nothing crossfades — the same field changes height throughout.
+ * Blanket leads the catalogue, then the same state space opens into the three
+ * research projections. Nothing crossfades — the field changes height
+ * throughout.
  *
  * Driven by scroll position, never by a timer: there is no clock here, so a
  * transition cannot be interrupted, go stale, or snap.
@@ -69,32 +70,28 @@ const FOCUS = { i: 6, k: 6 };    // the one exposure in Projection IV
 const EXPOSURE = 7.2;            // what the business is exposed to
 const FUNDED = 4.3;              // what the contract actually pays
 
-// Height of the column at (i,k) for a fractional station 0..3.
-function heightAt(i, k, station) {
-  const dist = k === 1 ? DIST[i] : 0.02;
-  const surf = SURF[i][k];
-  if (station <= 1) {
-    // I -> II: the route axis turns on. The whole argument, one lerp.
-    return lerp(dist, surf, smooth01(station));
-  }
-  if (station <= 2) {
-    // II -> III: the surface settles into ground to be read as a map.
-    return lerp(surf, surf * 0.3, smooth01(station - 1));
-  }
-  // III -> IV: everything flattens but the one exposure.
-  const t = smooth01(station - 2);
+function stationHeight(i, k, index) {
   const isFocus = i === FOCUS.i && k === FOCUS.k;
-  return lerp(surf * 0.3, isFocus ? FUNDED : 0.02, t);
+  if (index === 0) return isFocus ? FUNDED : 0.02;
+  if (index === 1) return k === 1 ? DIST[i] : 0.02;
+  if (index === 2) return SURF[i][k];
+  return SURF[i][k] * 0.3;
 }
 
-/* ── the camera: broad -> oblique -> plan -> close ──────────────────────
-   define, price, map, act. The arc is the argument: a map IS a plan view,
-   so the camera makes the claim before the copy does. */
+// Height of the column at (i,k) for a fractional station 0..3.
+function heightAt(i, k, station) {
+  const index = Math.min(2, Math.floor(station));
+  const t = smooth01(station - index);
+  return lerp(stationHeight(i, k, index), stationHeight(i, k, index + 1), t);
+}
+
+/* ── the camera: close -> broad -> oblique -> plan ──────────────────────
+   act, define, price, map. Blanket leads before the broader research opens. */
 const POSES = [
-  { az: -0.52, el: 0.46, zoom: 1.00, tx: 0,   ty: 1.4, tz: 0 },    // I  broad
-  { az: -0.98, el: 0.30, zoom: 1.04, tx: 0,   ty: 1.2, tz: 0 },    // II oblique
-  { az: -0.72, el: 0.92, zoom: 0.90, tx: 0,   ty: 0.4, tz: 0 },    // III near-plan
-  { az: -0.40, el: 0.22, zoom: 2.30, tx: 0.6, ty: 1.8, tz: 0.6 },  // IV close
+  { az: -0.40, el: 0.22, zoom: 2.30, tx: 0.6, ty: 1.8, tz: 0.6 },  // I   close
+  { az: -0.52, el: 0.46, zoom: 1.00, tx: 0,   ty: 1.4, tz: 0 },    // II  broad
+  { az: -0.98, el: 0.30, zoom: 1.04, tx: 0,   ty: 1.2, tz: 0 },    // III oblique
+  { az: -0.72, el: 0.92, zoom: 0.90, tx: 0,   ty: 0.4, tz: 0 },    // IV  near-plan
 ];
 const MOBILE_ZOOM = 0.78;
 
@@ -204,7 +201,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
   );
   world.add(grid);
 
-  /* Projection I: the line that distinguishes market states from states that
+  /* Projection II: the line that distinguishes market states from states that
      have not yet become governable contracts. */
   const bx = 6.5 - half;
   const boundary = lineObject([
@@ -214,7 +211,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
     [[bx, 7.6, -half], [bx, 7.6, half]],
   ], C.wine);
 
-  /* Projection II: the direct claim and the synthetic route reach the same state
+  /* Projection III: the direct claim and the synthetic route reach the same state
      by visibly different paths. */
   const routeFrom = { i: 1.4, k: 10.6 };
   const routeTo = { i: 9.2, k: 2.4 };
@@ -237,14 +234,14 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
   ].map(([i, j, k]) => W(i, j, k));
   const replicationRoute = lineObject(chain(replicationPoints), C.wine);
 
-  /* Projection III: the cells that matched, and the exposures that found them */
+  /* Projection IV: the cells that matched, and the exposures that found them */
   const markPos = new Float32Array(SCATTER.length * 8 * 2 * 3);
   const markGeo = new BufferGeometry();
   markGeo.setAttribute('position', new BufferAttribute(markPos, 3));
   const marks = new LineSegments(markGeo, new LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0 }));
   world.add(marks);
 
-  /* Projection IV: the open outline is the full exposure. The filled inner column
+  /* Projection I: the open outline is the full exposure. The filled inner column
      is the candidate contract; the difference is the residual. */
   const fx = FOCUS.i - half;
   const fz = FOCUS.k - half;
@@ -260,7 +257,7 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
     [[fx - fw, 0, fz + fw], [fx - fw, EXPOSURE, fz + fw]],
   ], C.ink);
 
-  /* Plate IV: the residual — what the hedge does NOT cover, left visible */
+  /* Plate I: the residual — what the hedge does NOT cover, left visible */
   const resPos = new Float32Array(9 * 2 * 3);
   const resGeo = new BufferGeometry();
   resGeo.setAttribute('position', new BufferAttribute(resPos, 3));
@@ -286,10 +283,10 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
         const x = i - half, z = k - half;
         const isFocus = i === FOCUS.i && k === FOCUS.k;
         let hh = Math.max(0.015, heightAt(i, k, st));
-        // The SLAM idle rule, stolen wholesale: at Plate IV the funded payoff
+        // The SLAM idle rule, stolen wholesale: at Plate I the funded payoff
         // breathes and the residual does not move at all — because nothing is
         // protecting it. The animation is the argument.
-        if (isFocus && st > 2.8) hh *= 1 + breathe * 0.015;
+        if (isFocus && st < 0.2) hh *= 1 + breathe * 0.015;
 
         m4.makeScale(1, hh, 1);
         m4.setPosition(x, 0, z);
@@ -314,13 +311,13 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
     edgeGeo.attributes.position.needsUpdate = true;
     edgeGeo.computeBoundingSphere();
 
-    boundary.material.opacity = clamp01(1 - st * 1.4) * 0.62;
-    const showRoutes = clamp01(1 - Math.abs(st - 1) * 1.45);
+    boundary.material.opacity = clamp01(1 - Math.abs(st - 1) * 1.4) * 0.62;
+    const showRoutes = clamp01(1 - Math.abs(st - 2) * 1.45);
     directRoute.material.opacity = showRoutes * 0.86;
     replicationRoute.material.opacity = showRoutes * 0.72;
 
-    // Projection III: matched cells get a box, unmatched observations retain a stub.
-    const showMarks = clamp01(1 - Math.abs(st - 2) * 1.3);
+    // Projection IV: matched cells get a box, unmatched observations retain a stub.
+    const showMarks = clamp01(1 - Math.abs(st - 3) * 1.3);
     marks.material.opacity = showMarks * 0.75;
     if (showMarks > 0.01) {
       let mi = 0;
@@ -344,8 +341,8 @@ export function createAtlas(canvas, { reducedMotion = false } = {}) {
       markGeo.computeBoundingSphere();
     }
 
-    // Projection IV: the residual, hatched between coverage and full exposure.
-    const showRes = clamp01((st - 2.35) * 1.6);
+    // Projection I: the residual, hatched between coverage and full exposure.
+    const showRes = clamp01(1 - st * 1.6);
     residual.material.opacity = showRes * 0.8;
     focusMat.opacity = showRes * 0.55;
     exposureOutline.material.opacity = showRes * 0.62;

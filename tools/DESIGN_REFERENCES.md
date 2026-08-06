@@ -12,7 +12,7 @@ Applied rules:
 
 1. One 150px rail and one 54px gutter govern every institutional section.
 2. Controls are underlined editorial links; outlined or filled generic CTA rectangles are avoided.
-3. Research work is a four-object catalogue: Statebook and Blanket are wide features; SLAM and Hedgebook form the paired middle row.
+3. Research work is a four-object catalogue: Blanket and Statebook are wide features; SLAM and Hedgebook complete the sequence.
 4. Proof comes from the live artifact and concise copy; decorative scale captions are omitted.
 5. Microtype stays readable; labels are supporting structure, never grey decoration.
 6. Motion explains a system once. It does not compete with screenshots or delay the project inventory.
