@@ -510,7 +510,7 @@
         .shelf-toggle::after { content: '→'; transition: transform 200ms var(--ease-out); }
         .books-list.is-open + .shelf-toggle::after { content: '↑'; }
 
-        /* ── Hyperliquid Policy Center type roles ─────────────────────── */
+        /* ── Publication type roles ───────────────────────────────────── */
         .hero h1, .section-heading, .formation-heading, .books-title,
         .now-lede, .hero-deck, .epigraph blockquote, .stage-plate-name {
             font-family: var(--type-display);
@@ -830,10 +830,10 @@
                             <p class="atlas-index">Research publication</p>
                             <h3 class="atlas-title">Statebook</h3>
                             <p class="atlas-sub">Markets for every state of the world.</p>
-                            <p class="atlas-desc">An interactive policy publication developed in collaboration with the <a href="https://hyperliquidpolicy.org" target="_blank" rel="noopener">Hyperliquid Policy Center</a>. It shows how real businesses could use perpetuals and event contracts against risks that ordinary listed markets do not match. The cases and figures are synthetic.</p>
+                            <p class="atlas-desc">An independent, noncommercial interactive publication about how continuous and state-contingent contracts can describe business risks that ordinary listed markets do not match. The cases and figures are synthetic.</p>
                             <figure class="atlas-proof" data-animate="image">
-                                <a href="https://hpc-markets.vercel.app" target="_blank" rel="noopener">
-                                    <img src="assets/statebook.png" alt="Statebook publication showing markets for every state of the world" width="1200" height="630" loading="lazy">
+                                <a href="https://statebook-hpc.vercel.app" target="_blank" rel="noopener">
+                                    <img src="assets/statebook.png" alt="Statebook interactive publication about exchange convergence and business risk" width="1200" height="630" loading="lazy">
                                 </a>
                             </figure>
                             <div class="atlas-note">
@@ -877,18 +877,18 @@
                             </div>
                         </article>
 
-                        <article class="atlas-entry" data-projection="residual" id="bizhedge">
-                            <p class="atlas-index">Prototype</p>
-                            <h3 class="atlas-title">BizHedge</h3>
-                            <p class="atlas-sub">Matching business risks to live event contracts.</p>
-                            <p class="atlas-desc">Describe what could hurt the business in ordinary language. BizHedge searches current Kalshi markets, identifies the strongest legitimate relationship, and makes the cost, payout, and remaining risk legible. If no market genuinely fits, it says so.</p>
+                        <article class="atlas-entry" data-projection="residual" id="blanket">
+                            <p class="atlas-index">Product</p>
+                            <h3 class="atlas-title">Blanket</h3>
+                            <p class="atlas-sub">Small-business risk, mapped to Kalshi.</p>
+                            <p class="atlas-desc">Describe one business risk. Blanket checks current Kalshi markets for a partial offset, shows what it costs, and keeps no-fit results visible. Trading still happens on Kalshi.</p>
                             <figure class="atlas-proof" data-animate="image">
-                                <a href="https://bizhedge.app" target="_blank" rel="noopener">
-                                    <img src="assets/bizhedge.png" alt="BizHedge mapping a business exposure to a live event contract" width="1200" height="630" loading="lazy">
+                                <a href="https://tryblanket.app" target="_blank" rel="noopener">
+                                    <img src="assets/blanket.png" alt="Blanket mapping small-business risk to Kalshi markets" width="1200" height="630" loading="lazy">
                                 </a>
                             </figure>
                             <div class="atlas-actions">
-                                <a class="work-link" href="https://bizhedge.app" target="_blank" rel="noopener">Try BizHedge</a>
+                                <a class="work-link" href="https://tryblanket.app" target="_blank" rel="noopener">Try Blanket</a>
                             </div>
                         </article>
                     </div>
@@ -1416,7 +1416,7 @@
                         ctx.globalAlpha = 1;
                     }
 
-                    // BizHedge — one exposure, one contract, a visible residual.
+                    // Blanket — one exposure, one contract, a visible residual.
                     if (V.focus > .01) {
                         ctx.globalAlpha = V.focus;
                         const fi = 6.6, fk = 6.6;

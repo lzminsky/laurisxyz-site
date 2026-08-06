@@ -39,7 +39,7 @@ ARTICLES = [
         "figures": [],
         "related": [
             ("Hedgebook — corporate exposures, matched to live contracts", "https://www.hedgespx.com", True),
-            ("BizHedge — the exposure-first method, live", "https://bizhedge.app", True),
+            ("Blanket — small-business risk, mapped to Kalshi", "https://tryblanket.app", True),
         ],
     },
     {
@@ -508,7 +508,7 @@ ARTICLE_STYLE = """
             .shelf { margin-top: 54px; }
             .art-after { margin-top: 50px; }
         }
-        /* ── Hyperliquid Policy Center type roles ─────────────────────── */
+        /* ── Publication type roles ───────────────────────────────────── */
         .art-title, .arch-title {
             font-family: var(--type-display);
             font-weight: 400;
