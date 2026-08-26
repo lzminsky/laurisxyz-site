@@ -38,7 +38,7 @@ ARTICLES = [
         "skip_first": True,
         "figures": [],
         "related": [
-            ("Hedgebook — corporate exposures, matched to live contracts", "https://www.hedgespx.com", True),
+            ("Hedgebook — corporate exposures, matched to live contracts", "https://tryblanket.app/hedgebook", True),
             ("Blanket — small-business risk, mapped to Kalshi", "https://tryblanket.app", True),
         ],
     },
@@ -142,6 +142,14 @@ ARTICLES = [
 
 FEATURED_NOTES = [
     {
+        "title": "Introducing Blanket",
+        "date": "11 Aug 2026",
+        "iso": "2026-08-11",
+        "deck": "A public research product for discovering where listed event markets may partially fit small-business risk — and where they do not.",
+        "url": "https://x.com/lzminsky/status/2087177263716450574",
+        "image": {"src": "/assets/blanket.png", "w": 1200, "h": 630},
+    },
+    {
         "title": "Statebook",
         "date": "15 Jul 2026",
         "iso": "2026-07-15",
@@ -149,17 +157,12 @@ FEATURED_NOTES = [
         "url": "https://x.com/lzminsky/status/2077464459522568198",
         "image": {"src": "/assets/statebook.png", "w": 1200, "h": 630},
     },
-    {
-        "title": "The exchange stack is converging",
-        "date": "15 Jul 2026",
-        "iso": "2026-07-15",
-        "deck": "Venue labels increasingly describe the front door, not the payoff stack.",
-        "url": "https://x.com/lzminsky/status/2077174969738363261",
-        "image": {"src": "/assets/writing/postE_exchange_stack_map.png", "w": 1600, "h": 1000},
-    },
 ]
 
 NOTES = [
+    ("The exchange stack is converging", "15 Jul 2026",
+     "Venue labels increasingly describe the front door, not the payoff stack.",
+     "https://x.com/lzminsky/status/2077174969738363261"),
     ("I was very wrong — the compute curve, corrected", "14 Jul 2026",
      "A public correction on compute markets, quoting the July 3 framework it revises.",
      "https://x.com/lzminsky/status/2077131007430725932"),
@@ -853,7 +856,7 @@ def build_index():
                 <div>
                     <h1 class="arch-title">Essays and notes.</h1>
                 </div>
-                <p class="arch-intro">I write about event risk, corporate hedging, and exchange design. Longer articles are archived here; shorter notes remain on <a href="{X}" target="_blank" rel="noopener">X</a>.</p>
+                <p class="arch-intro">I write about market formation, institutional risk transfer, and the financialization of new underliers. Longer articles are archived here; shorter notes remain on <a href="{X}" target="_blank" rel="noopener">X</a>.</p>
             </header>
             <section class="arch-section" aria-label="Articles">
                 <p class="arch-label">Articles</p>
@@ -879,7 +882,7 @@ def build_index():
                 </div>
             </section>"""
 
-    page = shell("Writing — Lauris", "Essays and working notes on event risk, corporate hedging, and exchange design.",
+    page = shell("Writing — Lauris", "Essays and working notes on market formation, institutional risk transfer, and the financialization of new underliers.",
                  INDEX_STYLE, body, "https://lauris.xyz/writing/")
     dest = OUT / "index.html"
     dest.parent.mkdir(parents=True, exist_ok=True)
