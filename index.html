@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lauris — Markets, ventures, and research</title>
+    <title>Lauris: Markets, ventures, and research</title>
     <meta name="description" content="Lauris builds and researches market infrastructure across event contracts, derivatives, corporate risk, and institutional finance.">
     <meta name="theme-color" content="#ffffff">
-    <meta property="og:title" content="Lauris — Markets, ventures, and research">
+    <meta property="og:title" content="Lauris: Markets, ventures, and research">
     <meta property="og:description" content="I work on how states of the world become financial markets.">
     <meta property="og:url" content="https://lauris.xyz">
     <meta property="og:type" content="website">
@@ -14,13 +14,13 @@
     <meta property="og:image" content="https://www.lauris.xyz/assets/share.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Lauris — research, market design, and ventures">
+    <meta property="og:image:alt" content="Lauris: research, market design, and ventures">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@lzminsky">
-    <meta name="twitter:title" content="Lauris — Markets, ventures, and research">
+    <meta name="twitter:title" content="Lauris: Markets, ventures, and research">
     <meta name="twitter:description" content="I work on how states of the world become financial markets.">
     <meta name="twitter:image" content="https://www.lauris.xyz/assets/share.png">
-    <meta name="twitter:image:alt" content="Lauris — research, market design, and ventures">
+    <meta name="twitter:image:alt" content="Lauris: research, market design, and ventures">
     <link rel="canonical" href="https://lauris.xyz">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="mask-icon" href="/favicon.svg" color="#1a1816">
@@ -276,7 +276,7 @@
         .now-list { margin-top: 12px; list-style: none; }
         .now-list li { position: relative; padding-left: 16px; color: var(--ink-soft); font-size: .88rem; line-height: 1.5; }
         .now-list li + li { margin-top: 7px; }
-        .now-list li::before { position: absolute; left: 0; color: var(--ink-muted); content: '—'; }
+        .now-list li::before { position: absolute; left: 0; color: var(--ink-muted); content: '•'; }
         .now-list a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
 
         .text-link, .work-link {
@@ -693,6 +693,20 @@
             .motion-ready [data-animate] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
         }
         @media print { body::before { display: none; } }
+    
+        /* Insrt Labs operating history. */
+        #insrt-labs { padding: 24px 0; }
+        #insrt-labs .record-name { font-size: 27px; }
+        #insrt-labs .record-date { font-size: 11px; margin-top: 7px; }
+        #insrt-labs .record-narrative { max-width: 68ch; }
+        #insrt-labs .record-narrative p { margin: 0; color: var(--ink-soft); font-size: 19px; line-height: 1.55; letter-spacing: -.01em; }
+        #insrt-labs .record-narrative p + p { margin-top: 20px; }
+        #insrt-labs .record-narrative p:first-child { color: var(--ink); }
+        @media (max-width: 720px) {
+            #insrt-labs { grid-template-columns: 1fr; gap: 17px; }
+            #insrt-labs .record-narrative p { font-size: 18px; line-height: 1.5; }
+            #insrt-labs .record-narrative p + p { margin-top: 18px; }
+        }
     </style>
 </head>
 <body>
@@ -731,7 +745,7 @@
             <section class="hero">
                 <h1>I work on how states of the world become financial markets.</h1>
                 <div class="hero-support">
-                    <p class="hero-deck">My work connects event contracts, derivatives, and corporate risk through systems design and legal structures—from exposure discovery and contract design to execution, margin, and institutional ownership.</p>
+                    <p class="hero-deck">I work on developing frontier derivatives markets and the risk-transfer architecture that allows them to function like established markets in rates, credit, and commodities.</p>
                     <div class="hero-links">
                         <a class="btn-x" href="https://x.com/lzminsky" target="_blank" rel="noopener">Read on X</a>
                         <a class="text-link text-link--down" href="#work">Explore research</a>
@@ -743,9 +757,9 @@
             </section>
 
             <section class="now-strip" id="now" aria-labelledby="now-label">
-                <h2 class="now-label" id="now-label">Now <time datetime="2026-07">July 2026</time></h2>
+                <h2 class="now-label" id="now-label">Now <time datetime="2026-09">September 2026</time></h2>
                 <div class="now-grid">
-                    <p class="now-lede">Lately, frontier risk markets—especially event risk, pari-mutuel insurance, and compute as an asset class. I am in the early formation of a new venture with a senior FICC co-founder, researching origination and swaps.</p>
+                    <p class="now-lede">Building a new venture focused on institutional risk transfer in frontier derivatives markets, initially event risk, alongside a former Goldman Sachs regional Head of FICC Coverage.</p>
                     <div class="now-secondary">
                         <p class="now-caption">Also:</p>
                         <ul class="now-list">
@@ -783,27 +797,17 @@
                             </div>
                             <p class="record-desc">The European version of dv01: a plumbing engine for securitization, made with some of my best friends from the LSE.</p>
                         </article>
-                        <article class="record-row record-row--feature">
-                            <div class="record-who">
-                                <h3 class="record-name">Insrt Labs <span class="project-mark">┐</span></h3>
-                                <span class="record-date">2022–2025 · Founder</span>
-                            </div>
-                            <div class="record-detail">
-                                <p class="record-desc">Founded and ran Insrt Labs for 39 months. Five audited products explored three versions of the same microstructure problem: fractional ownership and yield, just-in-time inventory, and routing new demand into long-tail spot markets. Wound down December 2025.</p>
-                                <ol class="record-lineage" aria-label="Insrt Labs product lineage">
-                                    <li class="lineage-item">
-                                        <span class="lineage-name">Multiplier</span>
-                                        <span class="lineage-date">2023–2025</span>
-                                        <p>Gamified leverage trading app. Partners included the Solana Foundation and Raydium Foundation.</p>
-                                    </li>
-                                    <li class="lineage-item">
-                                        <span class="lineage-name">Insrt</span>
-                                        <span class="lineage-date">2022–2023</span>
-                                        <p>Fractional ownership over onchain intellectual property.</p>
-                                    </li>
-                                </ol>
-                            </div>
-                        </article>
+                        <article class="record-row record-row--feature" id="insrt-labs">
+  <div class="record-who">
+    <h3 class="record-name">Insrt Labs <span class="project-mark">┐</span></h3>
+    <span class="record-date">2022–2025 · Founder</span>
+  </div>
+  <div class="record-detail record-narrative">
+    <p>I founded Insrt Labs in 2022 to build financial infrastructure around NFTs. ShardVaults used non-fungible smart contract standards for fractionalized RWA origination, borrowing and automated yield. As NFT liquidity contracted, we shifted toward consumer applications.</p>
+    <p>We then built the first onchain gacha for NFTs and physical collectibles. On Blast, we developed just-in-time prize redemption to avoid tying up capital in inventory. Multiplier extended that mechanism to liquid tokens, with games routing new demand into spot markets.</p>
+    <p>We raised $3m from VC and shipped five audited products. Across Insrt and Multiplier, users spent $20m and the protocols generated <span title="Lifetime net protocol fees, valued at the ETH prices used in the company postmortem.">$4.2m in net fees</span>, which financed continued development. I wound down the company in December 2025.</p>
+  </div>
+</article>
                         <article class="record-row">
                             <div class="record-who">
                                 <h3 class="record-name">Independent work</h3>
@@ -830,7 +834,7 @@
                             <p class="atlas-index">Public research product</p>
                             <h3 class="atlas-title">Blanket</h3>
                             <p class="atlas-sub">Small-business risk, mapped to Kalshi.</p>
-                            <p class="atlas-desc">An independent product and market exploration for discovering where listed event markets can—and cannot—meet business demand: finding partial offsets, making basis visible, preserving no-fit evidence, and revealing where new markets may need to form. Blanket does not execute trades.</p>
+                            <p class="atlas-desc">An independent product and market exploration for discovering where listed event markets can and cannot meet business demand: finding partial offsets, making basis visible, preserving no-fit evidence, and revealing where new markets may need to form. Blanket does not execute trades.</p>
                             <figure class="atlas-proof" data-animate="image">
                                 <a href="https://tryblanket.app" target="_blank" rel="noopener">
                                     <img src="assets/blanket.png" alt="Blanket mapping small-business risk to Kalshi markets" width="1200" height="630" loading="lazy">
@@ -979,7 +983,7 @@
                                 <time class="writing-date" datetime="2026-07-03">03 Jul 2026</time>
                                 <span class="writing-row-copy">
                                     <span class="writing-row-title">Compute, sliced four ways</span>
-                                    <span class="writing-row-deck">The level, the shape, the residual, and the jumps—and the instrument each one gets.</span>
+                                    <span class="writing-row-deck">The level, the shape, the residual, and the jumps, with the instrument each one gets.</span>
                                 </span>
                                 <span class="writing-row-media"><img src="assets/writing/exh_compute_matrix.jpg" alt="" width="1400" height="764" loading="lazy"></span>
                             </a>
@@ -1010,102 +1014,102 @@
             <ol class="books-list" id="books-list">
                 <li class="book-item">
                     <span class="book-number">01</span>
-                    <span class="book-name">Seeing Like a State</span> <span class="book-author">— Scott</span>
+                    <span class="book-name">Seeing Like a State</span> <span class="book-author">by Scott</span>
                     <p class="book-note">The map is not the territory and how a map can kill millions.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">02</span>
-                    <span class="book-name">The Venture of Islam</span> <span class="book-author">— Hodgson</span>
+                    <span class="book-name">The Venture of Islam</span> <span class="book-author">by Hodgson</span>
                     <p class="book-note">Civilizational history at its best.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">03</span>
-                    <span class="book-name">Models of Bounded Rationality</span> <span class="book-author">— Simon</span>
+                    <span class="book-name">Models of Bounded Rationality</span> <span class="book-author">by Simon</span>
                     <p class="book-note">We all satisfice to our computational and emotional limits.</p>
                 </li>
                 <li class="book-item">
                     <span class="book-number">04</span>
-                    <span class="book-name">On the Nature of Things</span> <span class="book-author">— Lucretius</span>
+                    <span class="book-name">On the Nature of Things</span> <span class="book-author">by Lucretius</span>
                     <p class="book-note">The most beautiful poetry ever written.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">05</span>
-                    <span class="book-name">The Count of Monte Cristo</span> <span class="book-author">— Dumas</span>
+                    <span class="book-name">The Count of Monte Cristo</span> <span class="book-author">by Dumas</span>
                     <p class="book-note">Patience as strategy. The revenge plot as mechanism design problem.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">06</span>
-                    <span class="book-name">A History of Philosophy</span> <span class="book-author">— Copleston</span>
+                    <span class="book-name">A History of Philosophy</span> <span class="book-author">by Copleston</span>
                     <p class="book-note">The topography of the history of thought.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">07</span>
-                    <span class="book-name">Critique of Pure Reason</span> <span class="book-author">— Kant</span>
+                    <span class="book-name">Critique of Pure Reason</span> <span class="book-author">by Kant</span>
                     <p class="book-note">The only thing that still annoys me is that the Terminus is the Manifold.</p>
                 </li>
                 <li class="book-item">
                     <span class="book-number">08</span>
-                    <span class="book-name">Theory of Value</span> <span class="book-author">— Debreu</span>
+                    <span class="book-name">Theory of Value</span> <span class="book-author">by Debreu</span>
                     <p class="book-note">Beautiful, rigorous, and wrong in exactly the ways that matter.</p>
                 </li>
                 <li class="book-item">
                     <span class="book-number">09</span>
-                    <span class="book-name">Law, Legislation and Liberty</span> <span class="book-author">— Hayek</span>
+                    <span class="book-name">Law, Legislation and Liberty</span> <span class="book-author">by Hayek</span>
                     <p class="book-note">Cosmos versus Taxis. Spontaneous order versus constructed order. The source code for everything I work on.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">10</span>
-                    <span class="book-name">Genetic Epistemology</span> <span class="book-author">— Piaget</span>
+                    <span class="book-name">Genetic Epistemology</span> <span class="book-author">by Piaget</span>
                     <p class="book-note">The biological precursor to Kantian epistemology.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">11</span>
-                    <span class="book-name">The Concept of the Political</span> <span class="book-author">— Schmitt</span>
+                    <span class="book-name">The Concept of the Political</span> <span class="book-author">by Schmitt</span>
                     <p class="book-note">Sovereignty. Friend/Foe. Which is which?</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">12</span>
-                    <span class="book-name">Collected Poems</span> <span class="book-author">— Cavafy</span>
+                    <span class="book-name">Collected Poems</span> <span class="book-author">by Cavafy</span>
                     <p class="book-note">Above all, don't fool yourself, don't say it was a dream, your ears deceived you.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">13</span>
-                    <span class="book-name">The Origins of Political Order</span> <span class="book-author">— Fukuyama</span>
+                    <span class="book-name">The Origins of Political Order</span> <span class="book-author">by Fukuyama</span>
                     <p class="book-note">How institutions actually form. The state, rule of law, accountability and why most places fail to get all three.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">14</span>
-                    <span class="book-name">The Swerve</span> <span class="book-author">— Greenblatt</span>
+                    <span class="book-name">The Swerve</span> <span class="book-author">by Greenblatt</span>
                     <p class="book-note">How Lucretius got rediscovered and changed everything. Ideas have material histories.</p>
                 </li>
                 <li class="book-item">
                     <span class="book-number">15</span>
-                    <span class="book-name">Laws of Form</span> <span class="book-author">— Spencer-Brown</span>
+                    <span class="book-name">Laws of Form</span> <span class="book-author">by Spencer-Brown</span>
                     <p class="book-note">The calculus of distinction. The mark at the top of this page comes from it.</p>
                 </li>
                 <li class="book-item">
                     <span class="book-number">16</span>
-                    <span class="book-name">From Third World to First</span> <span class="book-author">— Lee Kuan Yew</span>
+                    <span class="book-name">From Third World to First</span> <span class="book-author">by Lee Kuan Yew</span>
                     <p class="book-note">Whoever rules must have that iron in him. This is not a game of cards. This is your life and mine.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">17</span>
-                    <span class="book-name">Changing Fortunes</span> <span class="book-author">— Volcker &amp; Gyohten</span>
+                    <span class="book-name">Changing Fortunes</span> <span class="book-author">by Volcker &amp; Gyohten</span>
                     <p class="book-note">Monetary history from the people who made it. Central banking as craft, not science.</p>
                 </li>
                 <li class="book-item book-extra">
                     <span class="book-number">18</span>
-                    <span class="book-name">With the Old Breed</span> <span class="book-author">— Sledge</span>
+                    <span class="book-name">With the Old Breed</span> <span class="book-author">by Sledge</span>
                     <p class="book-note">War as it actually is. The corrective to every abstraction about conflict.</p>
                 </li>
                 <li class="book-item">
                     <span class="book-number">19</span>
-                    <span class="book-name">On War</span> <span class="book-author">— Clausewitz</span>
+                    <span class="book-name">On War</span> <span class="book-author">by Clausewitz</span>
                     <p class="book-note">Friction, fog, the continuation of politics by other means. Strategy as dealing with uncertainty, not eliminating it.</p>
                 </li>
                 <li class="book-item">
                     <span class="book-number">20</span>
-                    <span class="book-name">Simulacra and Simulation</span> <span class="book-author">— Baudrillard</span>
+                    <span class="book-name">Simulacra and Simulation</span> <span class="book-author">by Baudrillard</span>
                     <p class="book-note">We live in a hyperreality and it is only getting more strange. A prophetic monograph.</p>
                 </li>
             </ol>
