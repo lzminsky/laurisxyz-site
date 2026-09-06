@@ -694,18 +694,38 @@
         }
         @media print { body::before { display: none; } }
 
-        /* Insrt Labs operating history. */
+        /* Insrt Labs product chapters. */
         #insrt-labs { padding: 24px 0; }
         #insrt-labs .record-name { font-size: 27px; }
-        #insrt-labs .record-date { font-size: 11px; margin-top: 7px; }
-        #insrt-labs .record-narrative { max-width: 68ch; }
-        #insrt-labs .record-narrative p { margin: 0; color: var(--ink-soft); font-size: 19px; line-height: 1.55; letter-spacing: -.01em; }
-        #insrt-labs .record-narrative p + p { margin-top: 20px; }
-        #insrt-labs .record-narrative p:first-child { color: var(--ink); }
+        #insrt-labs .record-date { font-size: 11px; margin-top: 7px; letter-spacing: 0; white-space: nowrap; }
+        #insrt-labs .insrt-intro { margin: 0; max-width: 76ch; color: var(--ink); font-size: 19px; line-height: 1.45; letter-spacing: -.01em; text-wrap: pretty; }
+        #insrt-labs .record-lineage { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 23px; gap: 0; }
+        #insrt-labs .lineage-item { padding: 18px 20px 4px; }
+        #insrt-labs .lineage-item:first-child { padding-left: 0; }
+        #insrt-labs .lineage-item:last-child { padding-right: 0; }
+        #insrt-labs .lineage-item::before { display: none; }
+        #insrt-labs .lineage-name { margin: 0; color: var(--ink); font-size: 18px; font-weight: 500; line-height: 1.2; letter-spacing: -.015em; }
+        #insrt-labs .lineage-period { display: block; margin-top: 7px; color: var(--ink-muted); font: 11px/1.4 var(--type-mono); }
+        #insrt-labs .lineage-item p { margin: 10px 0 0; color: var(--ink-soft); font-size: 16px; line-height: 1.5; letter-spacing: -.01em; text-wrap: pretty; }
+        #insrt-labs .insrt-outcome { margin: 23px 0 0; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 16px; line-height: 1.5; text-wrap: pretty; }
+        #insrt-labs .insrt-status { margin: 12px 0 0; color: var(--ink-muted); font: 11px/1.5 var(--type-mono); }
+        @media (max-width: 1100px) {
+            #insrt-labs { grid-template-columns: 1fr; gap: 18px; }
+            #insrt-labs .lineage-item { padding-left: 16px; padding-right: 16px; }
+        }
         @media (max-width: 720px) {
-            #insrt-labs { grid-template-columns: 1fr; gap: 17px; }
-            #insrt-labs .record-narrative p { font-size: 18px; line-height: 1.5; }
-            #insrt-labs .record-narrative p + p { margin-top: 18px; }
+            #insrt-labs { gap: 17px; padding: 22px 0; }
+            #insrt-labs .record-name { font-size: 25px; }
+            #insrt-labs .insrt-intro { font-size: 18px; line-height: 1.45; }
+            #insrt-labs .record-lineage { grid-template-columns: 1fr; margin-top: 21px; }
+            #insrt-labs .lineage-item,
+            #insrt-labs .lineage-item:first-child,
+            #insrt-labs .lineage-item:last-child { padding: 17px 0; border-left: 0; }
+            #insrt-labs .lineage-item + .lineage-item { border-top: 1px solid var(--rule); }
+            #insrt-labs .lineage-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+            #insrt-labs .lineage-period { flex-shrink: 0; margin-top: 0; }
+            #insrt-labs .lineage-item p { margin-top: 8px; font-size: 16px; }
+            #insrt-labs .insrt-outcome { margin-top: 0; padding-top: 17px; font-size: 16px; }
         }
     </style>
 </head>
@@ -798,15 +818,38 @@
                             <p class="record-desc">The European version of dv01: a plumbing engine for securitization, made with some of my best friends from the LSE.</p>
                         </article>
                         <article class="record-row record-row--feature" id="insrt-labs">
-  <div class="record-who">
-    <h3 class="record-name">Insrt Labs <span class="project-mark">┐</span></h3>
-    <span class="record-date">2022–2025 · Founder</span>
-  </div>
-  <div class="record-detail record-narrative">
-    <p>I founded Insrt Labs in 2022 to build financial infrastructure around NFTs. ShardVaults used non-fungible smart contract standards for fractionalized RWA origination, borrowing and automated yield. As NFT liquidity contracted, we shifted toward consumer applications.</p>
-    <p>We then built the first onchain gacha for NFTs and physical collectibles. On Blast, we developed just-in-time prize redemption to avoid tying up capital in inventory. Multiplier extended that mechanism to liquid tokens, with games routing new demand into spot markets.</p>
-    <p>We raised $3m from VC and shipped five audited products. Across Insrt and Multiplier, users spent $20m and the protocols generated <span title="Lifetime net protocol fees, valued at the ETH prices used in the company postmortem.">$4.2m in net fees</span>, which financed continued development. I wound down the company in December 2025.</p>
-  </div>
+    <div class="record-who">
+        <h3 class="record-name">Insrt Labs <span class="project-mark">┐</span></h3>
+        <span class="record-date">2022–2025 · Founder</span>
+    </div>
+    <div class="record-detail">
+        <p class="insrt-intro">I founded Insrt Labs to build financial infrastructure around NFTs. As that market contracted, we shifted toward consumer applications.</p>
+        <ol class="record-lineage" aria-label="Insrt Labs product development">
+            <li class="lineage-item">
+                <div class="lineage-head">
+                    <h4 class="lineage-name">Insrt / ShardVaults</h4>
+                    <span class="lineage-period">2022–2023</span>
+                </div>
+                <p>Fractionalized RWA origination using non-fungible smart contract standards, with borrowing and automated yield.</p>
+            </li>
+            <li class="lineage-item">
+                <div class="lineage-head">
+                    <h4 class="lineage-name">Insrt / Blast</h4>
+                    <span class="lineage-period">2024</span>
+                </div>
+                <p>The first onchain gacha for NFTs and physical collectibles. Just-in-time redemption avoided tying up capital in prize inventory.</p>
+            </li>
+            <li class="lineage-item">
+                <div class="lineage-head">
+                    <h4 class="lineage-name">Multiplier</h4>
+                    <span class="lineage-period">2025</span>
+                </div>
+                <p>Extended the redemption mechanism to liquid tokens, with games routing new demand into spot markets.</p>
+            </li>
+        </ol>
+        <p class="insrt-outcome">We raised $3m from VC and shipped five audited products. Across Insrt and Multiplier, users spent $20m and the protocols generated <span title="Lifetime net protocol fees, valued at the ETH prices used in the company postmortem.">$4.2m in net fees</span>, which financed continued development.</p>
+        <p class="insrt-status">Wound down December 2025.</p>
+    </div>
 </article>
                         <article class="record-row">
                             <div class="record-who">
