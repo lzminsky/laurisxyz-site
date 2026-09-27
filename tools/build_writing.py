@@ -43,6 +43,27 @@ ARTICLES = [
         ],
     },
     {
+        "num": 7,
+        "slug": "welcome-to-post-crypto",
+        "title": "Welcome to Post-Crypto",
+        "deck": "The institutional deck and the token chart made the same promise in different fonts.",
+        "kicker": "Essay · market culture",
+        "date": "03 Aug 2026",
+        "iso": "2026-08-03",
+        "url": "https://x.com/lzminsky/status/2084342145129889799",
+        "sources": [
+            ("Opening post on X", "https://x.com/lzminsky/status/2084320355976679783"),
+            ("Companion post on X", "https://x.com/lzminsky/status/2084342145129889799"),
+        ],
+        "note": 'Adapted from two posts published on 3 August 2026. A follow-up to <a href="/writing/welcome-to-post-ct/">Welcome to Post-CT</a>.',
+        "hero": None,
+        "thumb": {"file": "article6_postct_hero.jpg", "w": 1065, "h": 426},
+        "figures": [],
+        "related": [
+            ("Welcome to Post-CT — the earlier essay", "/writing/welcome-to-post-ct/", False),
+        ],
+    },
+    {
         "num": 2,
         "slug": "credit-already-trades-event-risk",
         "title": "Credit already trades event risk",
@@ -136,7 +157,9 @@ ARTICLES = [
         "hero": {"file": "article6_postct_hero.jpg", "w": 1065, "h": 426,
                  "caption": "The monoculture and what follows it."},
         "figures": [],
-        "related": [],
+        "related": [
+            ("Welcome to Post-Crypto — the follow-up", "/writing/welcome-to-post-crypto/", False),
+        ],
     },
 ]
 
@@ -740,6 +763,12 @@ def shelf(current_slug: str) -> str:
 
 def build_article(cfg, data, fingerprints=None):
     body_html = render_body(cfg, data["paragraphs"])
+    sources = cfg.get("sources", [("View original on X", cfg["url"])])
+    source_links = "\n                        ".join(
+        f'<a class="text-link" href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">{html.escape(label)}</a>'
+        for label, url in sources
+    )
+    source_note = f'<p class="foot">{cfg["note"]}</p>\n' if cfg.get("note") else ""
 
     words = len(prose_of(body_html).split())
     if fingerprints is not None:
@@ -782,11 +811,11 @@ def build_article(cfg, data, fingerprints=None):
                     <p class="art-deck">{cfg['deck']}</p>
                     <div class="art-meta">
                         <time datetime="{cfg['iso']}">{cfg['date']}</time>
-                        <a class="text-link" href="{cfg['url']}" target="_blank" rel="noopener">View original on X</a>
+                        {source_links}
                     </div>
                 </header>{hero_html}
                 <div class="art-body">
-{body_html}
+{source_note}{body_html}
                 </div>
             </article>{related}
             {shelf(cfg['slug'])}
